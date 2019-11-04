@@ -138,11 +138,11 @@ func (c *EqualComparator) compareAny(x interface{}, y interface{}) bool {
 	}
 
 	if c.useEqualMethod {
-		if xEqualer, ok := x.(Equaler); ok && x != nil {
+		if xEqualer, ok := x.(Equaler); ok {
 			return xEqualer.Equal(y)
 		}
 
-		if yEqualer, ok := y.(Equaler); ok && y != nil {
+		if yEqualer, ok := y.(Equaler); ok {
 			return yEqualer.Equal(x)
 		}
 	}

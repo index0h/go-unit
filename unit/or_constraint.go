@@ -79,7 +79,7 @@ func (c *OrConstraint) joinParts(parts []string) string {
 	}
 
 	for i, part := range actualParts {
-		if strings.Index(part, "\n") != -1 {
+		if strings.Contains(part, "\n") {
 			actualParts[i] = "(\n\t" + strings.Replace(part, "\n", "\n\t", -1) + "\n)"
 		} else {
 			actualParts[i] = "(" + part + ")"

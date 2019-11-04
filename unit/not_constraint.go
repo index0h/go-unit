@@ -91,7 +91,7 @@ func (c *NotConstraint) Details(value interface{}) string {
 func (c *NotConstraint) formatMultilineString(input string) string {
 	input = strings.TrimSpace(input)
 
-	if strings.Index(input, "\n") != -1 {
+	if strings.Contains(input, "\n") {
 		return "(\n\t" + strings.Replace(input, "\n", "\n\t", -1) + "\n)"
 	} else {
 		return "(" + input + ")"
