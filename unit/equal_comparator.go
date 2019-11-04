@@ -303,11 +303,11 @@ func (c *EqualComparator) buildEqualComparerOption() cmp.Option {
 			}
 
 			if c.useEqualMethod {
-				if _, ok := x.(Equaler); ok && x != nil {
+				if _, ok := x.(Equaler); ok {
 					return true
 				}
 
-				if _, ok := y.(Equaler); ok && y != nil {
+				if _, ok := y.(Equaler); ok {
 					return true
 				}
 			}
