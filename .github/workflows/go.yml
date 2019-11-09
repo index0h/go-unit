@@ -32,7 +32,7 @@ jobs:
         run: |
           echo "##[group]group1"
           echo "some"
-          echo "data"
+          echo "https://google.com"
           echo "##[endgroup]"
           echo "##[group]group2"
           echo "some"
