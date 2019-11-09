@@ -25,10 +25,17 @@ jobs:
         run: go get ./...
 
       - name: Test
-        run: go test -race -cover -coverprofile=coverage.out  ./... && go tool cover -html coverage.out -o coverage.html
+        run: |
+          go test -race -cover ./...
 
-      - name: Archive code coverage results
-        uses: actions/upload-artifact@v1
-        with:
-          name: code-coverage-report
-          path: coverage.html
+      - name: TestGroups
+        run: |
+          echo "##[group]group1"
+          echo "some"
+          echo "data"
+          echo "##[endgroup]"
+          echo "##[group]group2"
+          echo "some"
+          echo "data"
+          echo "##[endgroup]"
+          
