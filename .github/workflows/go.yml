@@ -2,40 +2,25 @@ name: Go
 on: [push]
 jobs:
   build:
-    name: Build and test
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os:
           - ubuntu-latest
+          - windows-latest
+          - macos-latest
         go-version:
           - 1.12.x
           - 1.13.x
     steps:
-      - name: Set up Go
-        uses: actions/setup-go@v1
+      - uses: actions/setup-go@v1
         with:
           go-version: ${{ matrix.go-version }}
         id: go
 
-      - name: Check out code into the Go module directory
-        uses: actions/checkout@v1
-
+      - uses: actions/checkout@v1
       - name: Get dependencies
         run: go get ./...
 
       - name: Test
-        run: |
-          go test -race -cover ./...
-
-      - name: TestGroups
-        run: |
-          echo "##[group]group1"
-          echo "some"
-          echo "https://google.com"
-          echo "##[endgroup]"
-          echo "##[group]group2"
-          echo "some"
-          echo "data"
-          echo "##[endgroup]"
-          
+        run: go test -race -cover  ./...
