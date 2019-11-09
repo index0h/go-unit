@@ -1033,7 +1033,12 @@ func TestController_AssertEqual(t *testing.T) {
 					RecordHelper().
 					RecordHelper().
 					RecordError(
-						NewAssertError("data", "'actual' variable", fmt.Sprintf("be equal to %+v", "data"), ""),
+						NewAssertError(
+							"data",
+							"'actual' variable",
+							fmt.Sprintf("be equal to %+v", "data"),
+							"  string(\n- \t\"data\",\n+ \t\"another data\",\n  )\n",
+						),
 					).
 					RecordFail(),
 			}).AssertEqual,

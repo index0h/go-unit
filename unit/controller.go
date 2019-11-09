@@ -299,7 +299,7 @@ func (c *Controller) AssertNotEmpty(value interface{}) {
 func (c *Controller) AssertEqual(expected interface{}, actual interface{}, options ...interface{}) {
 	c.test.Helper()
 
-	c.AssertThat(expected, c.Equal(expected, options...), "'actual' variable")
+	c.AssertThat(actual, c.Equal(expected, options...), "'actual' variable")
 }
 
 func (c *Controller) AssertNotEqual(expected interface{}, actual interface{}, options ...interface{}) {
