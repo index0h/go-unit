@@ -6,7 +6,7 @@ func TestNewElementsConstraint(t *testing.T) {
 	constraint1 := NewMockConstraint(t)
 	constraint2 := NewMockConstraint(t)
 
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		SetCompareOptions(IgnoreUnexportedOption{Value: testing.T{}}).
 		Call(NewElementsConstraint, constraint1, constraint2).
 		ExpectResult(
@@ -17,7 +17,7 @@ func TestNewElementsConstraint(t *testing.T) {
 			},
 		)
 
-	NewDeclarative(t, "WithNilConstraint").
+	NewSubtest(t, "WithNilConstraint").
 		Call(NewElementsConstraint, nil).
 		ExpectPanic(NewNotNilError("constraint[0]"))
 }
@@ -27,7 +27,7 @@ func TestNewValueElementsConstraint(t *testing.T) {
 	constraint2 := NewMockConstraint(t)
 	comparator := NewMockEqualComparer(t)
 
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		SetCompareOptions(IgnoreUnexportedOption{Value: testing.T{}}).
 		Call(NewValueElementsConstraint, comparator, nil, constraint1, ConstraintAsValue{Value: constraint2}, "data").
 		ExpectResult(
@@ -43,13 +43,13 @@ func TestNewValueElementsConstraint(t *testing.T) {
 			},
 		)
 
-	NewDeclarative(t, "WithNilComparator").
+	NewSubtest(t, "WithNilComparator").
 		Call(NewValueElementsConstraint, nil).
 		ExpectPanic(NewNotNilError("comparator"))
 }
 
 func TestElementsConstraint_Check(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&ElementsConstraint{
 				constraints: []Constraint{
@@ -61,7 +61,7 @@ func TestElementsConstraint_Check(t *testing.T) {
 		).
 		ExpectResult(true)
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&ElementsConstraint{
 				constraints: []Constraint{
@@ -73,7 +73,7 @@ func TestElementsConstraint_Check(t *testing.T) {
 		).
 		ExpectResult(false)
 
-	NewDeclarative(t, "WithInvalidList").
+	NewSubtest(t, "WithInvalidList").
 		Call(
 			(&ElementsConstraint{
 				constraints: []Constraint{
@@ -85,7 +85,7 @@ func TestElementsConstraint_Check(t *testing.T) {
 		).
 		ExpectPanic(NewInvalidTypeError("list", "data", []interface{}{}))
 
-	NewDeclarative(t, "WithInvalidElementsCount").
+	NewSubtest(t, "WithInvalidElementsCount").
 		Call(
 			(&ElementsConstraint{
 				constraints: []Constraint{
@@ -100,7 +100,7 @@ func TestElementsConstraint_Check(t *testing.T) {
 }
 
 func TestElementsConstraint_String(t *testing.T) {
-	NewDeclarative(t, "WithInvalidElementsCount").
+	NewSubtest(t, "WithInvalidElementsCount").
 		Call(
 			(&ElementsConstraint{
 				constraints: []Constraint{
@@ -114,7 +114,7 @@ func TestElementsConstraint_String(t *testing.T) {
 }
 
 func TestElementsConstraint_Details(t *testing.T) {
-	NewDeclarative(t, "WithInvalidElementsCount").
+	NewSubtest(t, "WithInvalidElementsCount").
 		Call(
 			(&ElementsConstraint{
 				constraints: []Constraint{
@@ -133,7 +133,7 @@ func TestElementsConstraint_Details(t *testing.T) {
 		).
 		ExpectResult("element[1], it must string2.\ndetails2\nelement[2], it must string3, actual value is data3.")
 
-	NewDeclarative(t, "WithInvalidList").
+	NewSubtest(t, "WithInvalidList").
 		Call(
 			(&ElementsConstraint{
 				constraints: []Constraint{
@@ -145,7 +145,7 @@ func TestElementsConstraint_Details(t *testing.T) {
 		).
 		ExpectPanic(NewInvalidTypeError("list", "data", []interface{}{}))
 
-	NewDeclarative(t, "WithInvalidElementsCount").
+	NewSubtest(t, "WithInvalidElementsCount").
 		Call(
 			(&ElementsConstraint{
 				constraints: []Constraint{

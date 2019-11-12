@@ -10,7 +10,7 @@ import (
 
 //noinspection GoRedundantConversion
 func TestNewLessConstraint(t *testing.T) {
-	NewDeclarative(t, "Invalid").
+	NewSubtest(t, "Invalid").
 		Call(
 			func() {
 				NewLessConstraint(nil)
@@ -18,114 +18,114 @@ func TestNewLessConstraint(t *testing.T) {
 		).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("expectedKinds", nil))
 
-	NewDeclarative(t, "Bool").
+	NewSubtest(t, "Bool").
 		Call(NewLessConstraint, true).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("expectedKinds", true))
 
-	NewDeclarative(t, "Int").
+	NewSubtest(t, "Int").
 		Call(NewLessConstraint, int(5)).
 		ExpectResult(ConstraintAsValue{Value: &LessConstraint{expected: int(5)}})
 
-	NewDeclarative(t, "Int8").
+	NewSubtest(t, "Int8").
 		Call(NewLessConstraint, int8(5)).
 		ExpectResult(ConstraintAsValue{Value: &LessConstraint{expected: int8(5)}})
 
-	NewDeclarative(t, "Int16").
+	NewSubtest(t, "Int16").
 		Call(NewLessConstraint, int16(5)).
 		ExpectResult(ConstraintAsValue{Value: &LessConstraint{expected: int16(5)}})
 
-	NewDeclarative(t, "Int32").
+	NewSubtest(t, "Int32").
 		Call(NewLessConstraint, int32(5)).
 		ExpectResult(ConstraintAsValue{Value: &LessConstraint{expected: int32(5)}})
 
-	NewDeclarative(t, "Int64").
+	NewSubtest(t, "Int64").
 		Call(NewLessConstraint, int64(5)).
 		ExpectResult(ConstraintAsValue{Value: &LessConstraint{expected: int64(5)}})
 
-	NewDeclarative(t, "Uint").
+	NewSubtest(t, "Uint").
 		Call(NewLessConstraint, uint(5)).
 		ExpectResult(ConstraintAsValue{Value: &LessConstraint{expected: uint(5)}})
 
-	NewDeclarative(t, "Uint8").
+	NewSubtest(t, "Uint8").
 		Call(NewLessConstraint, uint8(5)).
 		ExpectResult(ConstraintAsValue{Value: &LessConstraint{expected: uint8(5)}})
 
-	NewDeclarative(t, "Uint16").
+	NewSubtest(t, "Uint16").
 		Call(NewLessConstraint, uint16(5)).
 		ExpectResult(ConstraintAsValue{Value: &LessConstraint{expected: uint16(5)}})
 
-	NewDeclarative(t, "Uint32").
+	NewSubtest(t, "Uint32").
 		Call(NewLessConstraint, uint32(5)).
 		ExpectResult(ConstraintAsValue{Value: &LessConstraint{expected: uint32(5)}})
 
-	NewDeclarative(t, "Uint64").
+	NewSubtest(t, "Uint64").
 		Call(NewLessConstraint, uint64(5)).
 		ExpectResult(ConstraintAsValue{Value: &LessConstraint{expected: uint64(5)}})
 
-	NewDeclarative(t, "UintPtr").
+	NewSubtest(t, "UintPtr").
 		Call(NewLessConstraint, uintptr(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("expectedKinds", uintptr(5)))
 
-	NewDeclarative(t, "Float32").
+	NewSubtest(t, "Float32").
 		Call(NewLessConstraint, float32(5)).
 		ExpectResult(ConstraintAsValue{Value: &LessConstraint{expected: float32(5)}})
 
-	NewDeclarative(t, "Float64").
+	NewSubtest(t, "Float64").
 		Call(NewLessConstraint, float64(5)).
 		ExpectResult(ConstraintAsValue{Value: &LessConstraint{expected: float64(5)}})
 
-	NewDeclarative(t, "Complex64").
+	NewSubtest(t, "Complex64").
 		Call(NewLessConstraint, complex64(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("expectedKinds", complex64(5)))
 
-	NewDeclarative(t, "Complex128").
+	NewSubtest(t, "Complex128").
 		Call(NewLessConstraint, complex128(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("expectedKinds", complex128(5)))
 
-	NewDeclarative(t, "Array").
+	NewSubtest(t, "Array").
 		Call(NewLessConstraint, [1]int{5}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("expectedKinds", [1]int{5}))
 
-	NewDeclarative(t, "Chan").
+	NewSubtest(t, "Chan").
 		Call(NewLessConstraint, make(chan int)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("expectedKinds", make(chan int)))
 
-	NewDeclarative(t, "Func").
+	NewSubtest(t, "Func").
 		Call(NewLessConstraint, func() {}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("expectedKinds", func() {}))
 
-	NewDeclarative(t, "Interface").
+	NewSubtest(t, "Interface").
 		Call(NewLessConstraint, (*interface{})(nil)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("expectedKinds", (*interface{})(nil)))
 
-	NewDeclarative(t, "Map").
+	NewSubtest(t, "Map").
 		Call(NewLessConstraint, map[int]int{1: 1}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("expectedKinds", map[int]int{1: 1}))
 
-	NewDeclarative(t, "Ptr").
+	NewSubtest(t, "Ptr").
 		Call(NewLessConstraint, new(int)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("expectedKinds", new(int)))
 
-	NewDeclarative(t, "Slice").
+	NewSubtest(t, "Slice").
 		Call(NewLessConstraint, []int{5}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("expectedKinds", []int{5}))
 
-	NewDeclarative(t, "String").
+	NewSubtest(t, "String").
 		Call(NewLessConstraint, "data").
 		ExpectPanic(NewInvalidNumericComparisonTypeError("expectedKinds", "data"))
 
-	NewDeclarative(t, "Struct").
+	NewSubtest(t, "Struct").
 		Call(NewLessConstraint, struct{}{}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("expectedKinds", struct{}{}))
 
-	NewDeclarative(t, "UnsafePointer").
+	NewSubtest(t, "UnsafePointer").
 		Call(NewLessConstraint, unsafe.Pointer(new(int))).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("expectedKinds", unsafe.Pointer(new(int))))
 }
 
 //noinspection GoRedundantConversion
 func TestLessConstraint_Check_WithInt(t *testing.T) {
-	NewDeclarative(t, "IntAndInvalid").
+	NewSubtest(t, "IntAndInvalid").
 		Call(
 			func() {
 				(&LessConstraint{expected: int(5)}).Check(nil)
@@ -133,229 +133,229 @@ func TestLessConstraint_Check_WithInt(t *testing.T) {
 		).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", nil))
 
-	NewDeclarative(t, "IntAndBool").
+	NewSubtest(t, "IntAndBool").
 		Call((&LessConstraint{expected: int(5)}).Check, false).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", false))
 
-	NewDeclarative(t, "IntLessInt").
+	NewSubtest(t, "IntLessInt").
 		Call((&LessConstraint{expected: int(10)}).Check, int(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "IntEqualInt").
+	NewSubtest(t, "IntEqualInt").
 		Call((&LessConstraint{expected: int(5)}).Check, int(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "IntGreaterInt").
+	NewSubtest(t, "IntGreaterInt").
 		Call((&LessConstraint{expected: int(5)}).Check, int(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "IntLessInt8").
+	NewSubtest(t, "IntLessInt8").
 		Call((&LessConstraint{expected: int(10)}).Check, int8(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "IntEqualInt8").
+	NewSubtest(t, "IntEqualInt8").
 		Call((&LessConstraint{expected: int(5)}).Check, int8(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "IntGreaterInt8").
+	NewSubtest(t, "IntGreaterInt8").
 		Call((&LessConstraint{expected: int(5)}).Check, int8(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "IntLessInt16").
+	NewSubtest(t, "IntLessInt16").
 		Call((&LessConstraint{expected: int(10)}).Check, int16(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "IntEqualInt16").
+	NewSubtest(t, "IntEqualInt16").
 		Call((&LessConstraint{expected: int(5)}).Check, int16(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "IntGreaterInt16").
+	NewSubtest(t, "IntGreaterInt16").
 		Call((&LessConstraint{expected: int(5)}).Check, int16(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "IntLessInt32").
+	NewSubtest(t, "IntLessInt32").
 		Call((&LessConstraint{expected: int(10)}).Check, int32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "IntEqualInt32").
+	NewSubtest(t, "IntEqualInt32").
 		Call((&LessConstraint{expected: int(5)}).Check, int32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "IntGreaterInt32").
+	NewSubtest(t, "IntGreaterInt32").
 		Call((&LessConstraint{expected: int(5)}).Check, int32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "IntLessInt64").
+	NewSubtest(t, "IntLessInt64").
 		Call((&LessConstraint{expected: int(10)}).Check, int64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "IntEqualInt64").
+	NewSubtest(t, "IntEqualInt64").
 		Call((&LessConstraint{expected: int(5)}).Check, int64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "IntGreaterInt64").
+	NewSubtest(t, "IntGreaterInt64").
 		Call((&LessConstraint{expected: int(5)}).Check, int64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "IntLessUintWithIntComparison").
+	NewSubtest(t, "IntLessUintWithIntComparison").
 		Call((&LessConstraint{expected: int(10)}).Check, uint(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "IntEqualUintWithIntComparison").
+	NewSubtest(t, "IntEqualUintWithIntComparison").
 		Call((&LessConstraint{expected: int(5)}).Check, uint(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "IntGreaterUintAndIntComparison").
+	NewSubtest(t, "IntGreaterUintAndIntComparison").
 		Call((&LessConstraint{expected: int(5)}).Check, uint(10)).
 		ExpectResult(false)
 
 	if !reflect.ValueOf(uint(0)).OverflowUint(math.MaxUint64) {
 
-		NewDeclarative(t, "IntGreaterUintWithUintComparison").
+		NewSubtest(t, "IntGreaterUintWithUintComparison").
 			Call((&LessConstraint{expected: int(5)}).Check, uint(math.MaxInt64)+1).
 			ExpectResult(false)
 
-		NewDeclarative(t, "IntGreaterUintWithFloatComparison").
+		NewSubtest(t, "IntGreaterUintWithFloatComparison").
 			Call((&LessConstraint{expected: int(-5)}).Check, uint(math.MaxInt64)+1).
 			ExpectResult(false)
 	}
 
-	NewDeclarative(t, "IntLessUint8").
+	NewSubtest(t, "IntLessUint8").
 		Call((&LessConstraint{expected: int(10)}).Check, uint8(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "IntEqualUint8").
+	NewSubtest(t, "IntEqualUint8").
 		Call((&LessConstraint{expected: int(5)}).Check, uint8(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "IntGreaterUint8").
+	NewSubtest(t, "IntGreaterUint8").
 		Call((&LessConstraint{expected: int(5)}).Check, uint8(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "IntLessUint16").
+	NewSubtest(t, "IntLessUint16").
 		Call((&LessConstraint{expected: int(10)}).Check, uint16(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "IntEqualUint16").
+	NewSubtest(t, "IntEqualUint16").
 		Call((&LessConstraint{expected: int(5)}).Check, uint16(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "IntGreaterUint16").
+	NewSubtest(t, "IntGreaterUint16").
 		Call((&LessConstraint{expected: int(5)}).Check, uint16(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "IntLessUint32").
+	NewSubtest(t, "IntLessUint32").
 		Call((&LessConstraint{expected: int(10)}).Check, uint32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "IntEqualUint32").
+	NewSubtest(t, "IntEqualUint32").
 		Call((&LessConstraint{expected: int(5)}).Check, uint32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "IntGreaterUint32").
+	NewSubtest(t, "IntGreaterUint32").
 		Call((&LessConstraint{expected: int(5)}).Check, uint32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "IntLessUint64WithIntComparison").
+	NewSubtest(t, "IntLessUint64WithIntComparison").
 		Call((&LessConstraint{expected: int(10)}).Check, uint64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "IntEqualUint64WithIntComparison").
+	NewSubtest(t, "IntEqualUint64WithIntComparison").
 		Call((&LessConstraint{expected: int(5)}).Check, uint64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "IntGreaterUint64WithIntComparison").
+	NewSubtest(t, "IntGreaterUint64WithIntComparison").
 		Call((&LessConstraint{expected: int(5)}).Check, uint64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "IntGreaterUint64WithUintComparison").
+	NewSubtest(t, "IntGreaterUint64WithUintComparison").
 		Call((&LessConstraint{expected: int(5)}).Check, uint64(math.MaxInt64)+1).
 		ExpectResult(false)
 
-	NewDeclarative(t, "IntGreaterUint64WithFloatComparison").
+	NewSubtest(t, "IntGreaterUint64WithFloatComparison").
 		Call((&LessConstraint{expected: int(-5)}).Check, uint64(math.MaxInt64)+1).
 		ExpectResult(false)
 
-	NewDeclarative(t, "IntAndUintPtr").
+	NewSubtest(t, "IntAndUintPtr").
 		Call((&LessConstraint{expected: int(5)}).Check, uintptr(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", uintptr(5)))
 
-	NewDeclarative(t, "IntLessFloat32").
+	NewSubtest(t, "IntLessFloat32").
 		Call((&LessConstraint{expected: int(10)}).Check, float32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "IntEqualFloat32").
+	NewSubtest(t, "IntEqualFloat32").
 		Call((&LessConstraint{expected: int(5)}).Check, float32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "IntGreaterFloat32").
+	NewSubtest(t, "IntGreaterFloat32").
 		Call((&LessConstraint{expected: int(5)}).Check, float32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "IntLessFloat64").
+	NewSubtest(t, "IntLessFloat64").
 		Call((&LessConstraint{expected: int(10)}).Check, float64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "IntEqualFloat64").
+	NewSubtest(t, "IntEqualFloat64").
 		Call((&LessConstraint{expected: int(5)}).Check, float64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "IntGreaterFloat64").
+	NewSubtest(t, "IntGreaterFloat64").
 		Call((&LessConstraint{expected: int(5)}).Check, float64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "IntAndComplex64").
+	NewSubtest(t, "IntAndComplex64").
 		Call((&LessConstraint{expected: int(5)}).Check, complex64(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", complex64(5)))
 
-	NewDeclarative(t, "IntAndComplex128").
+	NewSubtest(t, "IntAndComplex128").
 		Call((&LessConstraint{expected: int(5)}).Check, complex128(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", complex128(5)))
 
-	NewDeclarative(t, "IntAndArray").
+	NewSubtest(t, "IntAndArray").
 		Call((&LessConstraint{expected: int(5)}).Check, [1]int{5}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", [1]int{5}))
 
-	NewDeclarative(t, "IntAndChan").
+	NewSubtest(t, "IntAndChan").
 		Call((&LessConstraint{expected: int(5)}).Check, make(chan int)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", make(chan int)))
 
-	NewDeclarative(t, "IntAndFunc").
+	NewSubtest(t, "IntAndFunc").
 		Call((&LessConstraint{expected: int(5)}).Check, func() {}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", func() {}))
 
-	NewDeclarative(t, "IntAndInterface").
+	NewSubtest(t, "IntAndInterface").
 		Call((&LessConstraint{expected: int(5)}).Check, (*interface{})(nil)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", (*interface{})(nil)))
 
-	NewDeclarative(t, "IntAndMap").
+	NewSubtest(t, "IntAndMap").
 		Call((&LessConstraint{expected: int(5)}).Check, map[int]int{1: 1}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", map[int]int{1: 1}))
 
-	NewDeclarative(t, "IntAndPtr").
+	NewSubtest(t, "IntAndPtr").
 		Call((&LessConstraint{expected: int(5)}).Check, new(int)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", new(int)))
 
-	NewDeclarative(t, "IntAndSlice").
+	NewSubtest(t, "IntAndSlice").
 		Call((&LessConstraint{expected: int(5)}).Check, []int{5}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", []int{5}))
 
-	NewDeclarative(t, "IntAndString").
+	NewSubtest(t, "IntAndString").
 		Call((&LessConstraint{expected: int(5)}).Check, "data").
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", "data"))
 
-	NewDeclarative(t, "IntAndStruct").
+	NewSubtest(t, "IntAndStruct").
 		Call((&LessConstraint{expected: int(5)}).Check, struct{}{}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", struct{}{}))
 
-	NewDeclarative(t, "IntAndUnsafePointer").
+	NewSubtest(t, "IntAndUnsafePointer").
 		Call((&LessConstraint{expected: int(5)}).Check, unsafe.Pointer(new(int))).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", unsafe.Pointer(new(int))))
 }
 
 //noinspection GoRedundantConversion
 func TestLessConstraint_Check_WithInt8(t *testing.T) {
-	NewDeclarative(t, "Int8AndInvalid").
+	NewSubtest(t, "Int8AndInvalid").
 		Call(
 			func() {
 				(&LessConstraint{expected: int8(5)}).Check(nil)
@@ -363,229 +363,229 @@ func TestLessConstraint_Check_WithInt8(t *testing.T) {
 		).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", nil))
 
-	NewDeclarative(t, "Int8AndBool").
+	NewSubtest(t, "Int8AndBool").
 		Call((&LessConstraint{expected: int8(5)}).Check, false).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", false))
 
-	NewDeclarative(t, "Int8LessInt").
+	NewSubtest(t, "Int8LessInt").
 		Call((&LessConstraint{expected: int8(10)}).Check, int(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int8EqualInt").
+	NewSubtest(t, "Int8EqualInt").
 		Call((&LessConstraint{expected: int8(5)}).Check, int(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int8GreaterInt").
+	NewSubtest(t, "Int8GreaterInt").
 		Call((&LessConstraint{expected: int8(5)}).Check, int(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int8LessInt8").
+	NewSubtest(t, "Int8LessInt8").
 		Call((&LessConstraint{expected: int8(10)}).Check, int8(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int8EqualInt8").
+	NewSubtest(t, "Int8EqualInt8").
 		Call((&LessConstraint{expected: int8(5)}).Check, int8(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int8GreaterInt8").
+	NewSubtest(t, "Int8GreaterInt8").
 		Call((&LessConstraint{expected: int8(5)}).Check, int8(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int8LessInt16").
+	NewSubtest(t, "Int8LessInt16").
 		Call((&LessConstraint{expected: int8(10)}).Check, int16(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int8EqualInt16").
+	NewSubtest(t, "Int8EqualInt16").
 		Call((&LessConstraint{expected: int8(5)}).Check, int16(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int8GreaterInt16").
+	NewSubtest(t, "Int8GreaterInt16").
 		Call((&LessConstraint{expected: int8(5)}).Check, int16(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int8LessInt32").
+	NewSubtest(t, "Int8LessInt32").
 		Call((&LessConstraint{expected: int8(10)}).Check, int32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int8EqualInt32").
+	NewSubtest(t, "Int8EqualInt32").
 		Call((&LessConstraint{expected: int8(5)}).Check, int32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int8GreaterInt32").
+	NewSubtest(t, "Int8GreaterInt32").
 		Call((&LessConstraint{expected: int8(5)}).Check, int32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int8LessInt64").
+	NewSubtest(t, "Int8LessInt64").
 		Call((&LessConstraint{expected: int8(10)}).Check, int64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int8EqualInt64").
+	NewSubtest(t, "Int8EqualInt64").
 		Call((&LessConstraint{expected: int8(5)}).Check, int64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int8GreaterInt64").
+	NewSubtest(t, "Int8GreaterInt64").
 		Call((&LessConstraint{expected: int8(5)}).Check, int64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int8LessUintWihtIntComparison").
+	NewSubtest(t, "Int8LessUintWihtIntComparison").
 		Call((&LessConstraint{expected: int8(10)}).Check, uint(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int8EqualUintWithIntComparison").
+	NewSubtest(t, "Int8EqualUintWithIntComparison").
 		Call((&LessConstraint{expected: int8(5)}).Check, uint(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int8GreaterUintIntComparison").
+	NewSubtest(t, "Int8GreaterUintIntComparison").
 		Call((&LessConstraint{expected: int8(5)}).Check, uint(10)).
 		ExpectResult(false)
 
 	if !reflect.ValueOf(uint(0)).OverflowUint(math.MaxUint64) {
 
-		NewDeclarative(t, "Int8GreaterUintWithUintComparison").
+		NewSubtest(t, "Int8GreaterUintWithUintComparison").
 			Call((&LessConstraint{expected: int8(5)}).Check, uint(math.MaxInt64)+1).
 			ExpectResult(false)
 
-		NewDeclarative(t, "Int8GreaterUintWithFloatComparison").
+		NewSubtest(t, "Int8GreaterUintWithFloatComparison").
 			Call((&LessConstraint{expected: int8(-5)}).Check, uint(math.MaxInt64)+1).
 			ExpectResult(false)
 	}
 
-	NewDeclarative(t, "Int8LessUint8").
+	NewSubtest(t, "Int8LessUint8").
 		Call((&LessConstraint{expected: int8(10)}).Check, uint8(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int8EqualUint8").
+	NewSubtest(t, "Int8EqualUint8").
 		Call((&LessConstraint{expected: int8(5)}).Check, uint8(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int8GreaterUint8").
+	NewSubtest(t, "Int8GreaterUint8").
 		Call((&LessConstraint{expected: int8(5)}).Check, uint8(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int8LessUint16").
+	NewSubtest(t, "Int8LessUint16").
 		Call((&LessConstraint{expected: int8(10)}).Check, uint16(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int8EqualUint16").
+	NewSubtest(t, "Int8EqualUint16").
 		Call((&LessConstraint{expected: int8(5)}).Check, uint16(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int8GreaterUint16").
+	NewSubtest(t, "Int8GreaterUint16").
 		Call((&LessConstraint{expected: int8(5)}).Check, uint16(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int8LessUint32").
+	NewSubtest(t, "Int8LessUint32").
 		Call((&LessConstraint{expected: int8(10)}).Check, uint32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int8EqualUint32").
+	NewSubtest(t, "Int8EqualUint32").
 		Call((&LessConstraint{expected: int8(5)}).Check, uint32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int8GreaterUint32").
+	NewSubtest(t, "Int8GreaterUint32").
 		Call((&LessConstraint{expected: int8(5)}).Check, uint32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int8LessUint64WithIntComparison").
+	NewSubtest(t, "Int8LessUint64WithIntComparison").
 		Call((&LessConstraint{expected: int8(10)}).Check, uint64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int8EqualUint64WithIntComparison").
+	NewSubtest(t, "Int8EqualUint64WithIntComparison").
 		Call((&LessConstraint{expected: int8(5)}).Check, uint64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int8GreaterUint64WithIntComparison").
+	NewSubtest(t, "Int8GreaterUint64WithIntComparison").
 		Call((&LessConstraint{expected: int8(5)}).Check, uint64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int8GreaterUint64WithUintComparison").
+	NewSubtest(t, "Int8GreaterUint64WithUintComparison").
 		Call((&LessConstraint{expected: int8(5)}).Check, uint64(math.MaxInt64)+1).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int8GreaterUint64WithFloatComparison").
+	NewSubtest(t, "Int8GreaterUint64WithFloatComparison").
 		Call((&LessConstraint{expected: int8(-5)}).Check, uint64(math.MaxInt64)+1).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int8AndUintPtr").
+	NewSubtest(t, "Int8AndUintPtr").
 		Call((&LessConstraint{expected: int8(5)}).Check, uintptr(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", uintptr(5)))
 
-	NewDeclarative(t, "Int8LessFloat32").
+	NewSubtest(t, "Int8LessFloat32").
 		Call((&LessConstraint{expected: int8(10)}).Check, float32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int8EqualFloat32").
+	NewSubtest(t, "Int8EqualFloat32").
 		Call((&LessConstraint{expected: int8(5)}).Check, float32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int8GreaterFloat32").
+	NewSubtest(t, "Int8GreaterFloat32").
 		Call((&LessConstraint{expected: int8(5)}).Check, float32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int8LessFloat64").
+	NewSubtest(t, "Int8LessFloat64").
 		Call((&LessConstraint{expected: int8(10)}).Check, float64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int8EqualFloat64").
+	NewSubtest(t, "Int8EqualFloat64").
 		Call((&LessConstraint{expected: int8(5)}).Check, float64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int8GreaterFloat64").
+	NewSubtest(t, "Int8GreaterFloat64").
 		Call((&LessConstraint{expected: int8(5)}).Check, float64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int8AndComplex64").
+	NewSubtest(t, "Int8AndComplex64").
 		Call((&LessConstraint{expected: int8(5)}).Check, complex64(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", complex64(5)))
 
-	NewDeclarative(t, "Int8AndComplex128").
+	NewSubtest(t, "Int8AndComplex128").
 		Call((&LessConstraint{expected: int8(5)}).Check, complex128(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", complex128(5)))
 
-	NewDeclarative(t, "Int8AndArray").
+	NewSubtest(t, "Int8AndArray").
 		Call((&LessConstraint{expected: int8(5)}).Check, [1]int{5}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", [1]int{5}))
 
-	NewDeclarative(t, "Int8AndChan").
+	NewSubtest(t, "Int8AndChan").
 		Call((&LessConstraint{expected: int8(5)}).Check, make(chan int)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", make(chan int)))
 
-	NewDeclarative(t, "Int8AndFunc").
+	NewSubtest(t, "Int8AndFunc").
 		Call((&LessConstraint{expected: int8(5)}).Check, func() {}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", func() {}))
 
-	NewDeclarative(t, "Int8AndInterface").
+	NewSubtest(t, "Int8AndInterface").
 		Call((&LessConstraint{expected: int8(5)}).Check, (*interface{})(nil)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", (*interface{})(nil)))
 
-	NewDeclarative(t, "Int8AndMap").
+	NewSubtest(t, "Int8AndMap").
 		Call((&LessConstraint{expected: int8(5)}).Check, map[int]int{1: 1}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", map[int]int{1: 1}))
 
-	NewDeclarative(t, "Int8AndPtr").
+	NewSubtest(t, "Int8AndPtr").
 		Call((&LessConstraint{expected: int8(5)}).Check, new(int)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", new(int)))
 
-	NewDeclarative(t, "Int8AndSlice").
+	NewSubtest(t, "Int8AndSlice").
 		Call((&LessConstraint{expected: int8(5)}).Check, []int{5}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", []int{5}))
 
-	NewDeclarative(t, "Int8AndString").
+	NewSubtest(t, "Int8AndString").
 		Call((&LessConstraint{expected: int8(5)}).Check, "data").
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", "data"))
 
-	NewDeclarative(t, "Int8AndStruct").
+	NewSubtest(t, "Int8AndStruct").
 		Call((&LessConstraint{expected: int8(5)}).Check, struct{}{}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", struct{}{}))
 
-	NewDeclarative(t, "Int8AndUnsafePointer").
+	NewSubtest(t, "Int8AndUnsafePointer").
 		Call((&LessConstraint{expected: int8(5)}).Check, unsafe.Pointer(new(int))).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", unsafe.Pointer(new(int))))
 }
 
 //noinspection GoRedundantConversion
 func TestLessConstraint_Check_WithInt16(t *testing.T) {
-	NewDeclarative(t, "Int16AndInvalid").
+	NewSubtest(t, "Int16AndInvalid").
 		Call(
 			func() {
 				(&LessConstraint{expected: int16(5)}).Check(nil)
@@ -593,229 +593,229 @@ func TestLessConstraint_Check_WithInt16(t *testing.T) {
 		).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", nil))
 
-	NewDeclarative(t, "Int16AndBool").
+	NewSubtest(t, "Int16AndBool").
 		Call((&LessConstraint{expected: int16(5)}).Check, false).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", false))
 
-	NewDeclarative(t, "Int16LessInt").
+	NewSubtest(t, "Int16LessInt").
 		Call((&LessConstraint{expected: int16(10)}).Check, int(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int16EqualInt").
+	NewSubtest(t, "Int16EqualInt").
 		Call((&LessConstraint{expected: int16(5)}).Check, int(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int16GreaterInt").
+	NewSubtest(t, "Int16GreaterInt").
 		Call((&LessConstraint{expected: int16(5)}).Check, int(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int16LessInt8").
+	NewSubtest(t, "Int16LessInt8").
 		Call((&LessConstraint{expected: int16(10)}).Check, int8(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int16EqualInt8").
+	NewSubtest(t, "Int16EqualInt8").
 		Call((&LessConstraint{expected: int16(5)}).Check, int8(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int16GreaterInt8").
+	NewSubtest(t, "Int16GreaterInt8").
 		Call((&LessConstraint{expected: int16(5)}).Check, int8(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int16LessInt16").
+	NewSubtest(t, "Int16LessInt16").
 		Call((&LessConstraint{expected: int16(10)}).Check, int16(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int16EqualInt16").
+	NewSubtest(t, "Int16EqualInt16").
 		Call((&LessConstraint{expected: int16(5)}).Check, int16(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int16GreaterInt16").
+	NewSubtest(t, "Int16GreaterInt16").
 		Call((&LessConstraint{expected: int16(5)}).Check, int16(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int16LessInt32").
+	NewSubtest(t, "Int16LessInt32").
 		Call((&LessConstraint{expected: int16(10)}).Check, int32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int16EqualInt32").
+	NewSubtest(t, "Int16EqualInt32").
 		Call((&LessConstraint{expected: int16(5)}).Check, int32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int16GreaterInt32").
+	NewSubtest(t, "Int16GreaterInt32").
 		Call((&LessConstraint{expected: int16(5)}).Check, int32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int16LessInt64").
+	NewSubtest(t, "Int16LessInt64").
 		Call((&LessConstraint{expected: int16(10)}).Check, int64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int16EqualInt64").
+	NewSubtest(t, "Int16EqualInt64").
 		Call((&LessConstraint{expected: int16(5)}).Check, int64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int16GreaterInt64").
+	NewSubtest(t, "Int16GreaterInt64").
 		Call((&LessConstraint{expected: int16(5)}).Check, int64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int16LessUintWithIntComparison").
+	NewSubtest(t, "Int16LessUintWithIntComparison").
 		Call((&LessConstraint{expected: int16(10)}).Check, uint(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int16EqualUintWithIntComparison").
+	NewSubtest(t, "Int16EqualUintWithIntComparison").
 		Call((&LessConstraint{expected: int16(5)}).Check, uint(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int16GreaterUintWithIntComparison").
+	NewSubtest(t, "Int16GreaterUintWithIntComparison").
 		Call((&LessConstraint{expected: int16(5)}).Check, uint(10)).
 		ExpectResult(false)
 
 	if !reflect.ValueOf(uint(0)).OverflowUint(math.MaxUint64) {
 
-		NewDeclarative(t, "Int16GreaterUintWithUintComparison").
+		NewSubtest(t, "Int16GreaterUintWithUintComparison").
 			Call((&LessConstraint{expected: int16(5)}).Check, uint(math.MaxInt64)+1).
 			ExpectResult(false)
 
-		NewDeclarative(t, "Int16GreaterUintWithFloatComparison").
+		NewSubtest(t, "Int16GreaterUintWithFloatComparison").
 			Call((&LessConstraint{expected: int16(-5)}).Check, uint(math.MaxInt64)+1).
 			ExpectResult(false)
 	}
 
-	NewDeclarative(t, "Int16LessUint8").
+	NewSubtest(t, "Int16LessUint8").
 		Call((&LessConstraint{expected: int16(10)}).Check, uint8(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int16EqualUint8").
+	NewSubtest(t, "Int16EqualUint8").
 		Call((&LessConstraint{expected: int16(5)}).Check, uint8(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int16GreaterUint8").
+	NewSubtest(t, "Int16GreaterUint8").
 		Call((&LessConstraint{expected: int16(5)}).Check, uint8(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int16LessUint16").
+	NewSubtest(t, "Int16LessUint16").
 		Call((&LessConstraint{expected: int16(10)}).Check, uint16(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int16EqualUint16").
+	NewSubtest(t, "Int16EqualUint16").
 		Call((&LessConstraint{expected: int16(5)}).Check, uint16(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int16GreaterUint16").
+	NewSubtest(t, "Int16GreaterUint16").
 		Call((&LessConstraint{expected: int16(5)}).Check, uint16(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int16LessUint32").
+	NewSubtest(t, "Int16LessUint32").
 		Call((&LessConstraint{expected: int16(10)}).Check, uint32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int16EqualUint32").
+	NewSubtest(t, "Int16EqualUint32").
 		Call((&LessConstraint{expected: int16(5)}).Check, uint32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int16GreaterUint32").
+	NewSubtest(t, "Int16GreaterUint32").
 		Call((&LessConstraint{expected: int16(5)}).Check, uint32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int16LessUint64WithIntComparison").
+	NewSubtest(t, "Int16LessUint64WithIntComparison").
 		Call((&LessConstraint{expected: int16(10)}).Check, uint64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int16EqualUint64WithIntComparison").
+	NewSubtest(t, "Int16EqualUint64WithIntComparison").
 		Call((&LessConstraint{expected: int16(5)}).Check, uint64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int16GreaterUint64WithIntComparison").
+	NewSubtest(t, "Int16GreaterUint64WithIntComparison").
 		Call((&LessConstraint{expected: int16(5)}).Check, uint64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int16GreaterUint64WithUintComparison").
+	NewSubtest(t, "Int16GreaterUint64WithUintComparison").
 		Call((&LessConstraint{expected: int16(5)}).Check, uint64(math.MaxInt64)+1).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int16GreaterUint64WithFloatComparison").
+	NewSubtest(t, "Int16GreaterUint64WithFloatComparison").
 		Call((&LessConstraint{expected: int16(-5)}).Check, uint64(math.MaxInt64)+1).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int16AndUintPtr").
+	NewSubtest(t, "Int16AndUintPtr").
 		Call((&LessConstraint{expected: int16(5)}).Check, uintptr(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", uintptr(5)))
 
-	NewDeclarative(t, "Int16LessFloat32").
+	NewSubtest(t, "Int16LessFloat32").
 		Call((&LessConstraint{expected: int16(10)}).Check, float32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int16EqualFloat32").
+	NewSubtest(t, "Int16EqualFloat32").
 		Call((&LessConstraint{expected: int16(5)}).Check, float32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int16GreaterFloat32").
+	NewSubtest(t, "Int16GreaterFloat32").
 		Call((&LessConstraint{expected: int16(5)}).Check, float32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int16LessFloat64").
+	NewSubtest(t, "Int16LessFloat64").
 		Call((&LessConstraint{expected: int16(10)}).Check, float64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int16EqualFloat64").
+	NewSubtest(t, "Int16EqualFloat64").
 		Call((&LessConstraint{expected: int16(5)}).Check, float64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int16GreaterFloat64").
+	NewSubtest(t, "Int16GreaterFloat64").
 		Call((&LessConstraint{expected: int16(5)}).Check, float64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int16AndComplex64").
+	NewSubtest(t, "Int16AndComplex64").
 		Call((&LessConstraint{expected: int16(5)}).Check, complex64(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", complex64(5)))
 
-	NewDeclarative(t, "Int16AndComplex128").
+	NewSubtest(t, "Int16AndComplex128").
 		Call((&LessConstraint{expected: int16(5)}).Check, complex128(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", complex128(5)))
 
-	NewDeclarative(t, "Int16AndArray").
+	NewSubtest(t, "Int16AndArray").
 		Call((&LessConstraint{expected: int16(5)}).Check, [1]int{5}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", [1]int{5}))
 
-	NewDeclarative(t, "Int16AndChan").
+	NewSubtest(t, "Int16AndChan").
 		Call((&LessConstraint{expected: int16(5)}).Check, make(chan int)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", make(chan int)))
 
-	NewDeclarative(t, "Int16AndFunc").
+	NewSubtest(t, "Int16AndFunc").
 		Call((&LessConstraint{expected: int16(5)}).Check, func() {}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", func() {}))
 
-	NewDeclarative(t, "Int16AndInterface").
+	NewSubtest(t, "Int16AndInterface").
 		Call((&LessConstraint{expected: int16(5)}).Check, (*interface{})(nil)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", (*interface{})(nil)))
 
-	NewDeclarative(t, "Int16AndMap").
+	NewSubtest(t, "Int16AndMap").
 		Call((&LessConstraint{expected: int16(5)}).Check, map[int]int{1: 1}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", map[int]int{1: 1}))
 
-	NewDeclarative(t, "Int16AndPtr").
+	NewSubtest(t, "Int16AndPtr").
 		Call((&LessConstraint{expected: int16(5)}).Check, new(int)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", new(int)))
 
-	NewDeclarative(t, "Int16AndSlice").
+	NewSubtest(t, "Int16AndSlice").
 		Call((&LessConstraint{expected: int16(5)}).Check, []int{5}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", []int{5}))
 
-	NewDeclarative(t, "Int16AndString").
+	NewSubtest(t, "Int16AndString").
 		Call((&LessConstraint{expected: int16(5)}).Check, "data").
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", "data"))
 
-	NewDeclarative(t, "Int16AndStruct").
+	NewSubtest(t, "Int16AndStruct").
 		Call((&LessConstraint{expected: int16(5)}).Check, struct{}{}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", struct{}{}))
 
-	NewDeclarative(t, "Int16AndUnsafePointer").
+	NewSubtest(t, "Int16AndUnsafePointer").
 		Call((&LessConstraint{expected: int16(5)}).Check, unsafe.Pointer(new(int))).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", unsafe.Pointer(new(int))))
 }
 
 //noinspection GoRedundantConversion
 func TestLessConstraint_Check_WithInt32(t *testing.T) {
-	NewDeclarative(t, "Int32AndInvalid").
+	NewSubtest(t, "Int32AndInvalid").
 		Call(
 			func() {
 				(&LessConstraint{expected: int32(5)}).Check(nil)
@@ -823,229 +823,229 @@ func TestLessConstraint_Check_WithInt32(t *testing.T) {
 		).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", nil))
 
-	NewDeclarative(t, "Int32AndBool").
+	NewSubtest(t, "Int32AndBool").
 		Call((&LessConstraint{expected: int32(5)}).Check, false).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", false))
 
-	NewDeclarative(t, "Int32LessInt").
+	NewSubtest(t, "Int32LessInt").
 		Call((&LessConstraint{expected: int32(10)}).Check, int(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int32EqualInt").
+	NewSubtest(t, "Int32EqualInt").
 		Call((&LessConstraint{expected: int32(5)}).Check, int(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int32GreaterInt").
+	NewSubtest(t, "Int32GreaterInt").
 		Call((&LessConstraint{expected: int32(5)}).Check, int(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int32LessInt8").
+	NewSubtest(t, "Int32LessInt8").
 		Call((&LessConstraint{expected: int32(10)}).Check, int8(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int32EqualInt8").
+	NewSubtest(t, "Int32EqualInt8").
 		Call((&LessConstraint{expected: int32(5)}).Check, int8(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int32GreaterInt8").
+	NewSubtest(t, "Int32GreaterInt8").
 		Call((&LessConstraint{expected: int32(5)}).Check, int8(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int32LessInt16").
+	NewSubtest(t, "Int32LessInt16").
 		Call((&LessConstraint{expected: int32(10)}).Check, int16(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int32EqualInt16").
+	NewSubtest(t, "Int32EqualInt16").
 		Call((&LessConstraint{expected: int32(5)}).Check, int16(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int32GreaterInt16").
+	NewSubtest(t, "Int32GreaterInt16").
 		Call((&LessConstraint{expected: int32(5)}).Check, int16(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int32LessInt32").
+	NewSubtest(t, "Int32LessInt32").
 		Call((&LessConstraint{expected: int32(10)}).Check, int32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int32EqualInt32").
+	NewSubtest(t, "Int32EqualInt32").
 		Call((&LessConstraint{expected: int32(5)}).Check, int32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int32GreaterInt32").
+	NewSubtest(t, "Int32GreaterInt32").
 		Call((&LessConstraint{expected: int32(5)}).Check, int32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int32LessInt64").
+	NewSubtest(t, "Int32LessInt64").
 		Call((&LessConstraint{expected: int32(10)}).Check, int64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int32EqualInt64").
+	NewSubtest(t, "Int32EqualInt64").
 		Call((&LessConstraint{expected: int32(5)}).Check, int64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int32GreaterInt64").
+	NewSubtest(t, "Int32GreaterInt64").
 		Call((&LessConstraint{expected: int32(5)}).Check, int64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int32LessUintWithIntComparison").
+	NewSubtest(t, "Int32LessUintWithIntComparison").
 		Call((&LessConstraint{expected: int32(10)}).Check, uint(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int32EqualUintWithIntComparison").
+	NewSubtest(t, "Int32EqualUintWithIntComparison").
 		Call((&LessConstraint{expected: int32(5)}).Check, uint(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int32GreaterUintWithIntComparison").
+	NewSubtest(t, "Int32GreaterUintWithIntComparison").
 		Call((&LessConstraint{expected: int32(5)}).Check, uint(10)).
 		ExpectResult(false)
 
 	if !reflect.ValueOf(uint(0)).OverflowUint(math.MaxUint64) {
 
-		NewDeclarative(t, "Int32GreaterUintWithUintComparison").
+		NewSubtest(t, "Int32GreaterUintWithUintComparison").
 			Call((&LessConstraint{expected: int32(5)}).Check, uint(math.MaxInt64)+1).
 			ExpectResult(false)
 
-		NewDeclarative(t, "Int32GreaterUintWithFloatComparison").
+		NewSubtest(t, "Int32GreaterUintWithFloatComparison").
 			Call((&LessConstraint{expected: int32(-5)}).Check, uint(math.MaxInt64)+1).
 			ExpectResult(false)
 	}
 
-	NewDeclarative(t, "Int32LessUint8").
+	NewSubtest(t, "Int32LessUint8").
 		Call((&LessConstraint{expected: int32(10)}).Check, uint8(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int32EqualUint8").
+	NewSubtest(t, "Int32EqualUint8").
 		Call((&LessConstraint{expected: int32(5)}).Check, uint8(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int32GreaterUint8").
+	NewSubtest(t, "Int32GreaterUint8").
 		Call((&LessConstraint{expected: int32(5)}).Check, uint8(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int32LessUint16").
+	NewSubtest(t, "Int32LessUint16").
 		Call((&LessConstraint{expected: int32(10)}).Check, uint16(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int32EqualUint16").
+	NewSubtest(t, "Int32EqualUint16").
 		Call((&LessConstraint{expected: int32(5)}).Check, uint16(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int32GreaterUint16").
+	NewSubtest(t, "Int32GreaterUint16").
 		Call((&LessConstraint{expected: int32(5)}).Check, uint16(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int32LessUint32").
+	NewSubtest(t, "Int32LessUint32").
 		Call((&LessConstraint{expected: int32(10)}).Check, uint32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int32EqualUint32").
+	NewSubtest(t, "Int32EqualUint32").
 		Call((&LessConstraint{expected: int32(5)}).Check, uint32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int32GreaterUint32").
+	NewSubtest(t, "Int32GreaterUint32").
 		Call((&LessConstraint{expected: int32(5)}).Check, uint32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int32LessUint64WithIntComparison").
+	NewSubtest(t, "Int32LessUint64WithIntComparison").
 		Call((&LessConstraint{expected: int32(10)}).Check, uint64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int32EqualUint64WithIntComparison").
+	NewSubtest(t, "Int32EqualUint64WithIntComparison").
 		Call((&LessConstraint{expected: int32(5)}).Check, uint64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int32GreaterUint64WihtIntComparison").
+	NewSubtest(t, "Int32GreaterUint64WihtIntComparison").
 		Call((&LessConstraint{expected: int32(5)}).Check, uint64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int32GreaterUint64WithUintComparison").
+	NewSubtest(t, "Int32GreaterUint64WithUintComparison").
 		Call((&LessConstraint{expected: int32(5)}).Check, uint64(math.MaxInt64)+1).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int32GreaterUint64WithFloatComparison").
+	NewSubtest(t, "Int32GreaterUint64WithFloatComparison").
 		Call((&LessConstraint{expected: int32(-5)}).Check, uint64(math.MaxInt64)+1).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int32AndUintPtr").
+	NewSubtest(t, "Int32AndUintPtr").
 		Call((&LessConstraint{expected: int32(5)}).Check, uintptr(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", uintptr(5)))
 
-	NewDeclarative(t, "Int32LessFloat32").
+	NewSubtest(t, "Int32LessFloat32").
 		Call((&LessConstraint{expected: int32(10)}).Check, float32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int32EqualFloat32").
+	NewSubtest(t, "Int32EqualFloat32").
 		Call((&LessConstraint{expected: int32(5)}).Check, float32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int32GreaterFloat32").
+	NewSubtest(t, "Int32GreaterFloat32").
 		Call((&LessConstraint{expected: int32(5)}).Check, float32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int32LessFloat64").
+	NewSubtest(t, "Int32LessFloat64").
 		Call((&LessConstraint{expected: int32(10)}).Check, float64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int32EqualFloat64").
+	NewSubtest(t, "Int32EqualFloat64").
 		Call((&LessConstraint{expected: int32(5)}).Check, float64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int32GreaterFloat64").
+	NewSubtest(t, "Int32GreaterFloat64").
 		Call((&LessConstraint{expected: int32(5)}).Check, float64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int32AndComplex64").
+	NewSubtest(t, "Int32AndComplex64").
 		Call((&LessConstraint{expected: int32(5)}).Check, complex64(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", complex64(5)))
 
-	NewDeclarative(t, "Int32AndComplex128").
+	NewSubtest(t, "Int32AndComplex128").
 		Call((&LessConstraint{expected: int32(5)}).Check, complex128(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", complex128(5)))
 
-	NewDeclarative(t, "Int32AndArray").
+	NewSubtest(t, "Int32AndArray").
 		Call((&LessConstraint{expected: int32(5)}).Check, [1]int{5}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", [1]int{5}))
 
-	NewDeclarative(t, "Int32AndChan").
+	NewSubtest(t, "Int32AndChan").
 		Call((&LessConstraint{expected: int32(5)}).Check, make(chan int)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", make(chan int)))
 
-	NewDeclarative(t, "Int32AndFunc").
+	NewSubtest(t, "Int32AndFunc").
 		Call((&LessConstraint{expected: int32(5)}).Check, func() {}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", func() {}))
 
-	NewDeclarative(t, "Int32AndInterface").
+	NewSubtest(t, "Int32AndInterface").
 		Call((&LessConstraint{expected: int32(5)}).Check, (*interface{})(nil)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", (*interface{})(nil)))
 
-	NewDeclarative(t, "Int32AndMap").
+	NewSubtest(t, "Int32AndMap").
 		Call((&LessConstraint{expected: int32(5)}).Check, map[int]int{1: 1}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", map[int]int{1: 1}))
 
-	NewDeclarative(t, "Int32AndPtr").
+	NewSubtest(t, "Int32AndPtr").
 		Call((&LessConstraint{expected: int32(5)}).Check, new(int)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", new(int)))
 
-	NewDeclarative(t, "Int32AndSlice").
+	NewSubtest(t, "Int32AndSlice").
 		Call((&LessConstraint{expected: int32(5)}).Check, []int{5}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", []int{5}))
 
-	NewDeclarative(t, "Int32AndString").
+	NewSubtest(t, "Int32AndString").
 		Call((&LessConstraint{expected: int32(5)}).Check, "data").
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", "data"))
 
-	NewDeclarative(t, "Int32AndStruct").
+	NewSubtest(t, "Int32AndStruct").
 		Call((&LessConstraint{expected: int32(5)}).Check, struct{}{}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", struct{}{}))
 
-	NewDeclarative(t, "Int32AndUnsafePointer").
+	NewSubtest(t, "Int32AndUnsafePointer").
 		Call((&LessConstraint{expected: int32(5)}).Check, unsafe.Pointer(new(int))).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", unsafe.Pointer(new(int))))
 }
 
 //noinspection GoRedundantConversion
 func TestLessConstraint_Check_WithInt64(t *testing.T) {
-	NewDeclarative(t, "Int64AndInvalid").
+	NewSubtest(t, "Int64AndInvalid").
 		Call(
 			func() {
 				(&LessConstraint{expected: int64(5)}).Check(nil)
@@ -1053,229 +1053,229 @@ func TestLessConstraint_Check_WithInt64(t *testing.T) {
 		).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", nil))
 
-	NewDeclarative(t, "Int64AndBool").
+	NewSubtest(t, "Int64AndBool").
 		Call((&LessConstraint{expected: int64(5)}).Check, false).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", false))
 
-	NewDeclarative(t, "Int64LessInt").
+	NewSubtest(t, "Int64LessInt").
 		Call((&LessConstraint{expected: int64(10)}).Check, int(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int64EqualInt").
+	NewSubtest(t, "Int64EqualInt").
 		Call((&LessConstraint{expected: int64(5)}).Check, int(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int64GreaterInt").
+	NewSubtest(t, "Int64GreaterInt").
 		Call((&LessConstraint{expected: int64(5)}).Check, int(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int64LessInt8").
+	NewSubtest(t, "Int64LessInt8").
 		Call((&LessConstraint{expected: int64(10)}).Check, int8(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int64EqualInt8").
+	NewSubtest(t, "Int64EqualInt8").
 		Call((&LessConstraint{expected: int64(5)}).Check, int8(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int64GreaterInt8").
+	NewSubtest(t, "Int64GreaterInt8").
 		Call((&LessConstraint{expected: int64(5)}).Check, int8(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int64LessInt16").
+	NewSubtest(t, "Int64LessInt16").
 		Call((&LessConstraint{expected: int64(10)}).Check, int16(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int64EqualInt16").
+	NewSubtest(t, "Int64EqualInt16").
 		Call((&LessConstraint{expected: int64(5)}).Check, int16(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int64GreaterInt16").
+	NewSubtest(t, "Int64GreaterInt16").
 		Call((&LessConstraint{expected: int64(5)}).Check, int16(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int64LessInt32").
+	NewSubtest(t, "Int64LessInt32").
 		Call((&LessConstraint{expected: int64(10)}).Check, int32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int64EqualInt32").
+	NewSubtest(t, "Int64EqualInt32").
 		Call((&LessConstraint{expected: int64(5)}).Check, int32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int64GreaterInt32").
+	NewSubtest(t, "Int64GreaterInt32").
 		Call((&LessConstraint{expected: int64(5)}).Check, int32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int64LessInt64").
+	NewSubtest(t, "Int64LessInt64").
 		Call((&LessConstraint{expected: int64(10)}).Check, int64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int64EqualInt64").
+	NewSubtest(t, "Int64EqualInt64").
 		Call((&LessConstraint{expected: int64(5)}).Check, int64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int64GreaterInt64").
+	NewSubtest(t, "Int64GreaterInt64").
 		Call((&LessConstraint{expected: int64(5)}).Check, int64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int64LessUintWithIntComparison").
+	NewSubtest(t, "Int64LessUintWithIntComparison").
 		Call((&LessConstraint{expected: int64(10)}).Check, uint(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int64EqualUintWithIntComparison").
+	NewSubtest(t, "Int64EqualUintWithIntComparison").
 		Call((&LessConstraint{expected: int64(5)}).Check, uint(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int64GreaterUintWithIntComparison").
+	NewSubtest(t, "Int64GreaterUintWithIntComparison").
 		Call((&LessConstraint{expected: int64(5)}).Check, uint(10)).
 		ExpectResult(false)
 
 	if !reflect.ValueOf(uint(0)).OverflowUint(math.MaxUint64) {
 
-		NewDeclarative(t, "Int64GreaterUintWithUintComparison").
+		NewSubtest(t, "Int64GreaterUintWithUintComparison").
 			Call((&LessConstraint{expected: int64(5)}).Check, uint(math.MaxInt64)+1).
 			ExpectResult(false)
 
-		NewDeclarative(t, "Int64GreaterUintWithFloatComparison").
+		NewSubtest(t, "Int64GreaterUintWithFloatComparison").
 			Call((&LessConstraint{expected: int64(-5)}).Check, uint(math.MaxInt64)+1).
 			ExpectResult(false)
 	}
 
-	NewDeclarative(t, "Int64LessUint8").
+	NewSubtest(t, "Int64LessUint8").
 		Call((&LessConstraint{expected: int64(10)}).Check, uint8(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int64EqualUint8").
+	NewSubtest(t, "Int64EqualUint8").
 		Call((&LessConstraint{expected: int64(5)}).Check, uint8(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int64GreaterUint8").
+	NewSubtest(t, "Int64GreaterUint8").
 		Call((&LessConstraint{expected: int64(5)}).Check, uint8(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int64LessUint16").
+	NewSubtest(t, "Int64LessUint16").
 		Call((&LessConstraint{expected: int64(10)}).Check, uint16(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int64EqualUint16").
+	NewSubtest(t, "Int64EqualUint16").
 		Call((&LessConstraint{expected: int64(5)}).Check, uint16(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int64GreaterUint16").
+	NewSubtest(t, "Int64GreaterUint16").
 		Call((&LessConstraint{expected: int64(5)}).Check, uint16(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int64LessUint32").
+	NewSubtest(t, "Int64LessUint32").
 		Call((&LessConstraint{expected: int64(10)}).Check, uint32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int64EqualUint32").
+	NewSubtest(t, "Int64EqualUint32").
 		Call((&LessConstraint{expected: int64(5)}).Check, uint32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int64GreaterUint32").
+	NewSubtest(t, "Int64GreaterUint32").
 		Call((&LessConstraint{expected: int64(5)}).Check, uint32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int64LessUint64WithIntComparison").
+	NewSubtest(t, "Int64LessUint64WithIntComparison").
 		Call((&LessConstraint{expected: int64(10)}).Check, uint64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int64EqualUint64WithIntComparison").
+	NewSubtest(t, "Int64EqualUint64WithIntComparison").
 		Call((&LessConstraint{expected: int64(5)}).Check, uint64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int64GreaterUint64WithIntComparison").
+	NewSubtest(t, "Int64GreaterUint64WithIntComparison").
 		Call((&LessConstraint{expected: int64(5)}).Check, uint64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int64GreaterUint64WithUintComparison").
+	NewSubtest(t, "Int64GreaterUint64WithUintComparison").
 		Call((&LessConstraint{expected: int64(5)}).Check, uint64(math.MaxInt64)+1).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int64GreaterUint64WithFloatComparison").
+	NewSubtest(t, "Int64GreaterUint64WithFloatComparison").
 		Call((&LessConstraint{expected: int64(-5)}).Check, uint64(math.MaxInt64)+1).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int64AndUintPtr").
+	NewSubtest(t, "Int64AndUintPtr").
 		Call((&LessConstraint{expected: int64(5)}).Check, uintptr(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", uintptr(5)))
 
-	NewDeclarative(t, "Int64LessFloat32").
+	NewSubtest(t, "Int64LessFloat32").
 		Call((&LessConstraint{expected: int64(10)}).Check, float32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int64EqualFloat32").
+	NewSubtest(t, "Int64EqualFloat32").
 		Call((&LessConstraint{expected: int64(5)}).Check, float32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int64GreaterFloat32").
+	NewSubtest(t, "Int64GreaterFloat32").
 		Call((&LessConstraint{expected: int64(5)}).Check, float32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int64LessFloat64").
+	NewSubtest(t, "Int64LessFloat64").
 		Call((&LessConstraint{expected: int64(10)}).Check, float64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Int64EqualFloat64").
+	NewSubtest(t, "Int64EqualFloat64").
 		Call((&LessConstraint{expected: int64(5)}).Check, float64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int64GreaterFloat64").
+	NewSubtest(t, "Int64GreaterFloat64").
 		Call((&LessConstraint{expected: int64(5)}).Check, float64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Int64AndComplex64").
+	NewSubtest(t, "Int64AndComplex64").
 		Call((&LessConstraint{expected: int64(5)}).Check, complex64(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", complex64(5)))
 
-	NewDeclarative(t, "Int64AndComplex128").
+	NewSubtest(t, "Int64AndComplex128").
 		Call((&LessConstraint{expected: int64(5)}).Check, complex128(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", complex128(5)))
 
-	NewDeclarative(t, "Int64AndArray").
+	NewSubtest(t, "Int64AndArray").
 		Call((&LessConstraint{expected: int64(5)}).Check, [1]int{5}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", [1]int{5}))
 
-	NewDeclarative(t, "Int64AndChan").
+	NewSubtest(t, "Int64AndChan").
 		Call((&LessConstraint{expected: int64(5)}).Check, make(chan int)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", make(chan int)))
 
-	NewDeclarative(t, "Int64AndFunc").
+	NewSubtest(t, "Int64AndFunc").
 		Call((&LessConstraint{expected: int64(5)}).Check, func() {}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", func() {}))
 
-	NewDeclarative(t, "Int64AndInterface").
+	NewSubtest(t, "Int64AndInterface").
 		Call((&LessConstraint{expected: int64(5)}).Check, (*interface{})(nil)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", (*interface{})(nil)))
 
-	NewDeclarative(t, "Int64AndMap").
+	NewSubtest(t, "Int64AndMap").
 		Call((&LessConstraint{expected: int64(5)}).Check, map[int]int{1: 1}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", map[int]int{1: 1}))
 
-	NewDeclarative(t, "Int64AndPtr").
+	NewSubtest(t, "Int64AndPtr").
 		Call((&LessConstraint{expected: int64(5)}).Check, new(int)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", new(int)))
 
-	NewDeclarative(t, "Int64AndSlice").
+	NewSubtest(t, "Int64AndSlice").
 		Call((&LessConstraint{expected: int64(5)}).Check, []int{5}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", []int{5}))
 
-	NewDeclarative(t, "Int64AndString").
+	NewSubtest(t, "Int64AndString").
 		Call((&LessConstraint{expected: int64(5)}).Check, "data").
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", "data"))
 
-	NewDeclarative(t, "Int64AndStruct").
+	NewSubtest(t, "Int64AndStruct").
 		Call((&LessConstraint{expected: int64(5)}).Check, struct{}{}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", struct{}{}))
 
-	NewDeclarative(t, "Int64AndUnsafePointer").
+	NewSubtest(t, "Int64AndUnsafePointer").
 		Call((&LessConstraint{expected: int64(5)}).Check, unsafe.Pointer(new(int))).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", unsafe.Pointer(new(int))))
 }
 
 //noinspection GoRedundantConversion
 func TestLessConstraint_Check_WithUint(t *testing.T) {
-	NewDeclarative(t, "UintAndInvalid").
+	NewSubtest(t, "UintAndInvalid").
 		Call(
 			func() {
 				(&LessConstraint{expected: uint(5)}).Check(nil)
@@ -1283,260 +1283,260 @@ func TestLessConstraint_Check_WithUint(t *testing.T) {
 		).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", nil))
 
-	NewDeclarative(t, "UintAndBool").
+	NewSubtest(t, "UintAndBool").
 		Call((&LessConstraint{expected: uint(5)}).Check, false).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", false))
 
-	NewDeclarative(t, "UintLessIntWithIntComparison").
+	NewSubtest(t, "UintLessIntWithIntComparison").
 		Call((&LessConstraint{expected: uint(10)}).Check, int(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "UintEqualIntWithIntComparison").
+	NewSubtest(t, "UintEqualIntWithIntComparison").
 		Call((&LessConstraint{expected: uint(5)}).Check, int(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "UintGreaterIntWithIntComparison").
+	NewSubtest(t, "UintGreaterIntWithIntComparison").
 		Call((&LessConstraint{expected: uint(5)}).Check, int(10)).
 		ExpectResult(false)
 
 	if !reflect.ValueOf(uint(0)).OverflowUint(math.MaxUint64) {
-		NewDeclarative(t, "UintLessIntWithUintComparison").
+		NewSubtest(t, "UintLessIntWithUintComparison").
 			Call((&LessConstraint{expected: uint(math.MaxInt64) + 1}).Check, int(5)).
 			ExpectResult(true)
 
-		NewDeclarative(t, "UintLessIntWithFloatComparison").
+		NewSubtest(t, "UintLessIntWithFloatComparison").
 			Call((&LessConstraint{expected: uint(math.MaxInt64) + 1}).Check, int(-5)).
 			ExpectResult(true)
 	}
 
-	NewDeclarative(t, "UintLessInt8WithIntComparison").
+	NewSubtest(t, "UintLessInt8WithIntComparison").
 		Call((&LessConstraint{expected: uint(10)}).Check, int8(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "UintEqualInt8WithIntComparison").
+	NewSubtest(t, "UintEqualInt8WithIntComparison").
 		Call((&LessConstraint{expected: uint(5)}).Check, int8(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "UintGreaterInt8WithIntComparison").
+	NewSubtest(t, "UintGreaterInt8WithIntComparison").
 		Call((&LessConstraint{expected: uint(5)}).Check, int8(10)).
 		ExpectResult(false)
 
 	if !reflect.ValueOf(uint(0)).OverflowUint(math.MaxUint64) {
-		NewDeclarative(t, "UintLessInt8WithUintComparison").
+		NewSubtest(t, "UintLessInt8WithUintComparison").
 			Call((&LessConstraint{expected: uint(math.MaxInt64) + 1}).Check, int8(5)).
 			ExpectResult(true)
 
-		NewDeclarative(t, "UintLessInt8WithFloatComparison").
+		NewSubtest(t, "UintLessInt8WithFloatComparison").
 			Call((&LessConstraint{expected: uint(math.MaxInt64) + 1}).Check, int8(-5)).
 			ExpectResult(true)
 	}
 
-	NewDeclarative(t, "UintLessInt16WithIntComparison").
+	NewSubtest(t, "UintLessInt16WithIntComparison").
 		Call((&LessConstraint{expected: uint(10)}).Check, int16(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "UintEqualInt16WithIntComparison").
+	NewSubtest(t, "UintEqualInt16WithIntComparison").
 		Call((&LessConstraint{expected: uint(5)}).Check, int16(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "UintGreaterInt16WithIntComparison").
+	NewSubtest(t, "UintGreaterInt16WithIntComparison").
 		Call((&LessConstraint{expected: uint(5)}).Check, int16(10)).
 		ExpectResult(false)
 
 	if !reflect.ValueOf(uint(0)).OverflowUint(math.MaxUint64) {
-		NewDeclarative(t, "UintLessInt16WithUintComparison").
+		NewSubtest(t, "UintLessInt16WithUintComparison").
 			Call((&LessConstraint{expected: uint(math.MaxInt64) + 1}).Check, int16(5)).
 			ExpectResult(true)
 
-		NewDeclarative(t, "UintLessInt16WithFloatComparison").
+		NewSubtest(t, "UintLessInt16WithFloatComparison").
 			Call((&LessConstraint{expected: uint(math.MaxInt64) + 1}).Check, int16(-5)).
 			ExpectResult(true)
 	}
 
-	NewDeclarative(t, "UintLessInt32WithIntComparison").
+	NewSubtest(t, "UintLessInt32WithIntComparison").
 		Call((&LessConstraint{expected: uint(10)}).Check, int32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "UintEqualInt32WithIntComparison").
+	NewSubtest(t, "UintEqualInt32WithIntComparison").
 		Call((&LessConstraint{expected: uint(5)}).Check, int32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "UintGreaterInt32WithIntComparison").
+	NewSubtest(t, "UintGreaterInt32WithIntComparison").
 		Call((&LessConstraint{expected: uint(5)}).Check, int32(10)).
 		ExpectResult(false)
 
 	if !reflect.ValueOf(uint(0)).OverflowUint(math.MaxUint64) {
-		NewDeclarative(t, "UintLessInt32WithUintComparison").
+		NewSubtest(t, "UintLessInt32WithUintComparison").
 			Call((&LessConstraint{expected: uint(math.MaxInt64) + 1}).Check, int32(5)).
 			ExpectResult(true)
 
-		NewDeclarative(t, "UintLessInt32WithFloatComparison").
+		NewSubtest(t, "UintLessInt32WithFloatComparison").
 			Call((&LessConstraint{expected: uint(math.MaxInt64) + 1}).Check, int32(-5)).
 			ExpectResult(true)
 	}
 
-	NewDeclarative(t, "UintLessInt64WithIntComparison").
+	NewSubtest(t, "UintLessInt64WithIntComparison").
 		Call((&LessConstraint{expected: uint(10)}).Check, int64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "UintEqualInt64WithIntComparison").
+	NewSubtest(t, "UintEqualInt64WithIntComparison").
 		Call((&LessConstraint{expected: uint(5)}).Check, int64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "UintGreaterInt64WithIntComparison").
+	NewSubtest(t, "UintGreaterInt64WithIntComparison").
 		Call((&LessConstraint{expected: uint(5)}).Check, int64(10)).
 		ExpectResult(false)
 
 	if !reflect.ValueOf(uint(0)).OverflowUint(math.MaxUint64) {
-		NewDeclarative(t, "UintLessInt64WithUintComparison").
+		NewSubtest(t, "UintLessInt64WithUintComparison").
 			Call((&LessConstraint{expected: uint(math.MaxInt64) + 1}).Check, int64(5)).
 			ExpectResult(true)
 
-		NewDeclarative(t, "UintLessInt64WithFloatComparison").
+		NewSubtest(t, "UintLessInt64WithFloatComparison").
 			Call((&LessConstraint{expected: uint(math.MaxInt64) + 1}).Check, int64(-5)).
 			ExpectResult(true)
 	}
 
-	NewDeclarative(t, "UintLessUint").
+	NewSubtest(t, "UintLessUint").
 		Call((&LessConstraint{expected: uint(10)}).Check, uint(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "UintEqualUint").
+	NewSubtest(t, "UintEqualUint").
 		Call((&LessConstraint{expected: uint(5)}).Check, uint(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "UintGreaterUint").
+	NewSubtest(t, "UintGreaterUint").
 		Call((&LessConstraint{expected: uint(5)}).Check, uint(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "UintLessUint8").
+	NewSubtest(t, "UintLessUint8").
 		Call((&LessConstraint{expected: uint(10)}).Check, uint8(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "UintEqualUint8").
+	NewSubtest(t, "UintEqualUint8").
 		Call((&LessConstraint{expected: uint(5)}).Check, uint8(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "UintGreaterUint8").
+	NewSubtest(t, "UintGreaterUint8").
 		Call((&LessConstraint{expected: uint(5)}).Check, uint8(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "UintLessUint16").
+	NewSubtest(t, "UintLessUint16").
 		Call((&LessConstraint{expected: uint(10)}).Check, uint16(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "UintEqualUint16").
+	NewSubtest(t, "UintEqualUint16").
 		Call((&LessConstraint{expected: uint(5)}).Check, uint16(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "UintGreaterUint16").
+	NewSubtest(t, "UintGreaterUint16").
 		Call((&LessConstraint{expected: uint(5)}).Check, uint16(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "UintLessUint32").
+	NewSubtest(t, "UintLessUint32").
 		Call((&LessConstraint{expected: uint(10)}).Check, uint32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "UintEqualUint32").
+	NewSubtest(t, "UintEqualUint32").
 		Call((&LessConstraint{expected: uint(5)}).Check, uint32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "UintGreaterUint32").
+	NewSubtest(t, "UintGreaterUint32").
 		Call((&LessConstraint{expected: uint(5)}).Check, uint32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "UintLessUint64").
+	NewSubtest(t, "UintLessUint64").
 		Call((&LessConstraint{expected: uint(10)}).Check, uint64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "UintEqualUint64").
+	NewSubtest(t, "UintEqualUint64").
 		Call((&LessConstraint{expected: uint(5)}).Check, uint64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "UintGreaterUint64").
+	NewSubtest(t, "UintGreaterUint64").
 		Call((&LessConstraint{expected: uint(5)}).Check, uint64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "UintAndUintPtr").
+	NewSubtest(t, "UintAndUintPtr").
 		Call((&LessConstraint{expected: uint(5)}).Check, uintptr(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", uintptr(5)))
 
-	NewDeclarative(t, "UintLessFloat32").
+	NewSubtest(t, "UintLessFloat32").
 		Call((&LessConstraint{expected: uint(10)}).Check, float32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "UintEqualFloat32").
+	NewSubtest(t, "UintEqualFloat32").
 		Call((&LessConstraint{expected: uint(5)}).Check, float32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "UintGreaterFloat32").
+	NewSubtest(t, "UintGreaterFloat32").
 		Call((&LessConstraint{expected: uint(5)}).Check, float32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "UintLessFloat64").
+	NewSubtest(t, "UintLessFloat64").
 		Call((&LessConstraint{expected: uint(10)}).Check, float64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "UintEqualFloat64").
+	NewSubtest(t, "UintEqualFloat64").
 		Call((&LessConstraint{expected: uint(5)}).Check, float64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "UintGreaterFloat64").
+	NewSubtest(t, "UintGreaterFloat64").
 		Call((&LessConstraint{expected: uint(5)}).Check, float64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "UintAndComplex64").
+	NewSubtest(t, "UintAndComplex64").
 		Call((&LessConstraint{expected: uint(5)}).Check, complex64(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", complex64(5)))
 
-	NewDeclarative(t, "UintAndComplex128").
+	NewSubtest(t, "UintAndComplex128").
 		Call((&LessConstraint{expected: uint(5)}).Check, complex128(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", complex128(5)))
 
-	NewDeclarative(t, "UintAndArray").
+	NewSubtest(t, "UintAndArray").
 		Call((&LessConstraint{expected: uint(5)}).Check, [1]int{5}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", [1]int{5}))
 
-	NewDeclarative(t, "UintAndChan").
+	NewSubtest(t, "UintAndChan").
 		Call((&LessConstraint{expected: uint(5)}).Check, make(chan int)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", make(chan int)))
 
-	NewDeclarative(t, "UintAndFunc").
+	NewSubtest(t, "UintAndFunc").
 		Call((&LessConstraint{expected: uint(5)}).Check, func() {}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", func() {}))
 
-	NewDeclarative(t, "UintAndInterface").
+	NewSubtest(t, "UintAndInterface").
 		Call((&LessConstraint{expected: uint(5)}).Check, (*interface{})(nil)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", (*interface{})(nil)))
 
-	NewDeclarative(t, "UintAndMap").
+	NewSubtest(t, "UintAndMap").
 		Call((&LessConstraint{expected: uint(5)}).Check, map[int]int{1: 1}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", map[int]int{1: 1}))
 
-	NewDeclarative(t, "UintAndPtr").
+	NewSubtest(t, "UintAndPtr").
 		Call((&LessConstraint{expected: uint(5)}).Check, new(int)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", new(int)))
 
-	NewDeclarative(t, "UintAndSlice").
+	NewSubtest(t, "UintAndSlice").
 		Call((&LessConstraint{expected: uint(5)}).Check, []int{5}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", []int{5}))
 
-	NewDeclarative(t, "UintAndString").
+	NewSubtest(t, "UintAndString").
 		Call((&LessConstraint{expected: uint(5)}).Check, "data").
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", "data"))
 
-	NewDeclarative(t, "UintAndStruct").
+	NewSubtest(t, "UintAndStruct").
 		Call((&LessConstraint{expected: uint(5)}).Check, struct{}{}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", struct{}{}))
 
-	NewDeclarative(t, "UintAndUnsafePointer").
+	NewSubtest(t, "UintAndUnsafePointer").
 		Call((&LessConstraint{expected: uint(5)}).Check, unsafe.Pointer(new(int))).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", unsafe.Pointer(new(int))))
 }
 
 //noinspection GoRedundantConversion
 func TestLessConstraint_Check_WithUint8(t *testing.T) {
-	NewDeclarative(t, "Uint8AndInvalid").
+	NewSubtest(t, "Uint8AndInvalid").
 		Call(
 			func() {
 				(&LessConstraint{expected: uint8(5)}).Check(nil)
@@ -1544,210 +1544,210 @@ func TestLessConstraint_Check_WithUint8(t *testing.T) {
 		).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", nil))
 
-	NewDeclarative(t, "Uint8AndBool").
+	NewSubtest(t, "Uint8AndBool").
 		Call((&LessConstraint{expected: uint8(5)}).Check, false).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", false))
 
-	NewDeclarative(t, "Uint8LessInt").
+	NewSubtest(t, "Uint8LessInt").
 		Call((&LessConstraint{expected: uint8(10)}).Check, int(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint8EqualInt").
+	NewSubtest(t, "Uint8EqualInt").
 		Call((&LessConstraint{expected: uint8(5)}).Check, int(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint8GreaterInt").
+	NewSubtest(t, "Uint8GreaterInt").
 		Call((&LessConstraint{expected: uint8(5)}).Check, int(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint8LessInt8").
+	NewSubtest(t, "Uint8LessInt8").
 		Call((&LessConstraint{expected: uint8(10)}).Check, int8(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint8EqualInt8").
+	NewSubtest(t, "Uint8EqualInt8").
 		Call((&LessConstraint{expected: uint8(5)}).Check, int8(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint8GreaterInt8").
+	NewSubtest(t, "Uint8GreaterInt8").
 		Call((&LessConstraint{expected: uint8(5)}).Check, int8(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint8LessInt16").
+	NewSubtest(t, "Uint8LessInt16").
 		Call((&LessConstraint{expected: uint8(10)}).Check, int16(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint8EqualInt16").
+	NewSubtest(t, "Uint8EqualInt16").
 		Call((&LessConstraint{expected: uint8(5)}).Check, int16(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint8GreaterInt16").
+	NewSubtest(t, "Uint8GreaterInt16").
 		Call((&LessConstraint{expected: uint8(5)}).Check, int16(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint8LessInt32").
+	NewSubtest(t, "Uint8LessInt32").
 		Call((&LessConstraint{expected: uint8(10)}).Check, int32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint8EqualInt32").
+	NewSubtest(t, "Uint8EqualInt32").
 		Call((&LessConstraint{expected: uint8(5)}).Check, int32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint8GreaterInt32").
+	NewSubtest(t, "Uint8GreaterInt32").
 		Call((&LessConstraint{expected: uint8(5)}).Check, int32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint8LessInt64").
+	NewSubtest(t, "Uint8LessInt64").
 		Call((&LessConstraint{expected: uint8(10)}).Check, int64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint8EqualInt64").
+	NewSubtest(t, "Uint8EqualInt64").
 		Call((&LessConstraint{expected: uint8(5)}).Check, int64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint8GreaterInt64").
+	NewSubtest(t, "Uint8GreaterInt64").
 		Call((&LessConstraint{expected: uint8(5)}).Check, int64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint8LessUint").
+	NewSubtest(t, "Uint8LessUint").
 		Call((&LessConstraint{expected: uint8(10)}).Check, uint(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint8EqualUint").
+	NewSubtest(t, "Uint8EqualUint").
 		Call((&LessConstraint{expected: uint8(5)}).Check, uint(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint8GreaterUint").
+	NewSubtest(t, "Uint8GreaterUint").
 		Call((&LessConstraint{expected: uint8(5)}).Check, uint(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint8LessUint8").
+	NewSubtest(t, "Uint8LessUint8").
 		Call((&LessConstraint{expected: uint8(10)}).Check, uint8(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint8EqualUint8").
+	NewSubtest(t, "Uint8EqualUint8").
 		Call((&LessConstraint{expected: uint8(5)}).Check, uint8(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint8GreaterUint8").
+	NewSubtest(t, "Uint8GreaterUint8").
 		Call((&LessConstraint{expected: uint8(5)}).Check, uint8(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint8LessUint16").
+	NewSubtest(t, "Uint8LessUint16").
 		Call((&LessConstraint{expected: uint8(10)}).Check, uint16(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint8EqualUint16").
+	NewSubtest(t, "Uint8EqualUint16").
 		Call((&LessConstraint{expected: uint8(5)}).Check, uint16(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint8GreaterUint16").
+	NewSubtest(t, "Uint8GreaterUint16").
 		Call((&LessConstraint{expected: uint8(5)}).Check, uint16(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint8LessUint32").
+	NewSubtest(t, "Uint8LessUint32").
 		Call((&LessConstraint{expected: uint8(10)}).Check, uint32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint8EqualUint32").
+	NewSubtest(t, "Uint8EqualUint32").
 		Call((&LessConstraint{expected: uint8(5)}).Check, uint32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint8GreaterUint32").
+	NewSubtest(t, "Uint8GreaterUint32").
 		Call((&LessConstraint{expected: uint8(5)}).Check, uint32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint8LessUint64").
+	NewSubtest(t, "Uint8LessUint64").
 		Call((&LessConstraint{expected: uint8(10)}).Check, uint64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint8EqualUint64").
+	NewSubtest(t, "Uint8EqualUint64").
 		Call((&LessConstraint{expected: uint8(5)}).Check, uint64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint8GreaterUint64").
+	NewSubtest(t, "Uint8GreaterUint64").
 		Call((&LessConstraint{expected: uint8(5)}).Check, uint64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint8AndUintPtr").
+	NewSubtest(t, "Uint8AndUintPtr").
 		Call((&LessConstraint{expected: uint8(5)}).Check, uintptr(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", uintptr(5)))
 
-	NewDeclarative(t, "Uint8LessFloat32").
+	NewSubtest(t, "Uint8LessFloat32").
 		Call((&LessConstraint{expected: uint8(10)}).Check, float32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint8EqualFloat32").
+	NewSubtest(t, "Uint8EqualFloat32").
 		Call((&LessConstraint{expected: uint8(5)}).Check, float32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint8GreaterFloat32").
+	NewSubtest(t, "Uint8GreaterFloat32").
 		Call((&LessConstraint{expected: uint8(5)}).Check, float32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint8LessFloat64").
+	NewSubtest(t, "Uint8LessFloat64").
 		Call((&LessConstraint{expected: uint8(10)}).Check, float64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint8EqualFloat64").
+	NewSubtest(t, "Uint8EqualFloat64").
 		Call((&LessConstraint{expected: uint8(5)}).Check, float64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint8GreaterFloat64").
+	NewSubtest(t, "Uint8GreaterFloat64").
 		Call((&LessConstraint{expected: uint8(5)}).Check, float64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint8AndComplex64").
+	NewSubtest(t, "Uint8AndComplex64").
 		Call((&LessConstraint{expected: uint8(5)}).Check, complex64(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", complex64(5)))
 
-	NewDeclarative(t, "Uint8AndComplex128").
+	NewSubtest(t, "Uint8AndComplex128").
 		Call((&LessConstraint{expected: uint8(5)}).Check, complex128(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", complex128(5)))
 
-	NewDeclarative(t, "Uint8AndArray").
+	NewSubtest(t, "Uint8AndArray").
 		Call((&LessConstraint{expected: uint8(5)}).Check, [1]int{5}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", [1]int{5}))
 
-	NewDeclarative(t, "Uint8AndChan").
+	NewSubtest(t, "Uint8AndChan").
 		Call((&LessConstraint{expected: uint8(5)}).Check, make(chan int)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", make(chan int)))
 
-	NewDeclarative(t, "Uint8AndFunc").
+	NewSubtest(t, "Uint8AndFunc").
 		Call((&LessConstraint{expected: uint8(5)}).Check, func() {}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", func() {}))
 
-	NewDeclarative(t, "Uint8AndInterface").
+	NewSubtest(t, "Uint8AndInterface").
 		Call((&LessConstraint{expected: uint8(5)}).Check, (*interface{})(nil)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", (*interface{})(nil)))
 
-	NewDeclarative(t, "Uint8AndMap").
+	NewSubtest(t, "Uint8AndMap").
 		Call((&LessConstraint{expected: uint8(5)}).Check, map[int]int{1: 1}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", map[int]int{1: 1}))
 
-	NewDeclarative(t, "Uint8AndPtr").
+	NewSubtest(t, "Uint8AndPtr").
 		Call((&LessConstraint{expected: uint8(5)}).Check, new(int)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", new(int)))
 
-	NewDeclarative(t, "Uint8AndSlice").
+	NewSubtest(t, "Uint8AndSlice").
 		Call((&LessConstraint{expected: uint8(5)}).Check, []int{5}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", []int{5}))
 
-	NewDeclarative(t, "Uint8AndString").
+	NewSubtest(t, "Uint8AndString").
 		Call((&LessConstraint{expected: uint8(5)}).Check, "data").
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", "data"))
 
-	NewDeclarative(t, "Uint8AndStruct").
+	NewSubtest(t, "Uint8AndStruct").
 		Call((&LessConstraint{expected: uint8(5)}).Check, struct{}{}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", struct{}{}))
 
-	NewDeclarative(t, "Uint8AndUnsafePointer").
+	NewSubtest(t, "Uint8AndUnsafePointer").
 		Call((&LessConstraint{expected: uint8(5)}).Check, unsafe.Pointer(new(int))).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", unsafe.Pointer(new(int))))
 }
 
 //noinspection GoRedundantConversion
 func TestLessConstraint_Check_WithUint16(t *testing.T) {
-	NewDeclarative(t, "Uint16AndInvalid").
+	NewSubtest(t, "Uint16AndInvalid").
 		Call(
 			func() {
 				(&LessConstraint{expected: uint16(5)}).Check(nil)
@@ -1755,210 +1755,210 @@ func TestLessConstraint_Check_WithUint16(t *testing.T) {
 		).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", nil))
 
-	NewDeclarative(t, "Uint16AndBool").
+	NewSubtest(t, "Uint16AndBool").
 		Call((&LessConstraint{expected: uint16(5)}).Check, false).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", false))
 
-	NewDeclarative(t, "Uint16LessInt").
+	NewSubtest(t, "Uint16LessInt").
 		Call((&LessConstraint{expected: uint16(10)}).Check, int(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint16EqualInt").
+	NewSubtest(t, "Uint16EqualInt").
 		Call((&LessConstraint{expected: uint16(5)}).Check, int(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint16GreaterInt").
+	NewSubtest(t, "Uint16GreaterInt").
 		Call((&LessConstraint{expected: uint16(5)}).Check, int(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint16LessInt8").
+	NewSubtest(t, "Uint16LessInt8").
 		Call((&LessConstraint{expected: uint16(10)}).Check, int8(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint16EqualInt8").
+	NewSubtest(t, "Uint16EqualInt8").
 		Call((&LessConstraint{expected: uint16(5)}).Check, int8(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint16GreaterInt8").
+	NewSubtest(t, "Uint16GreaterInt8").
 		Call((&LessConstraint{expected: uint16(5)}).Check, int8(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint16LessInt16").
+	NewSubtest(t, "Uint16LessInt16").
 		Call((&LessConstraint{expected: uint16(10)}).Check, int16(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint16EqualInt16").
+	NewSubtest(t, "Uint16EqualInt16").
 		Call((&LessConstraint{expected: uint16(5)}).Check, int16(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint16GreaterInt16").
+	NewSubtest(t, "Uint16GreaterInt16").
 		Call((&LessConstraint{expected: uint16(5)}).Check, int16(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint16LessInt32").
+	NewSubtest(t, "Uint16LessInt32").
 		Call((&LessConstraint{expected: uint16(10)}).Check, int32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint16EqualInt32").
+	NewSubtest(t, "Uint16EqualInt32").
 		Call((&LessConstraint{expected: uint16(5)}).Check, int32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint16GreaterInt32").
+	NewSubtest(t, "Uint16GreaterInt32").
 		Call((&LessConstraint{expected: uint16(5)}).Check, int32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint16LessInt64").
+	NewSubtest(t, "Uint16LessInt64").
 		Call((&LessConstraint{expected: uint16(10)}).Check, int64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint16EqualInt64").
+	NewSubtest(t, "Uint16EqualInt64").
 		Call((&LessConstraint{expected: uint16(5)}).Check, int64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint16GreaterInt64").
+	NewSubtest(t, "Uint16GreaterInt64").
 		Call((&LessConstraint{expected: uint16(5)}).Check, int64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint16LessUint").
+	NewSubtest(t, "Uint16LessUint").
 		Call((&LessConstraint{expected: uint16(10)}).Check, uint(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint16EqualUint").
+	NewSubtest(t, "Uint16EqualUint").
 		Call((&LessConstraint{expected: uint16(5)}).Check, uint(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint16GreaterUint").
+	NewSubtest(t, "Uint16GreaterUint").
 		Call((&LessConstraint{expected: uint16(5)}).Check, uint(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint16LessUint8").
+	NewSubtest(t, "Uint16LessUint8").
 		Call((&LessConstraint{expected: uint16(10)}).Check, uint8(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint16EqualUint8").
+	NewSubtest(t, "Uint16EqualUint8").
 		Call((&LessConstraint{expected: uint16(5)}).Check, uint8(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint16GreaterUint8").
+	NewSubtest(t, "Uint16GreaterUint8").
 		Call((&LessConstraint{expected: uint16(5)}).Check, uint8(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint16LessUint16").
+	NewSubtest(t, "Uint16LessUint16").
 		Call((&LessConstraint{expected: uint16(10)}).Check, uint16(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint16EqualUint16").
+	NewSubtest(t, "Uint16EqualUint16").
 		Call((&LessConstraint{expected: uint16(5)}).Check, uint16(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint16GreaterUint16").
+	NewSubtest(t, "Uint16GreaterUint16").
 		Call((&LessConstraint{expected: uint16(5)}).Check, uint16(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint16LessUint32").
+	NewSubtest(t, "Uint16LessUint32").
 		Call((&LessConstraint{expected: uint16(10)}).Check, uint32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint16EqualUint32").
+	NewSubtest(t, "Uint16EqualUint32").
 		Call((&LessConstraint{expected: uint16(5)}).Check, uint32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint16GreaterUint32").
+	NewSubtest(t, "Uint16GreaterUint32").
 		Call((&LessConstraint{expected: uint16(5)}).Check, uint32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint16LessUint64").
+	NewSubtest(t, "Uint16LessUint64").
 		Call((&LessConstraint{expected: uint16(10)}).Check, uint64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint16EqualUint64").
+	NewSubtest(t, "Uint16EqualUint64").
 		Call((&LessConstraint{expected: uint16(5)}).Check, uint64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint16GreaterUint64").
+	NewSubtest(t, "Uint16GreaterUint64").
 		Call((&LessConstraint{expected: uint16(5)}).Check, uint64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint16AndUintPtr").
+	NewSubtest(t, "Uint16AndUintPtr").
 		Call((&LessConstraint{expected: uint16(5)}).Check, uintptr(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", uintptr(5)))
 
-	NewDeclarative(t, "Uint16LessFloat32").
+	NewSubtest(t, "Uint16LessFloat32").
 		Call((&LessConstraint{expected: uint16(10)}).Check, float32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint16EqualFloat32").
+	NewSubtest(t, "Uint16EqualFloat32").
 		Call((&LessConstraint{expected: uint16(5)}).Check, float32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint16GreaterFloat32").
+	NewSubtest(t, "Uint16GreaterFloat32").
 		Call((&LessConstraint{expected: uint16(5)}).Check, float32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint16LessFloat64").
+	NewSubtest(t, "Uint16LessFloat64").
 		Call((&LessConstraint{expected: uint16(10)}).Check, float64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint16EqualFloat64").
+	NewSubtest(t, "Uint16EqualFloat64").
 		Call((&LessConstraint{expected: uint16(5)}).Check, float64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint16GreaterFloat64").
+	NewSubtest(t, "Uint16GreaterFloat64").
 		Call((&LessConstraint{expected: uint16(5)}).Check, float64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint16AndComplex64").
+	NewSubtest(t, "Uint16AndComplex64").
 		Call((&LessConstraint{expected: uint16(5)}).Check, complex64(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", complex64(5)))
 
-	NewDeclarative(t, "Uint16AndComplex128").
+	NewSubtest(t, "Uint16AndComplex128").
 		Call((&LessConstraint{expected: uint16(5)}).Check, complex128(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", complex128(5)))
 
-	NewDeclarative(t, "Uint16AndArray").
+	NewSubtest(t, "Uint16AndArray").
 		Call((&LessConstraint{expected: uint16(5)}).Check, [1]int{5}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", [1]int{5}))
 
-	NewDeclarative(t, "Uint16AndChan").
+	NewSubtest(t, "Uint16AndChan").
 		Call((&LessConstraint{expected: uint16(5)}).Check, make(chan int)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", make(chan int)))
 
-	NewDeclarative(t, "Uint16AndFunc").
+	NewSubtest(t, "Uint16AndFunc").
 		Call((&LessConstraint{expected: uint16(5)}).Check, func() {}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", func() {}))
 
-	NewDeclarative(t, "Uint16AndInterface").
+	NewSubtest(t, "Uint16AndInterface").
 		Call((&LessConstraint{expected: uint16(5)}).Check, (*interface{})(nil)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", (*interface{})(nil)))
 
-	NewDeclarative(t, "Uint16AndMap").
+	NewSubtest(t, "Uint16AndMap").
 		Call((&LessConstraint{expected: uint16(5)}).Check, map[int]int{1: 1}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", map[int]int{1: 1}))
 
-	NewDeclarative(t, "Uint16AndPtr").
+	NewSubtest(t, "Uint16AndPtr").
 		Call((&LessConstraint{expected: uint16(5)}).Check, new(int)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", new(int)))
 
-	NewDeclarative(t, "Uint16AndSlice").
+	NewSubtest(t, "Uint16AndSlice").
 		Call((&LessConstraint{expected: uint16(5)}).Check, []int{5}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", []int{5}))
 
-	NewDeclarative(t, "Uint16AndString").
+	NewSubtest(t, "Uint16AndString").
 		Call((&LessConstraint{expected: uint16(5)}).Check, "data").
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", "data"))
 
-	NewDeclarative(t, "Uint16AndStruct").
+	NewSubtest(t, "Uint16AndStruct").
 		Call((&LessConstraint{expected: uint16(5)}).Check, struct{}{}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", struct{}{}))
 
-	NewDeclarative(t, "Uint16AndUnsafePointer").
+	NewSubtest(t, "Uint16AndUnsafePointer").
 		Call((&LessConstraint{expected: uint16(5)}).Check, unsafe.Pointer(new(int))).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", unsafe.Pointer(new(int))))
 }
 
 //noinspection GoRedundantConversion
 func TestLessConstraint_Check_WithUint32(t *testing.T) {
-	NewDeclarative(t, "Uint32AndInvalid").
+	NewSubtest(t, "Uint32AndInvalid").
 		Call(
 			func() {
 				(&LessConstraint{expected: uint32(5)}).Check(nil)
@@ -1966,206 +1966,206 @@ func TestLessConstraint_Check_WithUint32(t *testing.T) {
 		).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", nil))
 
-	NewDeclarative(t, "Uint32AndBool").
+	NewSubtest(t, "Uint32AndBool").
 		Call((&LessConstraint{expected: uint32(5)}).Check, false).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", false))
 
-	NewDeclarative(t, "Uint32LessInt").
+	NewSubtest(t, "Uint32LessInt").
 		Call((&LessConstraint{expected: uint32(10)}).Check, int(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint32EqualInt").
+	NewSubtest(t, "Uint32EqualInt").
 		Call((&LessConstraint{expected: uint32(5)}).Check, int(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint32GreaterInt").
+	NewSubtest(t, "Uint32GreaterInt").
 		Call((&LessConstraint{expected: uint32(5)}).Check, int(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint32LessInt8").
+	NewSubtest(t, "Uint32LessInt8").
 		Call((&LessConstraint{expected: uint32(10)}).Check, int8(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint32EqualInt8").
+	NewSubtest(t, "Uint32EqualInt8").
 		Call((&LessConstraint{expected: uint32(5)}).Check, int8(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint32GreaterInt8").
+	NewSubtest(t, "Uint32GreaterInt8").
 		Call((&LessConstraint{expected: uint32(5)}).Check, int8(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint32LessInt16").
+	NewSubtest(t, "Uint32LessInt16").
 		Call((&LessConstraint{expected: uint32(10)}).Check, int16(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint32EqualInt16").
+	NewSubtest(t, "Uint32EqualInt16").
 		Call((&LessConstraint{expected: uint32(5)}).Check, int16(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint32GreaterInt16").
+	NewSubtest(t, "Uint32GreaterInt16").
 		Call((&LessConstraint{expected: uint32(5)}).Check, int16(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint32LessInt32").
+	NewSubtest(t, "Uint32LessInt32").
 		Call((&LessConstraint{expected: uint32(10)}).Check, int32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint32EqualInt32").
+	NewSubtest(t, "Uint32EqualInt32").
 		Call((&LessConstraint{expected: uint32(5)}).Check, int32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint32GreaterInt32").
+	NewSubtest(t, "Uint32GreaterInt32").
 		Call((&LessConstraint{expected: uint32(5)}).Check, int32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint32LessInt64").
+	NewSubtest(t, "Uint32LessInt64").
 		Call((&LessConstraint{expected: uint32(10)}).Check, int64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint32EqualInt64").
+	NewSubtest(t, "Uint32EqualInt64").
 		Call((&LessConstraint{expected: uint32(5)}).Check, int64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint32GreaterInt64").
+	NewSubtest(t, "Uint32GreaterInt64").
 		Call((&LessConstraint{expected: uint32(5)}).Check, int64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint32LessUint").
+	NewSubtest(t, "Uint32LessUint").
 		Call((&LessConstraint{expected: uint32(10)}).Check, uint(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint32EqualUint").
+	NewSubtest(t, "Uint32EqualUint").
 		Call((&LessConstraint{expected: uint32(5)}).Check, uint(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint32GreaterUint").
+	NewSubtest(t, "Uint32GreaterUint").
 		Call((&LessConstraint{expected: uint32(5)}).Check, uint(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint32LessUint8").
+	NewSubtest(t, "Uint32LessUint8").
 		Call((&LessConstraint{expected: uint32(10)}).Check, uint8(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint32EqualUint8").
+	NewSubtest(t, "Uint32EqualUint8").
 		Call((&LessConstraint{expected: uint32(5)}).Check, uint8(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint32LessUint16").
+	NewSubtest(t, "Uint32LessUint16").
 		Call((&LessConstraint{expected: uint32(10)}).Check, uint16(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint32EqualUint16").
+	NewSubtest(t, "Uint32EqualUint16").
 		Call((&LessConstraint{expected: uint32(5)}).Check, uint16(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint32GreaterUint16").
+	NewSubtest(t, "Uint32GreaterUint16").
 		Call((&LessConstraint{expected: uint32(5)}).Check, uint16(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint32LessUint32").
+	NewSubtest(t, "Uint32LessUint32").
 		Call((&LessConstraint{expected: uint32(10)}).Check, uint32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint32EqualUint32").
+	NewSubtest(t, "Uint32EqualUint32").
 		Call((&LessConstraint{expected: uint32(5)}).Check, uint32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint32GreaterUint32").
+	NewSubtest(t, "Uint32GreaterUint32").
 		Call((&LessConstraint{expected: uint32(5)}).Check, uint32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint32LessUint64").
+	NewSubtest(t, "Uint32LessUint64").
 		Call((&LessConstraint{expected: uint32(10)}).Check, uint64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint32EqualUint64").
+	NewSubtest(t, "Uint32EqualUint64").
 		Call((&LessConstraint{expected: uint32(5)}).Check, uint64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint32GreaterUint64").
+	NewSubtest(t, "Uint32GreaterUint64").
 		Call((&LessConstraint{expected: uint32(5)}).Check, uint64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint32AndUintPtr").
+	NewSubtest(t, "Uint32AndUintPtr").
 		Call((&LessConstraint{expected: uint32(5)}).Check, uintptr(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", uintptr(5)))
 
-	NewDeclarative(t, "Uint32LessFloat32").
+	NewSubtest(t, "Uint32LessFloat32").
 		Call((&LessConstraint{expected: uint32(10)}).Check, float32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint32EqualFloat32").
+	NewSubtest(t, "Uint32EqualFloat32").
 		Call((&LessConstraint{expected: uint32(5)}).Check, float32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint32GreaterFloat32").
+	NewSubtest(t, "Uint32GreaterFloat32").
 		Call((&LessConstraint{expected: uint32(5)}).Check, float32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint32LessFloat64").
+	NewSubtest(t, "Uint32LessFloat64").
 		Call((&LessConstraint{expected: uint32(10)}).Check, float64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint32EqualFloat64").
+	NewSubtest(t, "Uint32EqualFloat64").
 		Call((&LessConstraint{expected: uint32(5)}).Check, float64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint32GreaterFloat64").
+	NewSubtest(t, "Uint32GreaterFloat64").
 		Call((&LessConstraint{expected: uint32(5)}).Check, float64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint32AndComplex64").
+	NewSubtest(t, "Uint32AndComplex64").
 		Call((&LessConstraint{expected: uint32(5)}).Check, complex64(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", complex64(5)))
 
-	NewDeclarative(t, "Uint32AndComplex128").
+	NewSubtest(t, "Uint32AndComplex128").
 		Call((&LessConstraint{expected: uint32(5)}).Check, complex128(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", complex128(5)))
 
-	NewDeclarative(t, "Uint32AndArray").
+	NewSubtest(t, "Uint32AndArray").
 		Call((&LessConstraint{expected: uint32(5)}).Check, [1]int{5}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", [1]int{5}))
 
-	NewDeclarative(t, "Uint32AndChan").
+	NewSubtest(t, "Uint32AndChan").
 		Call((&LessConstraint{expected: uint32(5)}).Check, make(chan int)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", make(chan int)))
 
-	NewDeclarative(t, "Uint32AndFunc").
+	NewSubtest(t, "Uint32AndFunc").
 		Call((&LessConstraint{expected: uint32(5)}).Check, func() {}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", func() {}))
 
-	NewDeclarative(t, "Uint32AndInterface").
+	NewSubtest(t, "Uint32AndInterface").
 		Call((&LessConstraint{expected: uint32(5)}).Check, (*interface{})(nil)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", (*interface{})(nil)))
 
-	NewDeclarative(t, "Uint32AndMap").
+	NewSubtest(t, "Uint32AndMap").
 		Call((&LessConstraint{expected: uint32(5)}).Check, map[int]int{1: 1}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", map[int]int{1: 1}))
 
-	NewDeclarative(t, "Uint32AndPtr").
+	NewSubtest(t, "Uint32AndPtr").
 		Call((&LessConstraint{expected: uint32(5)}).Check, new(int)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", new(int)))
 
-	NewDeclarative(t, "Uint32AndSlice").
+	NewSubtest(t, "Uint32AndSlice").
 		Call((&LessConstraint{expected: uint32(5)}).Check, []int{5}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", []int{5}))
 
-	NewDeclarative(t, "Uint32AndString").
+	NewSubtest(t, "Uint32AndString").
 		Call((&LessConstraint{expected: uint32(5)}).Check, "data").
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", "data"))
 
-	NewDeclarative(t, "Uint32AndStruct").
+	NewSubtest(t, "Uint32AndStruct").
 		Call((&LessConstraint{expected: uint32(5)}).Check, struct{}{}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", struct{}{}))
 
-	NewDeclarative(t, "Uint32AndUnsafePointer").
+	NewSubtest(t, "Uint32AndUnsafePointer").
 		Call((&LessConstraint{expected: uint32(5)}).Check, unsafe.Pointer(new(int))).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", unsafe.Pointer(new(int))))
 }
 
 //noinspection GoRedundantConversion
 func TestLessConstraint_Check_WithUint64(t *testing.T) {
-	NewDeclarative(t, "Uint64ndInvalid").
+	NewSubtest(t, "Uint64ndInvalid").
 		Call(
 			func() {
 				(&LessConstraint{expected: uint64(5)}).Check(nil)
@@ -2173,250 +2173,250 @@ func TestLessConstraint_Check_WithUint64(t *testing.T) {
 		).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", nil))
 
-	NewDeclarative(t, "Uint64AndBool").
+	NewSubtest(t, "Uint64AndBool").
 		Call((&LessConstraint{expected: uint64(5)}).Check, false).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", false))
 
-	NewDeclarative(t, "Uint64LessIntWithIntComparison").
+	NewSubtest(t, "Uint64LessIntWithIntComparison").
 		Call((&LessConstraint{expected: uint64(10)}).Check, int(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint64EqualIntWithIntComparison").
+	NewSubtest(t, "Uint64EqualIntWithIntComparison").
 		Call((&LessConstraint{expected: uint64(5)}).Check, int(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint64GreaterIntWithIntComparison").
+	NewSubtest(t, "Uint64GreaterIntWithIntComparison").
 		Call((&LessConstraint{expected: uint64(5)}).Check, int(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint64LessIntWithUintComparison").
+	NewSubtest(t, "Uint64LessIntWithUintComparison").
 		Call((&LessConstraint{expected: uint64(math.MaxInt64) + 1}).Check, int(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint64LessIntWithFloatComparison").
+	NewSubtest(t, "Uint64LessIntWithFloatComparison").
 		Call((&LessConstraint{expected: uint64(math.MaxInt64) + 1}).Check, int(-5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint64LessInt8WithIntComparison").
+	NewSubtest(t, "Uint64LessInt8WithIntComparison").
 		Call((&LessConstraint{expected: uint64(10)}).Check, int8(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint64EqualInt8WithIntComparison").
+	NewSubtest(t, "Uint64EqualInt8WithIntComparison").
 		Call((&LessConstraint{expected: uint64(5)}).Check, int8(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint64GreaterInt8WithIntComparison").
+	NewSubtest(t, "Uint64GreaterInt8WithIntComparison").
 		Call((&LessConstraint{expected: uint64(5)}).Check, int8(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint64LessInt8WithUintComparison").
+	NewSubtest(t, "Uint64LessInt8WithUintComparison").
 		Call((&LessConstraint{expected: uint64(math.MaxInt64) + 1}).Check, int8(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint64LessInt8WithFloatComparison").
+	NewSubtest(t, "Uint64LessInt8WithFloatComparison").
 		Call((&LessConstraint{expected: uint64(math.MaxInt64) + 1}).Check, int8(-5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint64LessInt16WithIntComparison").
+	NewSubtest(t, "Uint64LessInt16WithIntComparison").
 		Call((&LessConstraint{expected: uint64(10)}).Check, int16(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint64EqualInt16WithIntComparison").
+	NewSubtest(t, "Uint64EqualInt16WithIntComparison").
 		Call((&LessConstraint{expected: uint64(5)}).Check, int16(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint64GreaterInt16WithIntComparison").
+	NewSubtest(t, "Uint64GreaterInt16WithIntComparison").
 		Call((&LessConstraint{expected: uint64(5)}).Check, int16(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint64LessInt16WithUintComparison").
+	NewSubtest(t, "Uint64LessInt16WithUintComparison").
 		Call((&LessConstraint{expected: uint64(math.MaxInt64) + 1}).Check, int16(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint64LessInt16WithFloatComparison").
+	NewSubtest(t, "Uint64LessInt16WithFloatComparison").
 		Call((&LessConstraint{expected: uint64(math.MaxInt64) + 1}).Check, int16(-5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint64LessInt32WithIntComparison").
+	NewSubtest(t, "Uint64LessInt32WithIntComparison").
 		Call((&LessConstraint{expected: uint64(10)}).Check, int32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint64EqualInt32WithIntComparison").
+	NewSubtest(t, "Uint64EqualInt32WithIntComparison").
 		Call((&LessConstraint{expected: uint64(5)}).Check, int32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint64GreaterInt32WithIntComparison").
+	NewSubtest(t, "Uint64GreaterInt32WithIntComparison").
 		Call((&LessConstraint{expected: uint64(5)}).Check, int32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint64LessInt32WithUintComparison").
+	NewSubtest(t, "Uint64LessInt32WithUintComparison").
 		Call((&LessConstraint{expected: uint64(math.MaxInt64) + 1}).Check, int32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint64LessInt32WithFloatComparison").
+	NewSubtest(t, "Uint64LessInt32WithFloatComparison").
 		Call((&LessConstraint{expected: uint64(math.MaxInt64) + 1}).Check, int32(-5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint64LessInt64WithIntComparison").
+	NewSubtest(t, "Uint64LessInt64WithIntComparison").
 		Call((&LessConstraint{expected: uint64(10)}).Check, int64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint64EqualInt64WithIntComparison").
+	NewSubtest(t, "Uint64EqualInt64WithIntComparison").
 		Call((&LessConstraint{expected: uint64(5)}).Check, int64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint64GreaterInt64WithIntComparison").
+	NewSubtest(t, "Uint64GreaterInt64WithIntComparison").
 		Call((&LessConstraint{expected: uint64(5)}).Check, int64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint64LessInt64WithUintComparison").
+	NewSubtest(t, "Uint64LessInt64WithUintComparison").
 		Call((&LessConstraint{expected: uint64(math.MaxInt64) + 1}).Check, int64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint64LessInt64WithFloatComparison").
+	NewSubtest(t, "Uint64LessInt64WithFloatComparison").
 		Call((&LessConstraint{expected: uint64(math.MaxInt64) + 1}).Check, int64(-5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint64LessUint").
+	NewSubtest(t, "Uint64LessUint").
 		Call((&LessConstraint{expected: uint64(10)}).Check, uint(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint64EqualUint").
+	NewSubtest(t, "Uint64EqualUint").
 		Call((&LessConstraint{expected: uint64(5)}).Check, uint(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint64GreaterUint").
+	NewSubtest(t, "Uint64GreaterUint").
 		Call((&LessConstraint{expected: uint64(5)}).Check, uint(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint64LessUint8").
+	NewSubtest(t, "Uint64LessUint8").
 		Call((&LessConstraint{expected: uint64(10)}).Check, uint8(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint64EqualUint8").
+	NewSubtest(t, "Uint64EqualUint8").
 		Call((&LessConstraint{expected: uint64(5)}).Check, uint8(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint64GreaterUint8").
+	NewSubtest(t, "Uint64GreaterUint8").
 		Call((&LessConstraint{expected: uint64(5)}).Check, uint8(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint64LessUint16").
+	NewSubtest(t, "Uint64LessUint16").
 		Call((&LessConstraint{expected: uint64(10)}).Check, uint16(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint64EqualUint16").
+	NewSubtest(t, "Uint64EqualUint16").
 		Call((&LessConstraint{expected: uint64(5)}).Check, uint16(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint64GreaterUint16").
+	NewSubtest(t, "Uint64GreaterUint16").
 		Call((&LessConstraint{expected: uint64(5)}).Check, uint16(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint64LessUint32").
+	NewSubtest(t, "Uint64LessUint32").
 		Call((&LessConstraint{expected: uint64(10)}).Check, uint32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint64EqualUint32").
+	NewSubtest(t, "Uint64EqualUint32").
 		Call((&LessConstraint{expected: uint64(5)}).Check, uint32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint64GreaterUint32").
+	NewSubtest(t, "Uint64GreaterUint32").
 		Call((&LessConstraint{expected: uint64(5)}).Check, uint32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint64LessUint64").
+	NewSubtest(t, "Uint64LessUint64").
 		Call((&LessConstraint{expected: uint64(10)}).Check, uint64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint64EqualUint64").
+	NewSubtest(t, "Uint64EqualUint64").
 		Call((&LessConstraint{expected: uint64(5)}).Check, uint64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint64GreaterUint64").
+	NewSubtest(t, "Uint64GreaterUint64").
 		Call((&LessConstraint{expected: uint64(5)}).Check, uint64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint64AndUintPtr").
+	NewSubtest(t, "Uint64AndUintPtr").
 		Call((&LessConstraint{expected: uint64(5)}).Check, uintptr(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", uintptr(5)))
 
-	NewDeclarative(t, "Uint64LessFloat32").
+	NewSubtest(t, "Uint64LessFloat32").
 		Call((&LessConstraint{expected: uint64(10)}).Check, float32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint64EqualFloat32").
+	NewSubtest(t, "Uint64EqualFloat32").
 		Call((&LessConstraint{expected: uint64(5)}).Check, float32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint64GreaterFloat32").
+	NewSubtest(t, "Uint64GreaterFloat32").
 		Call((&LessConstraint{expected: uint64(5)}).Check, float32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint64LessFloat64").
+	NewSubtest(t, "Uint64LessFloat64").
 		Call((&LessConstraint{expected: uint64(10)}).Check, float64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Uint64EqualFloat64").
+	NewSubtest(t, "Uint64EqualFloat64").
 		Call((&LessConstraint{expected: uint64(5)}).Check, float64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint64GreaterFloat64").
+	NewSubtest(t, "Uint64GreaterFloat64").
 		Call((&LessConstraint{expected: uint64(5)}).Check, float64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Uint64AndComplex64").
+	NewSubtest(t, "Uint64AndComplex64").
 		Call((&LessConstraint{expected: uint64(5)}).Check, complex64(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", complex64(5)))
 
-	NewDeclarative(t, "Uint64AndComplex128").
+	NewSubtest(t, "Uint64AndComplex128").
 		Call((&LessConstraint{expected: uint64(5)}).Check, complex128(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", complex128(5)))
 
-	NewDeclarative(t, "Uint64AndArray").
+	NewSubtest(t, "Uint64AndArray").
 		Call((&LessConstraint{expected: uint64(5)}).Check, [1]int{5}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", [1]int{5}))
 
-	NewDeclarative(t, "Uint64AndChan").
+	NewSubtest(t, "Uint64AndChan").
 		Call((&LessConstraint{expected: uint64(5)}).Check, make(chan int)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", make(chan int)))
 
-	NewDeclarative(t, "Uint64AndFunc").
+	NewSubtest(t, "Uint64AndFunc").
 		Call((&LessConstraint{expected: uint64(5)}).Check, func() {}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", func() {}))
 
-	NewDeclarative(t, "Uint64AndInterface").
+	NewSubtest(t, "Uint64AndInterface").
 		Call((&LessConstraint{expected: uint64(5)}).Check, (*interface{})(nil)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", (*interface{})(nil)))
 
-	NewDeclarative(t, "Uint64AndMap").
+	NewSubtest(t, "Uint64AndMap").
 		Call((&LessConstraint{expected: uint64(5)}).Check, map[int]int{1: 1}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", map[int]int{1: 1}))
 
-	NewDeclarative(t, "Uint64AndPtr").
+	NewSubtest(t, "Uint64AndPtr").
 		Call((&LessConstraint{expected: uint64(5)}).Check, new(int)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", new(int)))
 
-	NewDeclarative(t, "Uint64AndSlice").
+	NewSubtest(t, "Uint64AndSlice").
 		Call((&LessConstraint{expected: uint64(5)}).Check, []int{5}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", []int{5}))
 
-	NewDeclarative(t, "Uint64AndString").
+	NewSubtest(t, "Uint64AndString").
 		Call((&LessConstraint{expected: uint64(5)}).Check, "data").
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", "data"))
 
-	NewDeclarative(t, "Uint64AndStruct").
+	NewSubtest(t, "Uint64AndStruct").
 		Call((&LessConstraint{expected: uint64(5)}).Check, struct{}{}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", struct{}{}))
 
-	NewDeclarative(t, "Uint64AndUnsafePointer").
+	NewSubtest(t, "Uint64AndUnsafePointer").
 		Call((&LessConstraint{expected: uint64(5)}).Check, unsafe.Pointer(new(int))).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", unsafe.Pointer(new(int))))
 }
 
 //noinspection GoRedundantConversion
 func TestLessConstraint_Check_WithFloat32(t *testing.T) {
-	NewDeclarative(t, "Float32AndInvalid").
+	NewSubtest(t, "Float32AndInvalid").
 		Call(
 			func() {
 				(&LessConstraint{expected: float32(5)}).Check(nil)
@@ -2424,210 +2424,210 @@ func TestLessConstraint_Check_WithFloat32(t *testing.T) {
 		).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", nil))
 
-	NewDeclarative(t, "Float32AndBool").
+	NewSubtest(t, "Float32AndBool").
 		Call((&LessConstraint{expected: float32(5)}).Check, false).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", false))
 
-	NewDeclarative(t, "Float32LessInt").
+	NewSubtest(t, "Float32LessInt").
 		Call((&LessConstraint{expected: float32(10)}).Check, int(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Float32EqualInt").
+	NewSubtest(t, "Float32EqualInt").
 		Call((&LessConstraint{expected: float32(5)}).Check, int(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float32GreaterInt").
+	NewSubtest(t, "Float32GreaterInt").
 		Call((&LessConstraint{expected: float32(5)}).Check, int(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float32LessInt8").
+	NewSubtest(t, "Float32LessInt8").
 		Call((&LessConstraint{expected: float32(10)}).Check, int8(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Float32EqualInt8").
+	NewSubtest(t, "Float32EqualInt8").
 		Call((&LessConstraint{expected: float32(5)}).Check, int8(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float32GreaterInt8").
+	NewSubtest(t, "Float32GreaterInt8").
 		Call((&LessConstraint{expected: float32(5)}).Check, int8(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float32LessInt16").
+	NewSubtest(t, "Float32LessInt16").
 		Call((&LessConstraint{expected: float32(10)}).Check, int16(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Float32EqualInt16").
+	NewSubtest(t, "Float32EqualInt16").
 		Call((&LessConstraint{expected: float32(5)}).Check, int16(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float32GreaterInt16").
+	NewSubtest(t, "Float32GreaterInt16").
 		Call((&LessConstraint{expected: float32(5)}).Check, int16(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float32LessInt32").
+	NewSubtest(t, "Float32LessInt32").
 		Call((&LessConstraint{expected: float32(10)}).Check, int32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Float32EqualInt32").
+	NewSubtest(t, "Float32EqualInt32").
 		Call((&LessConstraint{expected: float32(5)}).Check, int32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float32GreaterInt32").
+	NewSubtest(t, "Float32GreaterInt32").
 		Call((&LessConstraint{expected: float32(5)}).Check, int32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float32LessInt64").
+	NewSubtest(t, "Float32LessInt64").
 		Call((&LessConstraint{expected: float32(10)}).Check, int64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Float32EqualInt64").
+	NewSubtest(t, "Float32EqualInt64").
 		Call((&LessConstraint{expected: float32(5)}).Check, int64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float32GreaterInt64").
+	NewSubtest(t, "Float32GreaterInt64").
 		Call((&LessConstraint{expected: float32(5)}).Check, int64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float32LessUint").
+	NewSubtest(t, "Float32LessUint").
 		Call((&LessConstraint{expected: float32(10)}).Check, uint(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Float32EqualUint").
+	NewSubtest(t, "Float32EqualUint").
 		Call((&LessConstraint{expected: float32(5)}).Check, uint(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float32GreaterUint").
+	NewSubtest(t, "Float32GreaterUint").
 		Call((&LessConstraint{expected: float32(5)}).Check, uint(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float32LessUint8").
+	NewSubtest(t, "Float32LessUint8").
 		Call((&LessConstraint{expected: float32(10)}).Check, uint8(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Float32EqualUint8").
+	NewSubtest(t, "Float32EqualUint8").
 		Call((&LessConstraint{expected: float32(5)}).Check, uint8(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float32GreaterUint8").
+	NewSubtest(t, "Float32GreaterUint8").
 		Call((&LessConstraint{expected: float32(5)}).Check, uint8(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float32LessUint16").
+	NewSubtest(t, "Float32LessUint16").
 		Call((&LessConstraint{expected: float32(10)}).Check, uint16(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Float32EqualUint16").
+	NewSubtest(t, "Float32EqualUint16").
 		Call((&LessConstraint{expected: float32(5)}).Check, uint16(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float32GreaterUint16").
+	NewSubtest(t, "Float32GreaterUint16").
 		Call((&LessConstraint{expected: float32(5)}).Check, uint16(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float32LessUint32").
+	NewSubtest(t, "Float32LessUint32").
 		Call((&LessConstraint{expected: float32(10)}).Check, uint32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Float32EqualUint32").
+	NewSubtest(t, "Float32EqualUint32").
 		Call((&LessConstraint{expected: float32(5)}).Check, uint32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float32GreaterUint32").
+	NewSubtest(t, "Float32GreaterUint32").
 		Call((&LessConstraint{expected: float32(5)}).Check, uint32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float32LessUint64").
+	NewSubtest(t, "Float32LessUint64").
 		Call((&LessConstraint{expected: float32(10)}).Check, uint64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Float32EqualUint64").
+	NewSubtest(t, "Float32EqualUint64").
 		Call((&LessConstraint{expected: float32(5)}).Check, uint64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float32GreaterUint64").
+	NewSubtest(t, "Float32GreaterUint64").
 		Call((&LessConstraint{expected: float32(5)}).Check, uint64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float32AndUintPtr").
+	NewSubtest(t, "Float32AndUintPtr").
 		Call((&LessConstraint{expected: float32(5)}).Check, uintptr(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", uintptr(5)))
 
-	NewDeclarative(t, "Float32LessFloat32").
+	NewSubtest(t, "Float32LessFloat32").
 		Call((&LessConstraint{expected: float32(10)}).Check, float32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Float32EqualFloat32").
+	NewSubtest(t, "Float32EqualFloat32").
 		Call((&LessConstraint{expected: float32(5)}).Check, float32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float32GreaterFloat32").
+	NewSubtest(t, "Float32GreaterFloat32").
 		Call((&LessConstraint{expected: float32(5)}).Check, float32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float32LessFloat64").
+	NewSubtest(t, "Float32LessFloat64").
 		Call((&LessConstraint{expected: float32(10)}).Check, float64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Float32EqualFloat64").
+	NewSubtest(t, "Float32EqualFloat64").
 		Call((&LessConstraint{expected: float32(5)}).Check, float64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float32GreaterFloat64").
+	NewSubtest(t, "Float32GreaterFloat64").
 		Call((&LessConstraint{expected: float32(5)}).Check, float64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float32AndComplex64").
+	NewSubtest(t, "Float32AndComplex64").
 		Call((&LessConstraint{expected: float32(5)}).Check, complex64(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", complex64(5)))
 
-	NewDeclarative(t, "Float32AndComplex128").
+	NewSubtest(t, "Float32AndComplex128").
 		Call((&LessConstraint{expected: float32(5)}).Check, complex128(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", complex128(5)))
 
-	NewDeclarative(t, "Float32AndArray").
+	NewSubtest(t, "Float32AndArray").
 		Call((&LessConstraint{expected: float32(5)}).Check, [1]int{5}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", [1]int{5}))
 
-	NewDeclarative(t, "Float32AndChan").
+	NewSubtest(t, "Float32AndChan").
 		Call((&LessConstraint{expected: float32(5)}).Check, make(chan int)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", make(chan int)))
 
-	NewDeclarative(t, "Float32AndFunc").
+	NewSubtest(t, "Float32AndFunc").
 		Call((&LessConstraint{expected: float32(5)}).Check, func() {}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", func() {}))
 
-	NewDeclarative(t, "Float32AndInterface").
+	NewSubtest(t, "Float32AndInterface").
 		Call((&LessConstraint{expected: float32(5)}).Check, (*interface{})(nil)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", (*interface{})(nil)))
 
-	NewDeclarative(t, "Float32AndMap").
+	NewSubtest(t, "Float32AndMap").
 		Call((&LessConstraint{expected: float32(5)}).Check, map[int]int{1: 1}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", map[int]int{1: 1}))
 
-	NewDeclarative(t, "Float32AndPtr").
+	NewSubtest(t, "Float32AndPtr").
 		Call((&LessConstraint{expected: float32(5)}).Check, new(int)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", new(int)))
 
-	NewDeclarative(t, "Float32AndSlice").
+	NewSubtest(t, "Float32AndSlice").
 		Call((&LessConstraint{expected: float32(5)}).Check, []int{5}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", []int{5}))
 
-	NewDeclarative(t, "Float32AndString").
+	NewSubtest(t, "Float32AndString").
 		Call((&LessConstraint{expected: float32(5)}).Check, "data").
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", "data"))
 
-	NewDeclarative(t, "Float32AndStruct").
+	NewSubtest(t, "Float32AndStruct").
 		Call((&LessConstraint{expected: float32(5)}).Check, struct{}{}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", struct{}{}))
 
-	NewDeclarative(t, "Float32AndUnsafePointer").
+	NewSubtest(t, "Float32AndUnsafePointer").
 		Call((&LessConstraint{expected: float32(5)}).Check, unsafe.Pointer(new(int))).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", unsafe.Pointer(new(int))))
 }
 
 //noinspection GoRedundantConversion
 func TestLessConstraint_Check_WithFloat64(t *testing.T) {
-	NewDeclarative(t, "Float64AndInvalid").
+	NewSubtest(t, "Float64AndInvalid").
 		Call(
 			func() {
 				(&LessConstraint{expected: float64(5)}).Check(nil)
@@ -2635,215 +2635,215 @@ func TestLessConstraint_Check_WithFloat64(t *testing.T) {
 		).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", nil))
 
-	NewDeclarative(t, "Float64AndBool").
+	NewSubtest(t, "Float64AndBool").
 		Call((&LessConstraint{expected: float64(5)}).Check, false).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", false))
 
-	NewDeclarative(t, "Float64LessInt").
+	NewSubtest(t, "Float64LessInt").
 		Call((&LessConstraint{expected: float64(10)}).Check, int(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Float64EqualInt").
+	NewSubtest(t, "Float64EqualInt").
 		Call((&LessConstraint{expected: float64(5)}).Check, int(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float64GreaterInt").
+	NewSubtest(t, "Float64GreaterInt").
 		Call((&LessConstraint{expected: float64(5)}).Check, int(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float64LessInt8").
+	NewSubtest(t, "Float64LessInt8").
 		Call((&LessConstraint{expected: float64(10)}).Check, int8(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Float64EqualInt8").
+	NewSubtest(t, "Float64EqualInt8").
 		Call((&LessConstraint{expected: float64(5)}).Check, int8(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float64GreaterInt8").
+	NewSubtest(t, "Float64GreaterInt8").
 		Call((&LessConstraint{expected: float64(5)}).Check, int8(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float64LessInt16").
+	NewSubtest(t, "Float64LessInt16").
 		Call((&LessConstraint{expected: float64(10)}).Check, int16(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Float64EqualInt16").
+	NewSubtest(t, "Float64EqualInt16").
 		Call((&LessConstraint{expected: float64(5)}).Check, int16(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float64GreaterInt16").
+	NewSubtest(t, "Float64GreaterInt16").
 		Call((&LessConstraint{expected: float64(5)}).Check, int16(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float64LessInt32").
+	NewSubtest(t, "Float64LessInt32").
 		Call((&LessConstraint{expected: float64(10)}).Check, int32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Float64EqualInt32").
+	NewSubtest(t, "Float64EqualInt32").
 		Call((&LessConstraint{expected: float64(5)}).Check, int32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float64GreaterInt32").
+	NewSubtest(t, "Float64GreaterInt32").
 		Call((&LessConstraint{expected: float64(5)}).Check, int32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float64LessInt64").
+	NewSubtest(t, "Float64LessInt64").
 		Call((&LessConstraint{expected: float64(10)}).Check, int64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Float64EqualInt64").
+	NewSubtest(t, "Float64EqualInt64").
 		Call((&LessConstraint{expected: float64(5)}).Check, int64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float64GreaterInt64").
+	NewSubtest(t, "Float64GreaterInt64").
 		Call((&LessConstraint{expected: float64(5)}).Check, int64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float64LessUint").
+	NewSubtest(t, "Float64LessUint").
 		Call((&LessConstraint{expected: float64(10)}).Check, uint(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Float64EqualUint").
+	NewSubtest(t, "Float64EqualUint").
 		Call((&LessConstraint{expected: float64(5)}).Check, uint(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float64GreaterUint").
+	NewSubtest(t, "Float64GreaterUint").
 		Call((&LessConstraint{expected: float64(5)}).Check, uint(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float64LessUint8").
+	NewSubtest(t, "Float64LessUint8").
 		Call((&LessConstraint{expected: float64(10)}).Check, uint8(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Float64EqualUint8").
+	NewSubtest(t, "Float64EqualUint8").
 		Call((&LessConstraint{expected: float64(5)}).Check, uint8(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float64GreaterUint8").
+	NewSubtest(t, "Float64GreaterUint8").
 		Call((&LessConstraint{expected: float64(5)}).Check, uint8(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float64LessUint16").
+	NewSubtest(t, "Float64LessUint16").
 		Call((&LessConstraint{expected: float64(10)}).Check, uint16(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Float64EqualUint16").
+	NewSubtest(t, "Float64EqualUint16").
 		Call((&LessConstraint{expected: float64(5)}).Check, uint16(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float64GreaterUint16").
+	NewSubtest(t, "Float64GreaterUint16").
 		Call((&LessConstraint{expected: float64(5)}).Check, uint16(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float64LessUint32").
+	NewSubtest(t, "Float64LessUint32").
 		Call((&LessConstraint{expected: float64(10)}).Check, uint32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Float64EqualUint32").
+	NewSubtest(t, "Float64EqualUint32").
 		Call((&LessConstraint{expected: float64(5)}).Check, uint32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float64GreaterUint32").
+	NewSubtest(t, "Float64GreaterUint32").
 		Call((&LessConstraint{expected: float64(5)}).Check, uint32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float64LessUint64").
+	NewSubtest(t, "Float64LessUint64").
 		Call((&LessConstraint{expected: float64(10)}).Check, uint64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Float64EqualUint64").
+	NewSubtest(t, "Float64EqualUint64").
 		Call((&LessConstraint{expected: float64(5)}).Check, uint64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float64GreaterUint64").
+	NewSubtest(t, "Float64GreaterUint64").
 		Call((&LessConstraint{expected: float64(5)}).Check, uint64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float64AndUintPtr").
+	NewSubtest(t, "Float64AndUintPtr").
 		Call((&LessConstraint{expected: float64(5)}).Check, uintptr(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", uintptr(5)))
 
-	NewDeclarative(t, "Float64LessFloat32").
+	NewSubtest(t, "Float64LessFloat32").
 		Call((&LessConstraint{expected: float64(10)}).Check, float32(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Float64EqualFloat32").
+	NewSubtest(t, "Float64EqualFloat32").
 		Call((&LessConstraint{expected: float64(5)}).Check, float32(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float64GreaterFloat32").
+	NewSubtest(t, "Float64GreaterFloat32").
 		Call((&LessConstraint{expected: float64(5)}).Check, float32(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float64LessFloat64").
+	NewSubtest(t, "Float64LessFloat64").
 		Call((&LessConstraint{expected: float64(10)}).Check, float64(5)).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Float64EqualFloat64").
+	NewSubtest(t, "Float64EqualFloat64").
 		Call((&LessConstraint{expected: float64(5)}).Check, float64(5)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float64GreaterFloat64").
+	NewSubtest(t, "Float64GreaterFloat64").
 		Call((&LessConstraint{expected: float64(5)}).Check, float64(10)).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Float64AndComplex64").
+	NewSubtest(t, "Float64AndComplex64").
 		Call((&LessConstraint{expected: float64(5)}).Check, complex64(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", complex64(5)))
 
-	NewDeclarative(t, "Float64AndComplex128").
+	NewSubtest(t, "Float64AndComplex128").
 		Call((&LessConstraint{expected: float64(5)}).Check, complex128(5)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", complex128(5)))
 
-	NewDeclarative(t, "Float64AndArray").
+	NewSubtest(t, "Float64AndArray").
 		Call((&LessConstraint{expected: float64(5)}).Check, [1]int{5}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", [1]int{5}))
 
-	NewDeclarative(t, "Float64AndChan").
+	NewSubtest(t, "Float64AndChan").
 		Call((&LessConstraint{expected: float64(5)}).Check, make(chan int)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", make(chan int)))
 
-	NewDeclarative(t, "Float64AndFunc").
+	NewSubtest(t, "Float64AndFunc").
 		Call((&LessConstraint{expected: float64(5)}).Check, func() {}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", func() {}))
 
-	NewDeclarative(t, "Float64AndInterface").
+	NewSubtest(t, "Float64AndInterface").
 		Call((&LessConstraint{expected: float64(5)}).Check, (*interface{})(nil)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", (*interface{})(nil)))
 
-	NewDeclarative(t, "Float64AndMap").
+	NewSubtest(t, "Float64AndMap").
 		Call((&LessConstraint{expected: float64(5)}).Check, map[int]int{1: 1}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", map[int]int{1: 1}))
 
-	NewDeclarative(t, "Float64AndPtr").
+	NewSubtest(t, "Float64AndPtr").
 		Call((&LessConstraint{expected: float64(5)}).Check, new(int)).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", new(int)))
 
-	NewDeclarative(t, "Float64AndSlice").
+	NewSubtest(t, "Float64AndSlice").
 		Call((&LessConstraint{expected: float64(5)}).Check, []int{5}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", []int{5}))
 
-	NewDeclarative(t, "Float64AndString").
+	NewSubtest(t, "Float64AndString").
 		Call((&LessConstraint{expected: float64(5)}).Check, "data").
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", "data"))
 
-	NewDeclarative(t, "Float64AndStruct").
+	NewSubtest(t, "Float64AndStruct").
 		Call((&LessConstraint{expected: float64(5)}).Check, struct{}{}).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", struct{}{}))
 
-	NewDeclarative(t, "Float64AndUnsafePointer").
+	NewSubtest(t, "Float64AndUnsafePointer").
 		Call((&LessConstraint{expected: float64(5)}).Check, unsafe.Pointer(new(int))).
 		ExpectPanic(NewInvalidNumericComparisonTypeError("actual", unsafe.Pointer(new(int))))
 }
 
 func TestLessConstraint_String(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&LessConstraint{expected: 55}).String).
 		ExpectResult(fmt.Sprintf("be less than %v", 55))
 }
 
 func TestLessConstraint_Details(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&LessConstraint{expected: 55}).Details, 10).
 		ExpectResult("")
 }

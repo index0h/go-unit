@@ -8,18 +8,18 @@ import (
 func TestNewEqualConstraint(t *testing.T) {
 	comparatorFixture := NewMockEqualComparer(t)
 
-	NewDeclarative(t, "WithComparator").
+	NewSubtest(t, "WithComparator").
 		SetCompareOptions(IgnoreUnexportedOption{Value: testing.T{}}).
 		Call(NewEqualConstraint, "data", comparatorFixture).
 		ExpectResult(ConstraintAsValue{Value: &EqualConstraint{expected: "data", comparator: comparatorFixture}})
 
-	NewDeclarative(t, "WithNilComparator").
+	NewSubtest(t, "WithNilComparator").
 		Call(NewEqualConstraint, "data", nil).
 		ExpectPanic(NewNotNilError("comparator"))
 }
 
 func TestEqualConstraint_Check(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&EqualConstraint{
 				expected:   "data",
@@ -29,7 +29,7 @@ func TestEqualConstraint_Check(t *testing.T) {
 		).
 		ExpectResult(true)
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&EqualConstraint{
 				expected:   "data",
@@ -41,7 +41,7 @@ func TestEqualConstraint_Check(t *testing.T) {
 }
 
 func TestEqualConstraint_String(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&EqualConstraint{
 				expected:   "expected",
@@ -52,7 +52,7 @@ func TestEqualConstraint_String(t *testing.T) {
 }
 
 func TestEqualConstraint_Details(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&EqualConstraint{
 				expected:   "data",

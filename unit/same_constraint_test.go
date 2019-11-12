@@ -6,7 +6,7 @@ import (
 )
 
 func TestNewSameConstraint(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		SetCompareOptions(IgnoreUnexportedOption{Value: testing.T{}}).
 		Call(NewSameConstraint, "data").
 		ExpectResult(
@@ -20,7 +20,7 @@ func TestNewSameConstraint(t *testing.T) {
 }
 
 func TestSameConstraint_Check(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&SameConstraint{
 				expected:   "data",
@@ -30,7 +30,7 @@ func TestSameConstraint_Check(t *testing.T) {
 		).
 		ExpectResult(true)
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&SameConstraint{
 				expected:   "data",
@@ -42,7 +42,7 @@ func TestSameConstraint_Check(t *testing.T) {
 }
 
 func TestSameConstraint_String(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&SameConstraint{
 				expected:   "expected",
@@ -53,7 +53,7 @@ func TestSameConstraint_String(t *testing.T) {
 }
 
 func TestSameConstraint_Details(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&SameConstraint{
 				expected:   "data",

@@ -3,7 +3,7 @@ package unit
 import "testing"
 
 func TestNewValueConstraint(t *testing.T) {
-	NewDeclarative(t, "WithNilAndPositiveResult").
+	NewSubtest(t, "WithNilAndPositiveResult").
 		Call(NewValueConstraint, nil, NewMockEqualComparer(t)).
 		ExpectResult(ConstraintAsValue{Value: &NilConstraint{}})
 
@@ -11,7 +11,7 @@ func TestNewValueConstraint(t *testing.T) {
 		comparator := NewMockEqualComparer(t)
 		constraint := NewMockConstraint(t)
 
-		NewDeclarative(t, "WithConstraintAndPositiveResult").
+		NewSubtest(t, "WithConstraintAndPositiveResult").
 			SetCompareOptions(IgnoreUnexportedOption{Value: testing.T{}}).
 			Call(NewValueConstraint, constraint, comparator).
 			ExpectResult(ConstraintAsValue{Value: constraint})
@@ -21,7 +21,7 @@ func TestNewValueConstraint(t *testing.T) {
 		comparator := NewMockEqualComparer(t)
 		constraint := NewMockConstraint(t)
 
-		NewDeclarative(t, "WithConstraintAsValueAndPositiveResult").
+		NewSubtest(t, "WithConstraintAsValueAndPositiveResult").
 			SetCompareOptions(IgnoreUnexportedOption{Value: testing.T{}}).
 			Call(NewValueConstraint, ConstraintAsValue{Value: constraint}, comparator).
 			ExpectResult(
@@ -34,7 +34,7 @@ func TestNewValueConstraint(t *testing.T) {
 	{
 		comparator := NewMockEqualComparer(t)
 
-		NewDeclarative(t, "WithConstraintAsValueAndPositiveResult").
+		NewSubtest(t, "WithConstraintAsValueAndPositiveResult").
 			SetCompareOptions(IgnoreUnexportedOption{Value: testing.T{}}).
 			Call(NewValueConstraint, "data", comparator).
 			ExpectResult(
@@ -44,7 +44,7 @@ func TestNewValueConstraint(t *testing.T) {
 			)
 	}
 
-	NewDeclarative(t, "WithNilComparatorAndNegativeResult").
+	NewSubtest(t, "WithNilComparatorAndNegativeResult").
 		SetCompareOptions(IgnoreUnexportedOption{Value: testing.T{}}).
 		Call(NewValueConstraint, "data", nil).
 		ExpectPanic(NewNotNilError("comparator"))
