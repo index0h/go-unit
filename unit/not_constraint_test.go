@@ -8,28 +8,28 @@ import (
 )
 
 func TestNewNotConstraint(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		SetCompareOptions(IgnoreUnexportedOption{Value: testing.T{}}).
 		Call(NewNotConstraint, NewMockConstraint(t)).
 		ExpectResult(ConstraintAsValue{Value: &NotConstraint{constraint: NewMockConstraint(t)}})
 
-	NewDeclarative(t, "WithNegativeResultByNiConstraint").
+	NewSubtest(t, "WithNegativeResultByNiConstraint").
 		Call(NewNotConstraint, nil).
 		ExpectPanic(NewNotNilError("constraint"))
 }
 
 func TestNotConstraint_Check(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&NotConstraint{constraint: NewMockConstraint(t).RecordCheck("data", false)}).Check, "data").
 		ExpectResult(true)
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call((&NotConstraint{constraint: NewMockConstraint(t).RecordCheck("data", true)}).Check, "data").
 		ExpectResult(false)
 }
 
 func TestNotConstraint_String(t *testing.T) {
-	NewDeclarative(t, "WithAndConstraintAndOneLineResult").
+	NewSubtest(t, "WithAndConstraintAndOneLineResult").
 		Call(
 			(&NotConstraint{
 				constraint: &AndConstraint{
@@ -42,7 +42,7 @@ func TestNotConstraint_String(t *testing.T) {
 		).
 		ExpectResult("be not ((first data) and (second data))")
 
-	NewDeclarative(t, "WithAndConstraintAndMultilineResult").
+	NewSubtest(t, "WithAndConstraintAndMultilineResult").
 		Call(
 			(&NotConstraint{
 				constraint: &AndConstraint{
@@ -55,11 +55,11 @@ func TestNotConstraint_String(t *testing.T) {
 		).
 		ExpectResult("be not (\n\t(\n\t\tfirst\n\t\tdata\n\t) and (second data)\n)")
 
-	NewDeclarative(t, "WithAnythingConstraint").
+	NewSubtest(t, "WithAnythingConstraint").
 		Call((&NotConstraint{constraint: &AnyConstraint{}}).String).
 		ExpectResult("be nothing")
 
-	NewDeclarative(t, "WithCallbackConstraint").
+	NewSubtest(t, "WithCallbackConstraint").
 		Call(
 			(&NotConstraint{
 				constraint: &CallbackConstraint{
@@ -71,7 +71,7 @@ func TestNotConstraint_String(t *testing.T) {
 		).
 		ExpectResult("not accept callback")
 
-	NewDeclarative(t, "WithContainsConstraint").
+	NewSubtest(t, "WithContainsConstraint").
 		Call(
 			(&NotConstraint{
 				constraint: &ContainsConstraint{
@@ -81,11 +81,11 @@ func TestNotConstraint_String(t *testing.T) {
 		).
 		ExpectResult(fmt.Sprintf("not contain %+v", [1]int{1}))
 
-	NewDeclarative(t, "WithEmptyConstraint").
+	NewSubtest(t, "WithEmptyConstraint").
 		Call((&NotConstraint{constraint: &EmptyConstraint{}}).String).
 		ExpectResult("be not empty")
 
-	NewDeclarative(t, "WithEqualConstraint").
+	NewSubtest(t, "WithEqualConstraint").
 		Call(
 			(&NotConstraint{
 				constraint: &EqualConstraint{
@@ -95,11 +95,11 @@ func TestNotConstraint_String(t *testing.T) {
 		).
 		ExpectResult(fmt.Sprintf("be not equal to %+v", [1]int{1}))
 
-	NewDeclarative(t, "WithFalseConstraint").
+	NewSubtest(t, "WithFalseConstraint").
 		Call((&NotConstraint{constraint: &FalseConstraint{}}).String).
 		ExpectResult("be true")
 
-	NewDeclarative(t, "WithGreaterConstraint").
+	NewSubtest(t, "WithGreaterConstraint").
 		Call(
 			(&NotConstraint{
 				constraint: &GreaterConstraint{
@@ -109,7 +109,7 @@ func TestNotConstraint_String(t *testing.T) {
 		).
 		ExpectResult(fmt.Sprintf("be less than or equal to %v", 10))
 
-	NewDeclarative(t, "WithGreaterConstraint").
+	NewSubtest(t, "WithGreaterConstraint").
 		Call(
 			(&NotConstraint{
 				constraint: &KindConstraint{
@@ -119,7 +119,7 @@ func TestNotConstraint_String(t *testing.T) {
 		).
 		ExpectResult(fmt.Sprintf("have no one kind of %s, %s", reflect.String, reflect.Bool))
 
-	NewDeclarative(t, "WithLengthConstraint").
+	NewSubtest(t, "WithLengthConstraint").
 		Call(
 			(&NotConstraint{
 				constraint: &LengthConstraint{
@@ -129,7 +129,7 @@ func TestNotConstraint_String(t *testing.T) {
 		).
 		ExpectResult(fmt.Sprintf("not have length %v", 10))
 
-	NewDeclarative(t, "WithLengthGreaterConstraint").
+	NewSubtest(t, "WithLengthGreaterConstraint").
 		Call(
 			(&NotConstraint{
 				constraint: &LengthGreaterConstraint{
@@ -139,7 +139,7 @@ func TestNotConstraint_String(t *testing.T) {
 		).
 		ExpectResult(fmt.Sprintf("have length less than or equal to %v", 10))
 
-	NewDeclarative(t, "WithLengthLessConstraint").
+	NewSubtest(t, "WithLengthLessConstraint").
 		Call(
 			(&NotConstraint{
 				constraint: &LengthLessConstraint{
@@ -149,7 +149,7 @@ func TestNotConstraint_String(t *testing.T) {
 		).
 		ExpectResult(fmt.Sprintf("have length greater than or equal to %v", 10))
 
-	NewDeclarative(t, "WithLessConstraint").
+	NewSubtest(t, "WithLessConstraint").
 		Call(
 			(&NotConstraint{
 				constraint: &LessConstraint{
@@ -159,11 +159,11 @@ func TestNotConstraint_String(t *testing.T) {
 		).
 		ExpectResult(fmt.Sprintf("be greater than or equal to %v", 10))
 
-	NewDeclarative(t, "WithNilConstraint").
+	NewSubtest(t, "WithNilConstraint").
 		Call((&NotConstraint{constraint: &NilConstraint{}}).String).
 		ExpectResult("be not nil")
 
-	NewDeclarative(t, "WithNotConstraint").
+	NewSubtest(t, "WithNotConstraint").
 		Call(
 			(&NotConstraint{
 				constraint: &NotConstraint{
@@ -173,7 +173,7 @@ func TestNotConstraint_String(t *testing.T) {
 		).
 		ExpectResult("data")
 
-	NewDeclarative(t, "WithAndConstraintAndOneLineResult").
+	NewSubtest(t, "WithAndConstraintAndOneLineResult").
 		Call(
 			(&NotConstraint{
 				constraint: &AndConstraint{
@@ -186,7 +186,7 @@ func TestNotConstraint_String(t *testing.T) {
 		).
 		ExpectResult("be not ((first data) and (second data))")
 
-	NewDeclarative(t, "WithOrConstraintAndMultilineResult").
+	NewSubtest(t, "WithOrConstraintAndMultilineResult").
 		Call(
 			(&NotConstraint{
 				constraint: &OrConstraint{
@@ -199,7 +199,7 @@ func TestNotConstraint_String(t *testing.T) {
 		).
 		ExpectResult("be not (\n\t(\n\t\tfirst\n\t\tdata\n\t) or (second data)\n)")
 
-	NewDeclarative(t, "WithRegexpConstraint").
+	NewSubtest(t, "WithRegexpConstraint").
 		Call(
 			(&NotConstraint{
 				constraint: &RegexpConstraint{
@@ -209,7 +209,7 @@ func TestNotConstraint_String(t *testing.T) {
 		).
 		ExpectResult(fmt.Sprintf("not match PCRE pattern '%s'", regexp.MustCompile("^\\d{3}$")))
 
-	NewDeclarative(t, "WithSameConstraint").
+	NewSubtest(t, "WithSameConstraint").
 		Call(
 			(&NotConstraint{
 				constraint: &SameConstraint{
@@ -219,11 +219,11 @@ func TestNotConstraint_String(t *testing.T) {
 		).
 		ExpectResult(fmt.Sprintf("not be same as %+v", [1]int{5}))
 
-	NewDeclarative(t, "WithSameConstraint").
+	NewSubtest(t, "WithSameConstraint").
 		Call((&NotConstraint{constraint: &TrueConstraint{}}).String).
 		ExpectResult("be false")
 
-	NewDeclarative(t, "WithTypeConstraint").
+	NewSubtest(t, "WithTypeConstraint").
 		Call(
 			(&NotConstraint{
 				constraint: &TypeConstraint{
@@ -233,25 +233,25 @@ func TestNotConstraint_String(t *testing.T) {
 		).
 		ExpectResult(fmt.Sprintf("have no one type of %T, %T", int32(5), [1]string{"data"}))
 
-	NewDeclarative(t, "WithUnknownConstraintAndOneLineResult").
+	NewSubtest(t, "WithUnknownConstraintAndOneLineResult").
 		Call((&NotConstraint{constraint: NewMockConstraint(t).RecordString("data")}).String).
 		ExpectResult("not (data)")
 
-	NewDeclarative(t, "WithUnknownConstraintAndMultiLineResult").
+	NewSubtest(t, "WithUnknownConstraintAndMultiLineResult").
 		Call((&NotConstraint{constraint: NewMockConstraint(t).RecordString("first\ndata")}).String).
 		ExpectResult("not (\n\tfirst\n\tdata\n)")
 }
 
 func TestNotConstraint_Details(t *testing.T) {
-	NewDeclarative(t, "WithEmptyResult").
+	NewSubtest(t, "WithEmptyResult").
 		Call((&NotConstraint{constraint: NewMockConstraint(t).RecordDetails(10, "")}).Details, 10).
 		ExpectResult("")
 
-	NewDeclarative(t, "WithOneLineResult").
+	NewSubtest(t, "WithOneLineResult").
 		Call((&NotConstraint{constraint: NewMockConstraint(t).RecordDetails(10, "data")}).Details, 10).
 		ExpectResult("data")
 
-	NewDeclarative(t, "WithMultiLineResult").
+	NewSubtest(t, "WithMultiLineResult").
 		Call((&NotConstraint{constraint: NewMockConstraint(t).RecordDetails(10, "first\ndata")}).Details, 10).
 		ExpectResult("first\ndata")
 }

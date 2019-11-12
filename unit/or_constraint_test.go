@@ -9,31 +9,31 @@ func TestNewOrConstraint(t *testing.T) {
 	constraint2 := NewMockConstraint(t)
 	constraint3 := NewMockConstraint(t)
 
-	NewDeclarative(t, "Success: (<Value>, <Value>)").
+	NewSubtest(t, "Success: (<Value>, <Value>)").
 		SetCompareOptions(IgnoreUnexportedOption{Value: MockConstraint{}}).
 		Call(NewOrConstraint, constraint1, constraint2).
 		ExpectResult(ConstraintAsValue{Value: &OrConstraint{constraints: []Constraint{constraint1, constraint2}}})
 
-	NewDeclarative(t, "Success: (<Value>, <Value>, <Value>)").
+	NewSubtest(t, "Success: (<Value>, <Value>, <Value>)").
 		SetCompareOptions(IgnoreUnexportedOption{Value: MockConstraint{}}).
 		Call(NewOrConstraint, constraint1, constraint2, constraint3).
 		ExpectResult(ConstraintAsValue{Value: &OrConstraint{constraints: []Constraint{constraint1, constraint2, constraint3}}})
 
-	NewDeclarative(t, "Panic: ()").
+	NewSubtest(t, "Panic: ()").
 		Call(NewOrConstraint).
 		ExpectPanic(NewLengthNotLessError("argumentsConstraint", 2, 0))
 
-	NewDeclarative(t, "Panic: (<Value>)").
+	NewSubtest(t, "Panic: (<Value>)").
 		Call(NewOrConstraint, constraint1).
 		ExpectPanic(NewLengthNotLessError("argumentsConstraint", 2, 1))
 
-	NewDeclarative(t, "Panic: (<Value>, nil, <Value>)").
+	NewSubtest(t, "Panic: (<Value>, nil, <Value>)").
 		Call(NewOrConstraint, constraint1, nil, constraint3).
 		ExpectPanic(NewNotNilError("argumentsConstraint[1]"))
 }
 
 func TestOrConstraint_Check(t *testing.T) {
-	NewDeclarative(t, "Success: (false && false && false) -> false").
+	NewSubtest(t, "Success: (false && false && false) -> false").
 		Call(
 			(&OrConstraint{
 				constraints: []Constraint{
@@ -46,7 +46,7 @@ func TestOrConstraint_Check(t *testing.T) {
 		).
 		ExpectResult(false)
 
-	NewDeclarative(t, "Success: (true && ? && ?) -> true").
+	NewSubtest(t, "Success: (true && ? && ?) -> true").
 		Call(
 			(&OrConstraint{
 				constraints: []Constraint{
@@ -59,7 +59,7 @@ func TestOrConstraint_Check(t *testing.T) {
 		).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Success: (false && true && ?) -> true").
+	NewSubtest(t, "Success: (false && true && ?) -> true").
 		Call(
 			(&OrConstraint{
 				constraints: []Constraint{
@@ -72,7 +72,7 @@ func TestOrConstraint_Check(t *testing.T) {
 		).
 		ExpectResult(true)
 
-	NewDeclarative(t, "Success: (false && false && true) -> true").
+	NewSubtest(t, "Success: (false && false && true) -> true").
 		Call(
 			(&OrConstraint{
 				constraints: []Constraint{
@@ -87,7 +87,7 @@ func TestOrConstraint_Check(t *testing.T) {
 }
 
 func TestOrConstraint_String(t *testing.T) {
-	NewDeclarative(t, "Success: ('First' && 'Second' && 'third')").
+	NewSubtest(t, "Success: ('First' && 'Second' && 'third')").
 		Call(
 			(&OrConstraint{
 				constraints: []Constraint{
@@ -99,7 +99,7 @@ func TestOrConstraint_String(t *testing.T) {
 		).
 		ExpectResult("(First) or (Second) or (third)")
 
-	NewDeclarative(t, "Success: ('First\\nline' && 'Second\\nline' && 'third\\nline')").
+	NewSubtest(t, "Success: ('First\\nline' && 'Second\\nline' && 'third\\nline')").
 		Call(
 			(&OrConstraint{
 				constraints: []Constraint{
@@ -111,7 +111,7 @@ func TestOrConstraint_String(t *testing.T) {
 		).
 		ExpectResult("(\n\tFirst\n\tline\n) or (\n\tSecond\n\tline\n) or (\n\tthird\n\tline\n)")
 
-	NewDeclarative(t, "Success: ('First\\nline' && '' && 'third\\nline')").
+	NewSubtest(t, "Success: ('First\\nline' && '' && 'third\\nline')").
 		Call(
 			(&OrConstraint{
 				constraints: []Constraint{
@@ -123,7 +123,7 @@ func TestOrConstraint_String(t *testing.T) {
 		).
 		ExpectResult("(\n\tFirst\n\tline\n) or (\n\tthird\n\tline\n)")
 
-	NewDeclarative(t, "Success: ('First\\nline' && '' && '')").
+	NewSubtest(t, "Success: ('First\\nline' && '' && '')").
 		Call(
 			(&OrConstraint{
 				constraints: []Constraint{
@@ -135,7 +135,7 @@ func TestOrConstraint_String(t *testing.T) {
 		).
 		ExpectResult("First\nline")
 
-	NewDeclarative(t, "Success: ('f' && '' && '')").
+	NewSubtest(t, "Success: ('f' && '' && '')").
 		Call(
 			(&OrConstraint{
 				constraints: []Constraint{
@@ -149,7 +149,7 @@ func TestOrConstraint_String(t *testing.T) {
 }
 
 func TestOrConstraint_Details(t *testing.T) {
-	NewDeclarative(t, "Success: ('First' && 'Second' && 'third')").
+	NewSubtest(t, "Success: ('First' && 'Second' && 'third')").
 		Call(
 			(&OrConstraint{
 				constraints: []Constraint{
@@ -162,7 +162,7 @@ func TestOrConstraint_Details(t *testing.T) {
 		).
 		ExpectResult("(First) or (Second) or (third)")
 
-	NewDeclarative(t, "Success: ('First\\nline' && 'Second\\nline' && 'third\\nline')").
+	NewSubtest(t, "Success: ('First\\nline' && 'Second\\nline' && 'third\\nline')").
 		Call(
 			(&OrConstraint{
 				constraints: []Constraint{
@@ -175,7 +175,7 @@ func TestOrConstraint_Details(t *testing.T) {
 		).
 		ExpectResult("(\n\tFirst\n\tline\n) or (\n\tSecond\n\tline\n) or (\n\tthird\n\tline\n)")
 
-	NewDeclarative(t, "Success: ('First\\nline' && '' && 'third\\nline')").
+	NewSubtest(t, "Success: ('First\\nline' && '' && 'third\\nline')").
 		Call(
 			(&OrConstraint{
 				constraints: []Constraint{
@@ -188,7 +188,7 @@ func TestOrConstraint_Details(t *testing.T) {
 		).
 		ExpectResult("(\n\tFirst\n\tline\n) or (\n\tthird\n\tline\n)")
 
-	NewDeclarative(t, "Success: ('First\\nline' && '' && '')").
+	NewSubtest(t, "Success: ('First\\nline' && '' && '')").
 		Call(
 			(&OrConstraint{
 				constraints: []Constraint{
@@ -201,7 +201,7 @@ func TestOrConstraint_Details(t *testing.T) {
 		).
 		ExpectResult("First\nline")
 
-	NewDeclarative(t, "Success: ('f' && '' && '')").
+	NewSubtest(t, "Success: ('f' && '' && '')").
 		Call(
 			(&OrConstraint{
 				constraints: []Constraint{

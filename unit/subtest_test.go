@@ -5,24 +5,24 @@ import (
 	"testing"
 )
 
-func TestNewDeclarative(t *testing.T) {
+func TestNewSubtest(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	name := "name"
-	expected := &Declarative{
+	expected := &Subtest{
 		test:       testingT,
 		name:       name,
 		arguments:  []interface{}{},
 		comparator: NewEqualComparator(),
 	}
 
-	actual := NewDeclarative(testingT, name)
+	actual := NewSubtest(testingT, name)
 
 	if diff := NewEqualComparator(IgnoreUnexportedOption{Value: MockTestingT{}}).Diff(expected, actual); diff != "" {
 		t.Errorf("Return must be %+v.\n%s", expected, diff)
 	}
 }
 
-func TestNewDeclarative_WithPanic(t *testing.T) {
+func TestNewSubtest_WithPanic(t *testing.T) {
 	defer func() {
 		expected := NewNotNilError("test")
 
@@ -33,20 +33,20 @@ func TestNewDeclarative_WithPanic(t *testing.T) {
 
 	name := "name"
 
-	NewDeclarative(nil, name)
+	NewSubtest(nil, name)
 }
 
-func TestDeclarative_SetCompareOptions(t *testing.T) {
+func TestSubtest_SetCompareOptions(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	name := "name"
 	options := []interface{}{NumericDeltaOption{Value: 5}}
-	expected := &Declarative{
+	expected := &Subtest{
 		test:       testingT,
 		name:       name,
 		comparator: NewEqualComparator(options...),
 	}
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		test:       testingT,
 		name:       name,
 		comparator: NewEqualComparator(),
@@ -54,79 +54,79 @@ func TestDeclarative_SetCompareOptions(t *testing.T) {
 
 	testingT.RecordHelper()
 
-	actual := declarative.SetCompareOptions(options...)
+	actual := subtest.SetCompareOptions(options...)
 
 	if diff := NewEqualComparator(IgnoreUnexportedOption{Value: MockTestingT{}}).Diff(expected, actual); diff != "" {
 		t.Errorf("Return must be %+v.\n%s", expected, diff)
 	}
 }
 
-func TestDeclarative_Call_WithVariadic(t *testing.T) {
+func TestSubtest_Call_WithVariadic(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	callable := func(a1 int, a2 bool) (r1 bool, r2 int) {
 		return a2, a1
 	}
 	name := "name"
 	arguments := []interface{}{10, false}
-	expected := &Declarative{
+	expected := &Subtest{
 		test:      testingT,
 		name:      name,
 		callable:  callable,
 		arguments: arguments,
 	}
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		test: testingT,
 		name: name,
 	}
 
 	testingT.RecordHelper()
 
-	actual := declarative.Call(callable, arguments...)
+	actual := subtest.Call(callable, arguments...)
 
 	if diff := NewEqualComparator(IgnoreUnexportedOption{Value: MockTestingT{}}).Diff(expected, actual); diff != "" {
 		t.Errorf("Return must be %+v.\n%s", expected, diff)
 	}
 }
 
-func TestDeclarative_Call_WithNotVariadic(t *testing.T) {
+func TestSubtest_Call_WithNotVariadic(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	callable := func(a1 int, a2 ...bool) (r1 []bool, r2 int) {
 		return a2, a1
 	}
 	name := "name"
 	arguments := []interface{}{10, false, false, false, false, false, false}
-	expected := &Declarative{
+	expected := &Subtest{
 		test:      testingT,
 		name:      name,
 		callable:  callable,
 		arguments: arguments,
 	}
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		test: testingT,
 		name: name,
 	}
 
 	testingT.RecordHelper()
 
-	actual := declarative.Call(callable, arguments...)
+	actual := subtest.Call(callable, arguments...)
 
 	if diff := NewEqualComparator(IgnoreUnexportedOption{Value: MockTestingT{}}).Diff(expected, actual); diff != "" {
 		t.Errorf("Return must be %+v.\n%s", expected, diff)
 	}
 }
 
-func TestDeclarative_Call_WithNilCallable(t *testing.T) {
+func TestSubtest_Call_WithNilCallable(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	name := "name"
 	arguments := []interface{}{10, false}
-	expected := &Declarative{
+	expected := &Subtest{
 		test: testingT,
 		name: name,
 	}
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		test: testingT,
 		name: name,
 	}
@@ -135,23 +135,23 @@ func TestDeclarative_Call_WithNilCallable(t *testing.T) {
 	testingT.RecordError("Variable 'callable' must be not nil")
 	testingT.RecordFail()
 
-	actual := declarative.Call(nil, arguments...)
+	actual := subtest.Call(nil, arguments...)
 
 	if diff := NewEqualComparator(IgnoreUnexportedOption{Value: MockTestingT{}}).Diff(expected, actual); diff != "" {
 		t.Errorf("Return must be %+v.\n%s", expected, diff)
 	}
 }
 
-func TestDeclarative_Call_WithCallableNotFunc(t *testing.T) {
+func TestSubtest_Call_WithCallableNotFunc(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	name := "name"
 	arguments := []interface{}{10, false}
-	expected := &Declarative{
+	expected := &Subtest{
 		test: testingT,
 		name: name,
 	}
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		test: testingT,
 		name: name,
 	}
@@ -160,24 +160,24 @@ func TestDeclarative_Call_WithCallableNotFunc(t *testing.T) {
 	testingT.RecordError(NewInvalidKindError("callable", new(int), reflect.String).Error())
 	testingT.RecordFail()
 
-	actual := declarative.Call(new(int), arguments...)
+	actual := subtest.Call(new(int), arguments...)
 
 	if diff := NewEqualComparator(IgnoreUnexportedOption{Value: MockTestingT{}}).Diff(expected, actual); diff != "" {
 		t.Errorf("Return must be %+v.\n%s", expected, diff)
 	}
 }
 
-func TestDeclarative_Call_WithCallableNotVariadicAndInvalidArgumentsCount(t *testing.T) {
+func TestSubtest_Call_WithCallableNotVariadicAndInvalidArgumentsCount(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	name := "name"
 	callable := func(a1 int, a2 bool) {}
 	arguments := []interface{}{10}
-	expected := &Declarative{
+	expected := &Subtest{
 		test: testingT,
 		name: name,
 	}
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		test: testingT,
 		name: name,
 	}
@@ -186,24 +186,24 @@ func TestDeclarative_Call_WithCallableNotVariadicAndInvalidArgumentsCount(t *tes
 	testingT.RecordErrorf("Invalid count of arguments, expected: %d, actual: %d", 2, 1)
 	testingT.RecordFail()
 
-	actual := declarative.Call(callable, arguments...)
+	actual := subtest.Call(callable, arguments...)
 
 	if diff := NewEqualComparator(IgnoreUnexportedOption{Value: MockTestingT{}}).Diff(expected, actual); diff != "" {
 		t.Errorf("Return must be %+v.\n%s", expected, diff)
 	}
 }
 
-func TestDeclarative_Call_WithCallableVariadicAndInvalidArgumentsCount(t *testing.T) {
+func TestSubtest_Call_WithCallableVariadicAndInvalidArgumentsCount(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	name := "name"
 	callable := func(a1 int, a2 ...bool) {}
 	arguments := []interface{}{}
-	expected := &Declarative{
+	expected := &Subtest{
 		test: testingT,
 		name: name,
 	}
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		test: testingT,
 		name: name,
 	}
@@ -212,19 +212,19 @@ func TestDeclarative_Call_WithCallableVariadicAndInvalidArgumentsCount(t *testin
 	testingT.RecordErrorf("Count of arguments must be greater or equal than %d, actual: %d", 1, 0)
 	testingT.RecordFail()
 
-	actual := declarative.Call(callable, arguments...)
+	actual := subtest.Call(callable, arguments...)
 
 	if diff := NewEqualComparator(IgnoreUnexportedOption{Value: MockTestingT{}}).Diff(expected, actual); diff != "" {
 		t.Errorf("Return must be %+v.\n%s", expected, diff)
 	}
 }
 
-func TestDeclarative_expectResult(t *testing.T) {
+func TestSubtest_expectResult(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	name := "name"
 	results := []interface{}{true, 5}
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		name: name,
 		callable: func(a1 int, a2 bool) (r1 bool, r2 int) {
 			return a2, a1
@@ -235,15 +235,15 @@ func TestDeclarative_expectResult(t *testing.T) {
 
 	testingT.RecordHelper()
 
-	declarative.expectResult(testingT, results...)
+	subtest.expectResult(testingT, results...)
 }
 
-func TestDeclarative_expectResult_WithVariadicArguments(t *testing.T) {
+func TestSubtest_expectResult_WithVariadicArguments(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	name := "name"
 	results := []interface{}{[]bool{true, false, false}, 5}
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		name: name,
 		callable: func(a1 int, a2 ...bool) (r1 []bool, r2 int) {
 			return a2, a1
@@ -254,15 +254,15 @@ func TestDeclarative_expectResult_WithVariadicArguments(t *testing.T) {
 
 	testingT.RecordHelper()
 
-	declarative.expectResult(testingT, results...)
+	subtest.expectResult(testingT, results...)
 }
 
-func TestDeclarative_expectResult_WithNilAndNotVariadic(t *testing.T) {
+func TestSubtest_expectResult_WithNilAndNotVariadic(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	name := "name"
 	results := []interface{}{(*int)(nil)}
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		name: name,
 		callable: func(a1 *int) (r1 *int) {
 			return a1
@@ -273,15 +273,15 @@ func TestDeclarative_expectResult_WithNilAndNotVariadic(t *testing.T) {
 
 	testingT.RecordHelper()
 
-	declarative.expectResult(testingT, results...)
+	subtest.expectResult(testingT, results...)
 }
 
-func TestDeclarative_expectResult_WithNilAndVariadic(t *testing.T) {
+func TestSubtest_expectResult_WithNilAndVariadic(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	name := "name"
 	results := []interface{}{(*int)(nil), (*int)(nil), (*int)(nil)}
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		name: name,
 		callable: func(a1 ...*int) (r1 *int, r2 *int, r3 *int) {
 			return a1[0], a1[1], a1[2]
@@ -292,10 +292,10 @@ func TestDeclarative_expectResult_WithNilAndVariadic(t *testing.T) {
 
 	testingT.RecordHelper()
 
-	declarative.expectResult(testingT, results...)
+	subtest.expectResult(testingT, results...)
 }
 
-func TestDeclarative_expectResult_WithConstraints(t *testing.T) {
+func TestSubtest_expectResult_WithConstraints(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	name := "name"
 	constraint := NewMockConstraint(&testing.T{})
@@ -304,7 +304,7 @@ func TestDeclarative_expectResult_WithConstraints(t *testing.T) {
 		ConstraintAsValue{Value: constraint},
 	}
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		name: name,
 		callable: func() (interface{}, interface{}) {
 			return 5, constraint
@@ -315,17 +315,17 @@ func TestDeclarative_expectResult_WithConstraints(t *testing.T) {
 
 	testingT.RecordHelper()
 
-	declarative.expectResult(testingT, results...)
+	subtest.expectResult(testingT, results...)
 }
 
-func TestDeclarative_expectResult_WithConstraintAsValue(t *testing.T) {
+func TestSubtest_expectResult_WithConstraintAsValue(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	name := "name"
 	results := []interface{}{
 		ConstraintAsValue{Value: NewMockConstraint(&testing.T{})},
 	}
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		name: name,
 		callable: func() interface{} {
 			return NewMockConstraint(&testing.T{})
@@ -336,15 +336,15 @@ func TestDeclarative_expectResult_WithConstraintAsValue(t *testing.T) {
 
 	testingT.RecordHelper()
 
-	declarative.expectResult(testingT, results...)
+	subtest.expectResult(testingT, results...)
 }
 
-func TestDeclarative_expectResult_WithCallablePanic(t *testing.T) {
+func TestSubtest_expectResult_WithCallablePanic(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	name := "name"
 	results := []interface{}{[]bool{true, false}, 5}
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		name: name,
 		callable: func(a1 int, a2 ...bool) (r1 []bool, r2 int) {
 			panic("data")
@@ -360,10 +360,10 @@ func TestDeclarative_expectResult_WithCallablePanic(t *testing.T) {
 		NewNotConstraint(NewNilConstraint()),
 	)
 
-	declarative.expectResult(testingT, results...)
+	subtest.expectResult(testingT, results...)
 }
 
-func TestDeclarative_expectResult_WithResultsCountMismatch(t *testing.T) {
+func TestSubtest_expectResult_WithResultsCountMismatch(t *testing.T) {
 	defer func() {
 		expected := NewInvalidLengthError("list", 1, 2)
 
@@ -376,7 +376,7 @@ func TestDeclarative_expectResult_WithResultsCountMismatch(t *testing.T) {
 	name := "name"
 	results := []interface{}{true}
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		name: name,
 		callable: func(a1 int, a2 bool) (r1 bool, r2 int) {
 			return a2, a1
@@ -387,10 +387,10 @@ func TestDeclarative_expectResult_WithResultsCountMismatch(t *testing.T) {
 
 	testingT.RecordHelper()
 
-	declarative.expectResult(testingT, results...)
+	subtest.expectResult(testingT, results...)
 }
 
-func TestDeclarative_expectResult_WithConstraintCheckError(t *testing.T) {
+func TestSubtest_expectResult_WithConstraintCheckError(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	name := "name"
 	results := []interface{}{
@@ -401,7 +401,7 @@ func TestDeclarative_expectResult_WithConstraintCheckError(t *testing.T) {
 			RecordDetails(10, "detailsResult"),
 	}
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		name: name,
 		callable: func(argument int) int {
 			return argument * 2
@@ -416,10 +416,10 @@ func TestDeclarative_expectResult_WithConstraintCheckError(t *testing.T) {
 		"element[0], it must stringResult.\ndetailsResult",
 	)
 
-	declarative.expectResult(testingT, results...)
+	subtest.expectResult(testingT, results...)
 }
 
-func TestDeclarative_expectResult_WithConstraintCheckErrorAndWithoutDetails(t *testing.T) {
+func TestSubtest_expectResult_WithConstraintCheckErrorAndWithoutDetails(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	name := "name"
 	results := []interface{}{
@@ -430,7 +430,7 @@ func TestDeclarative_expectResult_WithConstraintCheckErrorAndWithoutDetails(t *t
 			RecordDetails(10, ""),
 	}
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		name: name,
 		callable: func(argument int) int {
 			return argument * 2
@@ -442,15 +442,15 @@ func TestDeclarative_expectResult_WithConstraintCheckErrorAndWithoutDetails(t *t
 	testingT.RecordHelper()
 	testingT.RecordErrorf("Failed assertion for expectedResults.\n%s", "")
 
-	declarative.expectResult(testingT, results...)
+	subtest.expectResult(testingT, results...)
 }
 
-func TestDeclarative_expectResult_WithInvalidResult(t *testing.T) {
+func TestSubtest_expectResult_WithInvalidResult(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	name := "name"
 	results := []interface{}{5}
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		name: name,
 		callable: func(argument int) int {
 			return argument * 2
@@ -465,15 +465,15 @@ func TestDeclarative_expectResult_WithInvalidResult(t *testing.T) {
 		"element[0], it must be equal to 5.\n  int(\n- \t5,\n+ \t10,\n  )",
 	)
 
-	declarative.expectResult(testingT, results...)
+	subtest.expectResult(testingT, results...)
 }
 
-func TestDeclarative_expectPanic(t *testing.T) {
+func TestSubtest_expectPanic(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	name := "name"
 	panics := 5
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		name: name,
 		callable: func(a1 int) (r1 bool) {
 			panic(a1)
@@ -484,15 +484,15 @@ func TestDeclarative_expectPanic(t *testing.T) {
 
 	testingT.RecordHelper()
 
-	declarative.expectPanic(testingT, panics)
+	subtest.expectPanic(testingT, panics)
 }
 
-func TestDeclarative_expectPanic_WithVariadicArguments(t *testing.T) {
+func TestSubtest_expectPanic_WithVariadicArguments(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	name := "name"
 	panics := []bool{true, false, false}
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		name: name,
 		callable: func(a1 int, a2 ...bool) (r1 []bool, r2 int) {
 			panic(a2)
@@ -503,15 +503,15 @@ func TestDeclarative_expectPanic_WithVariadicArguments(t *testing.T) {
 
 	testingT.RecordHelper()
 
-	declarative.expectPanic(testingT, panics)
+	subtest.expectPanic(testingT, panics)
 }
 
-func TestDeclarative_expectPanic_WithNilAndNotVariadic(t *testing.T) {
+func TestSubtest_expectPanic_WithNilAndNotVariadic(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	name := "name"
 	panics := (*int)(nil)
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		name: name,
 		callable: func(a1 *int) (r1 *int) {
 			panic(a1)
@@ -522,15 +522,15 @@ func TestDeclarative_expectPanic_WithNilAndNotVariadic(t *testing.T) {
 
 	testingT.RecordHelper()
 
-	declarative.expectPanic(testingT, panics)
+	subtest.expectPanic(testingT, panics)
 }
 
-func TestDeclarative_expectPanic_WithNilAndVariadic(t *testing.T) {
+func TestSubtest_expectPanic_WithNilAndVariadic(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	name := "name"
 	panics := (*int)(nil)
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		name: name,
 		callable: func(a1 ...*int) (r1 *int, r2 *int, r3 *int) {
 			panic(a1[2])
@@ -541,15 +541,15 @@ func TestDeclarative_expectPanic_WithNilAndVariadic(t *testing.T) {
 
 	testingT.RecordHelper()
 
-	declarative.expectPanic(testingT, panics)
+	subtest.expectPanic(testingT, panics)
 }
 
-func TestDeclarative_expectPanic_WithConstraints(t *testing.T) {
+func TestSubtest_expectPanic_WithConstraints(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	name := "name"
 	panics := NewMockConstraint(t).RecordCheck(true, true)
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		name: name,
 		callable: func() (interface{}, interface{}, interface{}) {
 			panic(true)
@@ -560,15 +560,15 @@ func TestDeclarative_expectPanic_WithConstraints(t *testing.T) {
 
 	testingT.RecordHelper()
 
-	declarative.expectPanic(testingT, panics)
+	subtest.expectPanic(testingT, panics)
 }
 
-func TestDeclarative_expectPanic_WithConstraintAsValue(t *testing.T) {
+func TestSubtest_expectPanic_WithConstraintAsValue(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	name := "name"
 	panics := ConstraintAsValue{Value: &MockConstraint{}}
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		name: name,
 		callable: func() (interface{}, interface{}, interface{}) {
 			panic(&MockConstraint{})
@@ -579,15 +579,15 @@ func TestDeclarative_expectPanic_WithConstraintAsValue(t *testing.T) {
 
 	testingT.RecordHelper()
 
-	declarative.expectPanic(testingT, panics)
+	subtest.expectPanic(testingT, panics)
 }
 
-func TestDeclarative_expectPanic_WithCallableResult(t *testing.T) {
+func TestSubtest_expectPanic_WithCallableResult(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	name := "name"
 	panics := "data"
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		name: name,
 		callable: func(a1 int, a2 ...bool) int {
 			return a1
@@ -599,10 +599,10 @@ func TestDeclarative_expectPanic_WithCallableResult(t *testing.T) {
 	testingT.RecordHelper()
 	testingT.RecordErrorf("Callable must call panic and not return arguments: %+v", []interface{}{5})
 
-	declarative.expectPanic(testingT, panics)
+	subtest.expectPanic(testingT, panics)
 }
 
-func TestDeclarative_expectPanic_WithConstraintCheckError(t *testing.T) {
+func TestSubtest_expectPanic_WithConstraintCheckError(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	name := "name"
 	panics := NewMockConstraint(t).
@@ -610,7 +610,7 @@ func TestDeclarative_expectPanic_WithConstraintCheckError(t *testing.T) {
 		RecordString("stringResult").
 		RecordDetails(10, "detailsResult")
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		name: name,
 		callable: func(argument int) int {
 			panic(argument * 2)
@@ -626,10 +626,10 @@ func TestDeclarative_expectPanic_WithConstraintCheckError(t *testing.T) {
 		"detailsResult",
 	)
 
-	declarative.expectPanic(testingT, panics)
+	subtest.expectPanic(testingT, panics)
 }
 
-func TestDeclarative_expectPanic_WithConstraintCheckErrorAndWithoutDetails(t *testing.T) {
+func TestSubtest_expectPanic_WithConstraintCheckErrorAndWithoutDetails(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	name := "name"
 	panics := NewMockConstraint(t).
@@ -637,7 +637,7 @@ func TestDeclarative_expectPanic_WithConstraintCheckErrorAndWithoutDetails(t *te
 		RecordDetails(10, "").
 		RecordString("stringResult")
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		name: name,
 		callable: func(argument int) int {
 			panic(argument * 2)
@@ -649,15 +649,15 @@ func TestDeclarative_expectPanic_WithConstraintCheckErrorAndWithoutDetails(t *te
 	testingT.RecordHelper()
 	testingT.RecordErrorf("Failed assertion for 'expectedPanic' variable, it must %s.", "stringResult")
 
-	declarative.expectPanic(testingT, panics)
+	subtest.expectPanic(testingT, panics)
 }
 
-func TestDeclarative_expectPanic_WithInvalidResult(t *testing.T) {
+func TestSubtest_expectPanic_WithInvalidResult(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	name := "name"
 	panics := 5
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		name: name,
 		callable: func(argument int) int {
 			panic(argument * 2)
@@ -673,21 +673,21 @@ func TestDeclarative_expectPanic_WithInvalidResult(t *testing.T) {
 		"  int(\n- \t5,\n+ \t10,\n  )\n",
 	)
 
-	declarative.expectPanic(testingT, panics)
+	subtest.expectPanic(testingT, panics)
 }
 
-func TestDeclarative_call_WithNotConfiguredCall(t *testing.T) {
+func TestSubtest_call_WithNotConfiguredCall(t *testing.T) {
 	testingT := NewMockTestingT(t)
 	name := "name"
 
-	declarative := &Declarative{
+	subtest := &Subtest{
 		name: name,
 	}
 
 	testingT.RecordError("Call is not configured")
 	testingT.RecordFail()
 
-	results, panics, stackTrace := declarative.call(testingT)
+	results, panics, stackTrace := subtest.call(testingT)
 
 	if diff := NewEqualComparator().Diff([]interface{}(nil), results); diff != "" {
 		t.Errorf("Results must be nil.\n%s", diff)

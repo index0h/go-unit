@@ -10,12 +10,12 @@ import (
 func TestNewController(t *testing.T) {
 	test := NewMockTestingT(t)
 
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		SetCompareOptions(IgnoreUnexportedOption{Value: MockTestingT{}}).
 		Call(NewController, test).
 		ExpectResult(&Controller{test: test, finishes: []func(){}})
 
-	NewDeclarative(t, "NilTestingT").
+	NewSubtest(t, "NilTestingT").
 		Call(NewController, nil).
 		ExpectPanic(NewNotNilError("test"))
 }
@@ -23,18 +23,18 @@ func TestNewController(t *testing.T) {
 func TestController_TestingT(t *testing.T) {
 	testingT := NewMockTestingT(t)
 
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		SetCompareOptions(SamePointerOption{Value: true}).
 		Call((&Controller{test: testingT}).TestingT).
 		ExpectResult(testingT)
 }
 
-func TestController_DeclarativeTest(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+func TestController_SubtestTest(t *testing.T) {
+	NewSubtest(t, "WithPositiveResult").
 		SetCompareOptions(IgnoreUnexportedOption{Value: testing.T{}}).
-		Call((&Controller{test: NewMockTestingT(t)}).DeclarativeTest, "testName").
+		Call((&Controller{test: NewMockTestingT(t)}).Subtest, "testName").
 		ExpectResult(
-			&Declarative{
+			&Subtest{
 				test:       NewMockTestingT(t),
 				name:       "testName",
 				arguments:  []interface{}{},
@@ -59,7 +59,7 @@ func TestController_Finish(t *testing.T) {
 		testingT.Fail()
 	}
 
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		SetCompareOptions(IgnoreUnexportedOption{Value: testing.T{}}).
 		Call((&Controller{test: testingT, finishes: []func(){finish}}).Finish).
 		ExpectResult()
@@ -69,14 +69,14 @@ func TestController_And(t *testing.T) {
 	constraint1 := NewMockConstraint(t)
 	constraint2 := NewMockConstraint(t)
 
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		SetCompareOptions(IgnoreUnexportedOption{Value: testing.T{}}).
 		Call((&Controller{test: NewMockTestingT(t)}).And, constraint1, constraint2).
 		ExpectResult(ConstraintAsValue{Value: &AndConstraint{constraints: []Constraint{constraint1, constraint2}}})
 }
 
 func TestController_Any(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		SetCompareOptions(IgnoreUnexportedOption{Value: testing.T{}}).
 		Call((&Controller{test: NewMockTestingT(t)}).Any).
 		ExpectResult(ConstraintAsValue{Value: &AnyConstraint{}})
@@ -87,11 +87,11 @@ func TestController_Callback(t *testing.T) {
 		return true
 	}
 
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).Callback, callback).
 		ExpectResult(ConstraintAsValue{Value: &CallbackConstraint{callback: callback}})
 
-	NewDeclarative(t, "WithPanicResult").
+	NewSubtest(t, "WithPanicResult").
 		Call((&Controller{test: NewMockTestingT(t)}).Callback, nil).
 		ExpectPanic(NewNotNilError("callback"))
 }
@@ -101,17 +101,17 @@ func TestController_NotCallback(t *testing.T) {
 		return true
 	}
 
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).NotCallback, callback).
 		ExpectResult(ConstraintAsValue{Value: &NotConstraint{constraint: &CallbackConstraint{callback: callback}}})
 
-	NewDeclarative(t, "WithPanicResult").
+	NewSubtest(t, "WithPanicResult").
 		Call((&Controller{test: NewMockTestingT(t)}).NotCallback, nil).
 		ExpectPanic(NewNotNilError("callback"))
 }
 
 func TestController_Contains(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).Contains, [1]int{5}, SamePointerOption{Value: true}).
 		ExpectResult(
 			ConstraintAsValue{
@@ -124,7 +124,7 @@ func TestController_Contains(t *testing.T) {
 }
 
 func TestController_NotContains(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).NotContains, [1]int{5}, SamePointerOption{Value: true}).
 		ExpectResult(
 			ConstraintAsValue{
@@ -139,7 +139,7 @@ func TestController_NotContains(t *testing.T) {
 }
 
 func TestController_Elements(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		SetCompareOptions(IgnoreUnexportedOption{Value: testing.T{}}).
 		Call(
 			(&Controller{test: NewMockTestingT(t)}).Elements,
@@ -161,7 +161,7 @@ func TestController_Elements(t *testing.T) {
 }
 
 func TestController_NotElements(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		SetCompareOptions(IgnoreUnexportedOption{Value: testing.T{}}).
 		Call(
 			(&Controller{test: NewMockTestingT(t)}).NotElements,
@@ -185,7 +185,7 @@ func TestController_NotElements(t *testing.T) {
 }
 
 func TestController_ValueElements(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		SetCompareOptions(IgnoreUnexportedOption{Value: testing.T{}}).
 		Call(
 			(&Controller{test: NewMockTestingT(t)}).ValueElements,
@@ -218,7 +218,7 @@ func TestController_ValueElements(t *testing.T) {
 }
 
 func TestController_NotValueElements(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		SetCompareOptions(IgnoreUnexportedOption{Value: testing.T{}}).
 		Call(
 			(&Controller{test: NewMockTestingT(t)}).NotValueElements,
@@ -253,13 +253,13 @@ func TestController_NotValueElements(t *testing.T) {
 }
 
 func TestController_Empty(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).Empty).
 		ExpectResult(ConstraintAsValue{Value: &EmptyConstraint{comparator: NewEqualComparator()}})
 }
 
 func TestController_NotEmpty(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).NotEmpty).
 		ExpectResult(
 			ConstraintAsValue{
@@ -273,7 +273,7 @@ func TestController_NotEmpty(t *testing.T) {
 }
 
 func TestController_Equal(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).Equal, [1]int{5}, SamePointerOption{Value: true}).
 		ExpectResult(
 			ConstraintAsValue{
@@ -286,7 +286,7 @@ func TestController_Equal(t *testing.T) {
 }
 
 func TestController_NotEqual(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).NotEqual, [1]int{5}, SamePointerOption{Value: true}).
 		ExpectResult(
 			ConstraintAsValue{
@@ -301,19 +301,19 @@ func TestController_NotEqual(t *testing.T) {
 }
 
 func TestController_False(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).False).
 		ExpectResult(ConstraintAsValue{Value: &FalseConstraint{}})
 }
 
 func TestController_Greater(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).Greater, 55).
 		ExpectResult(ConstraintAsValue{Value: &GreaterConstraint{expected: 55}})
 }
 
 func TestController_GreaterOrEqual(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).GreaterOrEqual, 55, float64(32)).
 		ExpectResult(
 			ConstraintAsValue{
@@ -331,13 +331,13 @@ func TestController_GreaterOrEqual(t *testing.T) {
 }
 
 func TestController_Less(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).Less, 55).
 		ExpectResult(ConstraintAsValue{Value: &LessConstraint{expected: 55}})
 }
 
 func TestController_LessOrEqual(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).LessOrEqual, 55, float64(32)).
 		ExpectResult(
 			ConstraintAsValue{
@@ -355,7 +355,7 @@ func TestController_LessOrEqual(t *testing.T) {
 }
 
 func TestController_Kind(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).Kind, reflect.Bool, reflect.String).
 		ExpectResult(
 			ConstraintAsValue{
@@ -367,7 +367,7 @@ func TestController_Kind(t *testing.T) {
 }
 
 func TestController_NotKind(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).NotKind, reflect.Bool, reflect.String).
 		ExpectResult(
 			ConstraintAsValue{
@@ -381,25 +381,25 @@ func TestController_NotKind(t *testing.T) {
 }
 
 func TestController_Length(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).Length, 5).
 		ExpectResult(ConstraintAsValue{Value: &LengthConstraint{length: 5}})
 }
 
 func TestController_NotLength(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).NotLength, 5).
 		ExpectResult(ConstraintAsValue{Value: &NotConstraint{constraint: &LengthConstraint{length: 5}}})
 }
 
 func TestController_LengthGreater(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).LengthGreater, 5).
 		ExpectResult(ConstraintAsValue{Value: &LengthGreaterConstraint{length: 5}})
 }
 
 func TestController_LengthGreaterOrEqual(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).LengthGreaterOrEqual, 5).
 		ExpectResult(
 			ConstraintAsValue{
@@ -414,13 +414,13 @@ func TestController_LengthGreaterOrEqual(t *testing.T) {
 }
 
 func TestController_LengthLess(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).LengthLess, 5).
 		ExpectResult(ConstraintAsValue{Value: &LengthLessConstraint{length: 5}})
 }
 
 func TestController_LengthLessOrEqual(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).LengthLessOrEqual, 5).
 		ExpectResult(
 			ConstraintAsValue{
@@ -435,32 +435,32 @@ func TestController_LengthLessOrEqual(t *testing.T) {
 }
 
 func TestController_Nil(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).Nil).
 		ExpectResult(ConstraintAsValue{Value: &NilConstraint{}})
 }
 
 func TestController_NotNil(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).NotNil).
 		ExpectResult(ConstraintAsValue{Value: &NotConstraint{constraint: &NilConstraint{}}})
 }
 
 func TestController_Not(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		SetCompareOptions(IgnoreUnexportedOption{Value: testing.T{}}).
 		Call((&Controller{test: NewMockTestingT(t)}).Not, NewMockConstraint(t)).
 		ExpectResult(ConstraintAsValue{Value: &NotConstraint{constraint: NewMockConstraint(t)}})
 }
 
 func TestController_Regexp(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).Regexp, "^\\d{4}$").
 		ExpectResult(ConstraintAsValue{Value: &RegexpConstraint{pattern: regexp.MustCompile("^\\d{4}$")}})
 }
 
 func TestController_NotRegexp(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).NotRegexp, "^\\d{4}$").
 		ExpectResult(
 			ConstraintAsValue{
@@ -474,7 +474,7 @@ func TestController_NotRegexp(t *testing.T) {
 }
 
 func TestController_Same(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).Same, [1]int{5}).
 		ExpectResult(
 			ConstraintAsValue{
@@ -487,7 +487,7 @@ func TestController_Same(t *testing.T) {
 }
 
 func TestController_NotSame(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).NotSame, [1]int{5}).
 		ExpectResult(
 			ConstraintAsValue{
@@ -502,13 +502,13 @@ func TestController_NotSame(t *testing.T) {
 }
 
 func TestController_True(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).True).
 		ExpectResult(ConstraintAsValue{Value: &TrueConstraint{}})
 }
 
 func TestController_Type(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).Type, int8(0), new(string)).
 		ExpectResult(
 			ConstraintAsValue{
@@ -520,7 +520,7 @@ func TestController_Type(t *testing.T) {
 }
 
 func TestController_NotType(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call((&Controller{test: NewMockTestingT(t)}).NotType, int8(0), new(string)).
 		ExpectResult(
 			ConstraintAsValue{
@@ -534,7 +534,7 @@ func TestController_NotType(t *testing.T) {
 }
 
 func TestController_Value(t *testing.T) {
-	NewDeclarative(t, "WithNilExpected").
+	NewSubtest(t, "WithNilExpected").
 		Call((&Controller{test: NewMockTestingT(t)}).Value, nil, SamePointerOption{Value: true}).
 		ExpectResult(
 			ConstraintAsValue{
@@ -542,7 +542,7 @@ func TestController_Value(t *testing.T) {
 			},
 		)
 
-	NewDeclarative(t, "WithConstraintExpected").
+	NewSubtest(t, "WithConstraintExpected").
 		SetCompareOptions(IgnoreUnexportedOption{testing.T{}}).
 		Call(
 			(&Controller{test: NewMockTestingT(t)}).Value,
@@ -555,7 +555,7 @@ func TestController_Value(t *testing.T) {
 			},
 		)
 
-	NewDeclarative(t, "WithConstraintExpected").
+	NewSubtest(t, "WithConstraintExpected").
 		SetCompareOptions(IgnoreUnexportedOption{testing.T{}}).
 		Call(
 			(&Controller{test: NewMockTestingT(t)}).Value,
@@ -571,7 +571,7 @@ func TestController_Value(t *testing.T) {
 			},
 		)
 
-	NewDeclarative(t, "WithValueExpected").
+	NewSubtest(t, "WithValueExpected").
 		SetCompareOptions(IgnoreUnexportedOption{testing.T{}}).
 		Call(
 			(&Controller{test: NewMockTestingT(t)}).Value,
@@ -589,7 +589,7 @@ func TestController_Value(t *testing.T) {
 }
 
 func TestController_NotValue(t *testing.T) {
-	NewDeclarative(t, "WithNilExpected").
+	NewSubtest(t, "WithNilExpected").
 		Call((&Controller{test: NewMockTestingT(t)}).NotValue, nil, SamePointerOption{Value: true}).
 		ExpectResult(
 			ConstraintAsValue{
@@ -599,7 +599,7 @@ func TestController_NotValue(t *testing.T) {
 			},
 		)
 
-	NewDeclarative(t, "WithConstraintExpected").
+	NewSubtest(t, "WithConstraintExpected").
 		SetCompareOptions(IgnoreUnexportedOption{testing.T{}}).
 		Call(
 			(&Controller{test: NewMockTestingT(t)}).NotValue,
@@ -614,7 +614,7 @@ func TestController_NotValue(t *testing.T) {
 			},
 		)
 
-	NewDeclarative(t, "WithConstraintExpected").
+	NewSubtest(t, "WithConstraintExpected").
 		SetCompareOptions(IgnoreUnexportedOption{testing.T{}}).
 		Call(
 			(&Controller{test: NewMockTestingT(t)}).NotValue,
@@ -632,7 +632,7 @@ func TestController_NotValue(t *testing.T) {
 			},
 		)
 
-	NewDeclarative(t, "WithValueExpected").
+	NewSubtest(t, "WithValueExpected").
 		SetCompareOptions(IgnoreUnexportedOption{testing.T{}}).
 		Call(
 			(&Controller{test: NewMockTestingT(t)}).NotValue,
@@ -652,7 +652,7 @@ func TestController_NotValue(t *testing.T) {
 }
 
 func TestController_AssertThat(t *testing.T) {
-	NewDeclarative(t, "ConstraintWithPositiveResult").
+	NewSubtest(t, "ConstraintWithPositiveResult").
 		SetCompareOptions(IgnoreUnexportedOption{Value: MockTestingT{}}).
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper()}).AssertThat,
@@ -662,7 +662,7 @@ func TestController_AssertThat(t *testing.T) {
 		).
 		ExpectResult(&Controller{test: NewMockTestingT(t)})
 
-	NewDeclarative(t, "ConstraintFailWithoutDetails").
+	NewSubtest(t, "ConstraintFailWithoutDetails").
 		SetCompareOptions(IgnoreUnexportedOption{Value: MockTestingT{}}).
 		Call(
 			(&Controller{
@@ -680,7 +680,7 @@ func TestController_AssertThat(t *testing.T) {
 		).
 		ExpectResult((*Controller)(nil))
 
-	NewDeclarative(t, "ConstraintFailWithDetails").
+	NewSubtest(t, "ConstraintFailWithDetails").
 		SetCompareOptions(IgnoreUnexportedOption{Value: MockTestingT{}}).
 		Call(
 			(&Controller{
@@ -698,7 +698,7 @@ func TestController_AssertThat(t *testing.T) {
 		).
 		ExpectResult((*Controller)(nil))
 
-	NewDeclarative(t, "NilConstraint").
+	NewSubtest(t, "NilConstraint").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -714,7 +714,7 @@ func TestController_AssertThat(t *testing.T) {
 }
 
 func TestController_AssertAnd(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertAnd,
 			5,
@@ -723,7 +723,7 @@ func TestController_AssertAnd(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -740,7 +740,7 @@ func TestController_AssertAnd(t *testing.T) {
 }
 
 func TestController_AssertCallback(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertCallback,
 			5,
@@ -750,7 +750,7 @@ func TestController_AssertCallback(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -768,7 +768,7 @@ func TestController_AssertCallback(t *testing.T) {
 }
 
 func TestController_AssertNotCallback(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertNotCallback,
 			5,
@@ -778,7 +778,7 @@ func TestController_AssertNotCallback(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -796,7 +796,7 @@ func TestController_AssertNotCallback(t *testing.T) {
 }
 
 func TestController_AssertContains(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertContains,
 			5,
@@ -804,7 +804,7 @@ func TestController_AssertContains(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -820,7 +820,7 @@ func TestController_AssertContains(t *testing.T) {
 }
 
 func TestController_AssertNotContains(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertNotContains,
 			5,
@@ -828,7 +828,7 @@ func TestController_AssertNotContains(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -844,7 +844,7 @@ func TestController_AssertNotContains(t *testing.T) {
 }
 
 func TestController_AssertElements(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertElements,
 			[]Constraint{&TrueConstraint{}, &FalseConstraint{}, &GreaterConstraint{expected: 5}},
@@ -854,7 +854,7 @@ func TestController_AssertElements(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -879,7 +879,7 @@ func TestController_AssertElements(t *testing.T) {
 }
 
 func TestController_AssertNotElements(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertNotElements,
 			[]Constraint{&TrueConstraint{}, &FalseConstraint{}, &GreaterConstraint{expected: 5}},
@@ -889,7 +889,7 @@ func TestController_AssertNotElements(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -912,7 +912,7 @@ func TestController_AssertNotElements(t *testing.T) {
 }
 
 func TestController_AssertValueElements(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertValueElements,
 			[]interface{}{true, &FalseConstraint{}, "data"},
@@ -920,7 +920,7 @@ func TestController_AssertValueElements(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -944,7 +944,7 @@ func TestController_AssertValueElements(t *testing.T) {
 }
 
 func TestController_AssertNotValueElements(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertNotValueElements,
 			[]interface{}{true, &FalseConstraint{}, "data"},
@@ -952,7 +952,7 @@ func TestController_AssertNotValueElements(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -973,14 +973,14 @@ func TestController_AssertNotValueElements(t *testing.T) {
 }
 
 func TestController_AssertEmpty(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertEmpty,
 			[]int{},
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -995,14 +995,14 @@ func TestController_AssertEmpty(t *testing.T) {
 }
 
 func TestController_AssertNotEmpty(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertNotEmpty,
 			[]int{1, 2, 3},
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1017,7 +1017,7 @@ func TestController_AssertNotEmpty(t *testing.T) {
 }
 
 func TestController_AssertEqual(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertEqual,
 			"data",
@@ -1026,7 +1026,7 @@ func TestController_AssertEqual(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1050,7 +1050,7 @@ func TestController_AssertEqual(t *testing.T) {
 }
 
 func TestController_AssertNotEqual(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertNotEqual,
 			"data",
@@ -1059,7 +1059,7 @@ func TestController_AssertNotEqual(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1078,14 +1078,14 @@ func TestController_AssertNotEqual(t *testing.T) {
 }
 
 func TestController_AssertFalse(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertFalse,
 			false,
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1102,7 +1102,7 @@ func TestController_AssertFalse(t *testing.T) {
 }
 
 func TestController_AssertGreater(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertGreater,
 			10,
@@ -1110,7 +1110,7 @@ func TestController_AssertGreater(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1128,7 +1128,7 @@ func TestController_AssertGreater(t *testing.T) {
 }
 
 func TestController_AssertGreaterOrEqual(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResultByGreater").
+	NewSubtest(t, "WithPositiveResultByGreater").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertGreaterOrEqual,
 			10,
@@ -1137,7 +1137,7 @@ func TestController_AssertGreaterOrEqual(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithPositiveResultByEqual").
+	NewSubtest(t, "WithPositiveResultByEqual").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertGreaterOrEqual,
 			10,
@@ -1146,7 +1146,7 @@ func TestController_AssertGreaterOrEqual(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1170,7 +1170,7 @@ func TestController_AssertGreaterOrEqual(t *testing.T) {
 }
 
 func TestController_AssertLess(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertLess,
 			100,
@@ -1178,7 +1178,7 @@ func TestController_AssertLess(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1196,7 +1196,7 @@ func TestController_AssertLess(t *testing.T) {
 }
 
 func TestController_AssertLessOrEqual(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResultByLess").
+	NewSubtest(t, "WithPositiveResultByLess").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertLessOrEqual,
 			100,
@@ -1205,7 +1205,7 @@ func TestController_AssertLessOrEqual(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithPositiveResultByEqual").
+	NewSubtest(t, "WithPositiveResultByEqual").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertLessOrEqual,
 			10,
@@ -1214,7 +1214,7 @@ func TestController_AssertLessOrEqual(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1238,7 +1238,7 @@ func TestController_AssertLessOrEqual(t *testing.T) {
 }
 
 func TestController_AssertKind(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertKind,
 			"data",
@@ -1247,7 +1247,7 @@ func TestController_AssertKind(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1271,7 +1271,7 @@ func TestController_AssertKind(t *testing.T) {
 }
 
 func TestController_AssertNotKind(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertNotKind,
 			"data",
@@ -1280,7 +1280,7 @@ func TestController_AssertNotKind(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1304,7 +1304,7 @@ func TestController_AssertNotKind(t *testing.T) {
 }
 
 func TestController_AssertLength(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertLength,
 			4,
@@ -1312,7 +1312,7 @@ func TestController_AssertLength(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1335,7 +1335,7 @@ func TestController_AssertLength(t *testing.T) {
 }
 
 func TestController_AssertNotLength(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertNotLength,
 			100,
@@ -1343,7 +1343,7 @@ func TestController_AssertNotLength(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1366,7 +1366,7 @@ func TestController_AssertNotLength(t *testing.T) {
 }
 
 func TestController_AssertLengthGreater(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertLengthGreater,
 			2,
@@ -1374,7 +1374,7 @@ func TestController_AssertLengthGreater(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1397,7 +1397,7 @@ func TestController_AssertLengthGreater(t *testing.T) {
 }
 
 func TestController_AssertLengthGreaterOrEqual(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResultByGreater").
+	NewSubtest(t, "WithPositiveResultByGreater").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertLengthGreaterOrEqual,
 			2,
@@ -1405,7 +1405,7 @@ func TestController_AssertLengthGreaterOrEqual(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithPositiveResultByEqual").
+	NewSubtest(t, "WithPositiveResultByEqual").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertLengthGreaterOrEqual,
 			4,
@@ -1413,7 +1413,7 @@ func TestController_AssertLengthGreaterOrEqual(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1436,7 +1436,7 @@ func TestController_AssertLengthGreaterOrEqual(t *testing.T) {
 }
 
 func TestController_AssertLengthLess(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertLengthLess,
 			100,
@@ -1444,7 +1444,7 @@ func TestController_AssertLengthLess(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1467,7 +1467,7 @@ func TestController_AssertLengthLess(t *testing.T) {
 }
 
 func TestController_AssertLengthLessOrEqual(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResultByLess").
+	NewSubtest(t, "WithPositiveResultByLess").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertLengthLessOrEqual,
 			100,
@@ -1475,7 +1475,7 @@ func TestController_AssertLengthLessOrEqual(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithPositiveResultByEqual").
+	NewSubtest(t, "WithPositiveResultByEqual").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertLengthLessOrEqual,
 			4,
@@ -1483,7 +1483,7 @@ func TestController_AssertLengthLessOrEqual(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1506,14 +1506,14 @@ func TestController_AssertLengthLessOrEqual(t *testing.T) {
 }
 
 func TestController_AssertNil(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertNil,
 			nil,
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1528,14 +1528,14 @@ func TestController_AssertNil(t *testing.T) {
 }
 
 func TestController_AssertNotNil(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertNotNil,
 			new(int),
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1550,7 +1550,7 @@ func TestController_AssertNotNil(t *testing.T) {
 }
 
 func TestController_AssertNot(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertNot,
 			NewMockConstraint(t).RecordCheck("data", false),
@@ -1558,7 +1558,7 @@ func TestController_AssertNot(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1577,7 +1577,7 @@ func TestController_AssertNot(t *testing.T) {
 }
 
 func TestController_AssertOr(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertOr,
 			5,
@@ -1586,7 +1586,7 @@ func TestController_AssertOr(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1603,7 +1603,7 @@ func TestController_AssertOr(t *testing.T) {
 }
 
 func TestController_AssertRegexp(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertRegexp,
 			"^\\d{4}$",
@@ -1611,7 +1611,7 @@ func TestController_AssertRegexp(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1634,7 +1634,7 @@ func TestController_AssertRegexp(t *testing.T) {
 }
 
 func TestController_AssertNotRegexp(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertNotRegexp,
 			"^\\d{4}$",
@@ -1642,7 +1642,7 @@ func TestController_AssertNotRegexp(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1665,7 +1665,7 @@ func TestController_AssertNotRegexp(t *testing.T) {
 }
 
 func TestController_AssertSame(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertSame,
 			"data",
@@ -1673,7 +1673,7 @@ func TestController_AssertSame(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1696,7 +1696,7 @@ func TestController_AssertSame(t *testing.T) {
 }
 
 func TestController_AssertNotSame(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertNotSame,
 			"data",
@@ -1704,7 +1704,7 @@ func TestController_AssertNotSame(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1722,14 +1722,14 @@ func TestController_AssertNotSame(t *testing.T) {
 }
 
 func TestController_AssertTrue(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertTrue,
 			true,
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1746,7 +1746,7 @@ func TestController_AssertTrue(t *testing.T) {
 }
 
 func TestController_AssertType(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertType,
 			"data",
@@ -1755,7 +1755,7 @@ func TestController_AssertType(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1779,7 +1779,7 @@ func TestController_AssertType(t *testing.T) {
 }
 
 func TestController_AssertNotType(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{test: NewMockTestingT(t).RecordHelper().RecordHelper()}).AssertNotType,
 			"data",
@@ -1788,7 +1788,7 @@ func TestController_AssertNotType(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithNegativeResult").
+	NewSubtest(t, "WithNegativeResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1812,7 +1812,7 @@ func TestController_AssertNotType(t *testing.T) {
 }
 
 func TestController_AssertValue(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1825,7 +1825,7 @@ func TestController_AssertValue(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1849,7 +1849,7 @@ func TestController_AssertValue(t *testing.T) {
 }
 
 func TestController_AssertNotValue(t *testing.T) {
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).
@@ -1862,7 +1862,7 @@ func TestController_AssertNotValue(t *testing.T) {
 		).
 		ExpectResult()
 
-	NewDeclarative(t, "WithPositiveResult").
+	NewSubtest(t, "WithPositiveResult").
 		Call(
 			(&Controller{
 				test: NewMockTestingT(t).

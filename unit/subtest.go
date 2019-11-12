@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-type Declarative struct {
+type Subtest struct {
 	test       TestingT
 	name       string
 	callable   interface{}
@@ -14,12 +14,12 @@ type Declarative struct {
 	comparator EqualComparer
 }
 
-func NewDeclarative(test TestingT, testName string) *Declarative {
+func NewSubtest(test TestingT, testName string) *Subtest {
 	if test == nil {
 		panic(NewNotNilError("test"))
 	}
 
-	return &Declarative{
+	return &Subtest{
 		test:       test,
 		name:       testName,
 		arguments:  []interface{}{},
@@ -27,7 +27,7 @@ func NewDeclarative(test TestingT, testName string) *Declarative {
 	}
 }
 
-func (d *Declarative) SetCompareOptions(options ...interface{}) *Declarative {
+func (d *Subtest) SetCompareOptions(options ...interface{}) *Subtest {
 	d.test.Helper()
 
 	d.comparator = NewEqualComparator(options...)
@@ -35,7 +35,7 @@ func (d *Declarative) SetCompareOptions(options ...interface{}) *Declarative {
 	return d
 }
 
-func (d *Declarative) Call(callable interface{}, arguments ...interface{}) *Declarative {
+func (d *Subtest) Call(callable interface{}, arguments ...interface{}) *Subtest {
 	d.test.Helper()
 
 	if callable == nil {
@@ -84,7 +84,7 @@ func (d *Declarative) Call(callable interface{}, arguments ...interface{}) *Decl
 	return d
 }
 
-func (d *Declarative) ExpectResult(expectedResults ...interface{}) {
+func (d *Subtest) ExpectResult(expectedResults ...interface{}) {
 	d.test.Helper()
 
 	d.test.Run(
@@ -97,7 +97,7 @@ func (d *Declarative) ExpectResult(expectedResults ...interface{}) {
 	)
 }
 
-func (d *Declarative) ExpectPanic(expectedPanic interface{}) {
+func (d *Subtest) ExpectPanic(expectedPanic interface{}) {
 	d.test.Helper()
 
 	d.test.Run(
@@ -110,7 +110,7 @@ func (d *Declarative) ExpectPanic(expectedPanic interface{}) {
 	)
 }
 
-func (d *Declarative) expectResult(test TestingT, expectedResults ...interface{}) {
+func (d *Subtest) expectResult(test TestingT, expectedResults ...interface{}) {
 	test.Helper()
 
 	actualResults, actualPanics, stackTrace := d.call(test)
@@ -126,7 +126,7 @@ func (d *Declarative) expectResult(test TestingT, expectedResults ...interface{}
 	}
 }
 
-func (d *Declarative) expectPanic(test TestingT, expectedPanic interface{}) {
+func (d *Subtest) expectPanic(test TestingT, expectedPanic interface{}) {
 	test.Helper()
 
 	actualResults, actualPanic, _ := d.call(test)
@@ -146,7 +146,7 @@ func (d *Declarative) expectPanic(test TestingT, expectedPanic interface{}) {
 	}
 }
 
-func (d *Declarative) call(test TestingT) (results []interface{}, panics interface{}, stackTrace []byte) {
+func (d *Subtest) call(test TestingT) (results []interface{}, panics interface{}, stackTrace []byte) {
 	if d.callable == nil {
 		test.Error("Call is not configured")
 		test.Fail()

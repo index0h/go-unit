@@ -28,8 +28,8 @@ func (c *Controller) TestingT() TestingT {
 	return c.test
 }
 
-func (c *Controller) DeclarativeTest(name string) *Declarative {
-	return NewDeclarative(c.test, name)
+func (c *Controller) Subtest(name string) *Subtest {
+	return NewSubtest(c.test, name)
 }
 
 func (c *Controller) RegisterFinish(finish func()) {
