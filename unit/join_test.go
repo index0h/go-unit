@@ -1,4 +1,4 @@
-package go_unit
+package unit
 
 import (
 	"fmt"
