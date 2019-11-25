@@ -1,11 +1,10 @@
 package unit
 
 import (
-	"fmt"
 	"path/filepath"
 	"testing"
 )
 
-func Test(t *testing.T) {
-	fmt.Println(filepath.Join("namespace", "data"))
+func TestJoin(t *testing.T) {
+	t.Error(filepath.Join("namespace", "data"))
 }
