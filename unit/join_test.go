@@ -21,10 +21,8 @@ func TestJoin(t *testing.T) {
 		t.Error(err)
 	}
 
-	if file, err := os.Create("file.go"); err != nil {
+	if _, err := os.Create("file.go"); err != nil {
 		t.Error(err)
-	} else {
-		t.Error(file)
 	}
 
 	t.Errorf("%+v", findAllFolders(rootPath))
